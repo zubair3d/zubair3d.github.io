@@ -3,8 +3,8 @@
 ## Action
 
 ### URL
-WebFrame_1601F472_0755_A069_418B_FA4531346CED.url = album.html
-WebFrame_1601F472_0755_A069_418B_FA4531346CED_mobile.url = album.html
+WebFrame_1601F472_0755_A069_418B_FA4531346CED.url = album01/album.html
+WebFrame_1601F472_0755_A069_418B_FA4531346CED_mobile.url = album01/album.html
 
 ## Media
 
@@ -35,6 +35,10 @@ Image_16F96C6E_070E_1C38_4195_0E15C66E50D4.url = skin/Image_16F96C6E_070E_1C38_4
 Image_16F96C6E_070E_1C38_4195_0E15C66E50D4_mobile.url = skin/Image_16F96C6E_070E_1C38_4195_0E15C66E50D4_mobile_en.png
 Image_16FDB4E9_070E_6C38_4191_F1C8D18930A0.url = skin/Image_16FDB4E9_070E_6C38_4191_F1C8D18930A0_en.png
 Image_16FDB4E9_070E_6C38_4191_F1C8D18930A0_mobile.url = skin/Image_16FDB4E9_070E_6C38_4191_F1C8D18930A0_mobile_en.png
+
+### Tooltip
+Image_0262E73B_0D68_0F66_41A9_E61EB52ECC69.toolTip = Close Album Gallery
+Image_0262E73B_0D68_0F66_41A9_E61EB52ECC69_mobile.toolTip = Close Album Gallery
 
 ## Tour
 

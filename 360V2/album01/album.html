@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom Photo Album</title>
+  <title>Tour Test V4</title>
 
-  <link rel="stylesheet" href="./photoswipe.css">
+  <link rel="stylesheet" href="./album/album_libs/photoswipe.css">
 
   <style>
     body {
@@ -28,7 +28,7 @@
       text-align: center;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center; /* Changed from space-between to center since title is removed */
       background: transparent;
     }
 
@@ -38,16 +38,6 @@
         height: auto;
         margin: 20px auto;
       }
-    }
-
-    .album-title {
-      font-size: 1.8rem;
-      font-weight: 300;
-      margin-bottom: 20px;
-      color: rgba(255,255,255,0.9);
-      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-      letter-spacing: 0.5px;
-      flex-shrink: 0;
     }
 
     /* Main area container so arrows can sit outside the anchor */
@@ -203,8 +193,6 @@
   </style>
 </head>
 <body>
-  
-
   <div class="gallery-container">
     <div class="main-slot">
       <a href="#" class="main-image-link" id="mainImageLink">
@@ -218,120 +206,131 @@
       <button type="button" class="nav-arrow strip prev" aria-label="Previous image">‹</button>
       <div class="thumbnail-strip" id="thumbnailStrip">
         
-                <a href="2231226444.jpg" class="gallery-item"
-                     data-main-src="2231226444.jpg"
-                     data-pswp-width="1600"
-                     data-pswp-height="900"
+                <a href="album/images/IMG_20190131_121752.jpg" class="gallery-item"
+                     data-main-src="album/images/IMG_20190131_121752.jpg"
+                     data-pswp-width="3456"
+                     data-pswp-height="4608"
                      data-index="0">
-                     <img src="thumb/2231226444.jpg" alt="Thumbnail of 2231226444.jpg">
+                     <img src="album/images/thumb/IMG_20190131_121752.jpg" alt="Thumbnail of IMG_20190131_121752.jpg">
                 </a>
-                <a href="2231226443.jpg" class="gallery-item"
-                     data-main-src="2231226443.jpg"
+                <a href="album/images/IMG_20190131_121727.jpg" class="gallery-item"
+                     data-main-src="album/images/IMG_20190131_121727.jpg"
+                     data-pswp-width="3456"
+                     data-pswp-height="4608"
+                     data-index="1">
+                     <img src="album/images/thumb/IMG_20190131_121727.jpg" alt="Thumbnail of IMG_20190131_121727.jpg">
+                </a>
+                <a href="album/images/2231226444.jpg" class="gallery-item"
+                     data-main-src="album/images/2231226444.jpg"
                      data-pswp-width="1600"
                      data-pswp-height="900"
-                     data-index="1">
-                     <img src="thumb/2231226443.jpg" alt="Thumbnail of 2231226443.jpg">
-                </a>
-                <a href="2196842048.jpg" class="gallery-item"
-                     data-main-src="2196842048.jpg"
-                     data-pswp-width="1600"
-                     data-pswp-height="1066"
                      data-index="2">
-                     <img src="thumb/2196842048.jpg" alt="Thumbnail of 2196842048.jpg">
+                     <img src="album/images/thumb/2231226444.jpg" alt="Thumbnail of 2231226444.jpg">
                 </a>
-                <a href="2196842068.jpg" class="gallery-item"
-                     data-main-src="2196842068.jpg"
+                <a href="album/images/2231226443.jpg" class="gallery-item"
+                     data-main-src="album/images/2231226443.jpg"
                      data-pswp-width="1600"
-                     data-pswp-height="1066"
+                     data-pswp-height="900"
                      data-index="3">
-                     <img src="thumb/2196842068.jpg" alt="Thumbnail of 2196842068.jpg">
+                     <img src="album/images/thumb/2231226443.jpg" alt="Thumbnail of 2231226443.jpg">
                 </a>
-                <a href="2196842074.jpg" class="gallery-item"
-                     data-main-src="2196842074.jpg"
+                <a href="album/images/2196842048.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842048.jpg"
                      data-pswp-width="1600"
                      data-pswp-height="1066"
                      data-index="4">
-                     <img src="thumb/2196842074.jpg" alt="Thumbnail of 2196842074.jpg">
+                     <img src="album/images/thumb/2196842048.jpg" alt="Thumbnail of 2196842048.jpg">
                 </a>
-                <a href="2196842117.jpg" class="gallery-item"
-                     data-main-src="2196842117.jpg"
+                <a href="album/images/2196842068.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842068.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="5">
+                     <img src="album/images/thumb/2196842068.jpg" alt="Thumbnail of 2196842068.jpg">
+                </a>
+                <a href="album/images/2196842074.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842074.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="6">
+                     <img src="album/images/thumb/2196842074.jpg" alt="Thumbnail of 2196842074.jpg">
+                </a>
+                <a href="album/images/2196842117.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842117.jpg"
                      data-pswp-width="1600"
                      data-pswp-height="898"
-                     data-index="5">
-                     <img src="thumb/2196842117.jpg" alt="Thumbnail of 2196842117.jpg">
+                     data-index="7">
+                     <img src="album/images/thumb/2196842117.jpg" alt="Thumbnail of 2196842117.jpg">
                 </a>
-                <a href="2196842116.jpg" class="gallery-item"
-                     data-main-src="2196842116.jpg"
+                <a href="album/images/2196842116.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842116.jpg"
                      data-pswp-width="1600"
                      data-pswp-height="899"
-                     data-index="6">
-                     <img src="thumb/2196842116.jpg" alt="Thumbnail of 2196842116.jpg">
-                </a>
-                <a href="2134712264.jpg" class="gallery-item"
-                     data-main-src="2134712264.jpg"
-                     data-pswp-width="1024"
-                     data-pswp-height="682"
-                     data-index="7">
-                     <img src="thumb/2134712264.jpg" alt="Thumbnail of 2134712264.jpg">
-                </a>
-                <a href="2134712259.jpg" class="gallery-item"
-                     data-main-src="2134712259.jpg"
-                     data-pswp-width="1024"
-                     data-pswp-height="682"
                      data-index="8">
-                     <img src="thumb/2134712259.jpg" alt="Thumbnail of 2134712259.jpg">
+                     <img src="album/images/thumb/2196842116.jpg" alt="Thumbnail of 2196842116.jpg">
                 </a>
-                <a href="2134712282.jpg" class="gallery-item"
-                     data-main-src="2134712282.jpg"
+                <a href="album/images/2134712264.jpg" class="gallery-item"
+                     data-main-src="album/images/2134712264.jpg"
                      data-pswp-width="1024"
                      data-pswp-height="682"
                      data-index="9">
-                     <img src="thumb/2134712282.jpg" alt="Thumbnail of 2134712282.jpg">
+                     <img src="album/images/thumb/2134712264.jpg" alt="Thumbnail of 2134712264.jpg">
                 </a>
-                <a href="2251117315.jpg" class="gallery-item"
-                     data-main-src="2251117315.jpg"
-                     data-pswp-width="1600"
-                     data-pswp-height="1066"
+                <a href="album/images/2134712259.jpg" class="gallery-item"
+                     data-main-src="album/images/2134712259.jpg"
+                     data-pswp-width="1024"
+                     data-pswp-height="682"
                      data-index="10">
-                     <img src="thumb/2251117315.jpg" alt="Thumbnail of 2251117315.jpg">
+                     <img src="album/images/thumb/2134712259.jpg" alt="Thumbnail of 2134712259.jpg">
                 </a>
-                <a href="2251117289.jpg" class="gallery-item"
-                     data-main-src="2251117289.jpg"
-                     data-pswp-width="1600"
-                     data-pswp-height="1066"
+                <a href="album/images/2134712282.jpg" class="gallery-item"
+                     data-main-src="album/images/2134712282.jpg"
+                     data-pswp-width="1024"
+                     data-pswp-height="682"
                      data-index="11">
-                     <img src="thumb/2251117289.jpg" alt="Thumbnail of 2251117289.jpg">
+                     <img src="album/images/thumb/2134712282.jpg" alt="Thumbnail of 2134712282.jpg">
                 </a>
-                <a href="2251117349.jpg" class="gallery-item"
-                     data-main-src="2251117349.jpg"
+                <a href="album/images/2251117315.jpg" class="gallery-item"
+                     data-main-src="album/images/2251117315.jpg"
                      data-pswp-width="1600"
                      data-pswp-height="1066"
                      data-index="12">
-                     <img src="thumb/2251117349.jpg" alt="Thumbnail of 2251117349.jpg">
+                     <img src="album/images/thumb/2251117315.jpg" alt="Thumbnail of 2251117315.jpg">
                 </a>
-                <a href="2251117263.jpg" class="gallery-item"
-                     data-main-src="2251117263.jpg"
+                <a href="album/images/2251117289.jpg" class="gallery-item"
+                     data-main-src="album/images/2251117289.jpg"
                      data-pswp-width="1600"
                      data-pswp-height="1066"
                      data-index="13">
-                     <img src="thumb/2251117263.jpg" alt="Thumbnail of 2251117263.jpg">
+                     <img src="album/images/thumb/2251117289.jpg" alt="Thumbnail of 2251117289.jpg">
+                </a>
+                <a href="album/images/2251117349.jpg" class="gallery-item"
+                     data-main-src="album/images/2251117349.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="14">
+                     <img src="album/images/thumb/2251117349.jpg" alt="Thumbnail of 2251117349.jpg">
+                </a>
+                <a href="album/images/2251117263.jpg" class="gallery-item"
+                     data-main-src="album/images/2251117263.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="15">
+                     <img src="album/images/thumb/2251117263.jpg" alt="Thumbnail of 2251117263.jpg">
                 </a>
       </div>
       <button type="button" class="nav-arrow strip next" aria-label="Next image">›</button>
     </div>
   </div>
 
-  <div class="instruction-text">
-    Click main image for Lightbox. Use arrows, swipe/drag, or keys to navigate.
-  </div>
 
   <script type="module">
-    import PhotoSwipeLightbox from './photoswipe-lightbox.esm.js';
+    import PhotoSwipeLightbox from './album/album_libs/photoswipe-lightbox.esm.js';
 
     const lightbox = new PhotoSwipeLightbox({
       gallery: '#thumbnailStrip',
       children: '.gallery-item',
-      pswpModule: () => import('./photoswipe.esm.js'),
+      pswpModule: () => import('./album/album_libs/photoswipe.esm.js'),
     });
 
     const mainImage = document.getElementById('mainImage');
@@ -489,15 +488,46 @@
       lightbox.loadAndOpen(startIndex);
     });
 
-    // Keyboard navigation
+    // Keyboard navigation (kept outside lightbox open state for dual control)
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(-1); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(1); }
+      // Prevents key scrolling the page when in the main viewer
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); }
+      
+      // If lightbox is not open, use keys to navigate main image viewer
+      if (!lightbox.pswp) {
+        if (e.key === 'ArrowLeft') { goTo(-1); }
+        if (e.key === 'ArrowRight') { goTo(1); }
+      }
     });
 
     // Init
     lightbox.init();
     if (galleryItems.length > 0) updateMainImage(galleryItems[0]);
+    
+    // ------------------------------------------------------------------
+    // NEW: Synchronization - Lightbox Swipes/Clicks Update Main Image (Feature 1)
+    // ------------------------------------------------------------------
+    lightbox.on('change', () => {
+      // 'pswp' is the PhotoSwipe core instance, which exists once the lightbox is open
+      const pswp = lightbox.pswp;
+      if (pswp) {
+        // The index in PhotoSwipe matches the data-index we set on the thumbnails
+        const newIndex = pswp.currIndex;
+        // Find the corresponding thumbnail item using the index
+        const nextItem = galleryItems[newIndex];
+        
+        if (nextItem) {
+          // updateMainImage handles updating the main viewer, active thumbnail,
+          // and the metadata for the main-image-link element.
+          updateMainImage(nextItem);
+          
+          // Ensure the thumbnail strip scrolls to show the current image
+          nextItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+    });
+    // ------------------------------------------------------------------
+
   </script>
 </body>
 </html>
