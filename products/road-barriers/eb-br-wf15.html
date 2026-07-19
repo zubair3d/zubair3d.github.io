@@ -153,14 +153,38 @@
 
                 <div class="col-lg-7">
                     
-                    <!-- Single Image Gallery -->
-                    <div class="row pswp-gallery">
-                        <div class="col-lg-12 text-center">
-                            <a href="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-0.png" data-pswp-width="1024" data-pswp-height="1024">
-                                <img src="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-0.png" class="img-fluid mb-3" alt="Water-Fillable Traffic Barrier" style="max-height: 400px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); object-fit: contain; background: #f9f9f9; padding: 20px; width: 100%;">
+                    <!-- Multiple Image Gallery -->
+                    <div class="product-mini-gallery pswp-gallery" id="product-gallery">
+                        <div class="mini-gallery-main-wrap">
+                            <button class="mini-gallery-nav prev" id="gallery-prev" aria-label="Previous image"><i class="fa fa-chevron-left"></i></button>
+                            <a href="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-0.jpg" data-pswp-width="2048" data-pswp-height="2048" class="mini-gallery-pswp-link" id="gallery-main-link">
+                                <img src="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-0.jpg" class="mini-gallery-main-img" alt="Water-Fillable Traffic Barrier" id="gallery-main-img">
                             </a>
-                            <p style="font-size: 12px; color: #888; margin-top: 5px;"><i class="fa fa-search-plus"></i> Click image to open zoom lightbox view</p>
+                            <button class="mini-gallery-nav next" id="gallery-next" aria-label="Next image"><i class="fa fa-chevron-right"></i></button>
                         </div>
+                        <!-- Thumbnail Strip -->
+                        <div class="mini-gallery-thumbs" id="gallery-thumbs">
+                            
+                            <div class="mini-gallery-thumb active" data-index="0"><img src="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-0.jpg" alt="Water-Fillable Traffic Barrier"></div>
+                            
+                            <div class="mini-gallery-thumb " data-index="1"><img src="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-1.png" alt="Water-Fillable Traffic Barrier"></div>
+                            
+                            <div class="mini-gallery-thumb " data-index="2"><img src="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-2.png" alt="Water-Fillable Traffic Barrier"></div>
+                            
+                            <div class="mini-gallery-thumb " data-index="3"><img src="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-3.webp" alt="Water-Fillable Traffic Barrier"></div>
+                            
+                        </div>
+                        <!-- Hidden pswp anchors for secondary images (so lightbox can navigate them) -->
+                        <div style="display:none;">
+                            
+                            <a href="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-1.png" data-pswp-width="800" data-pswp-height="800"></a>
+                            
+                            <a href="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-2.png" data-pswp-width="800" data-pswp-height="800"></a>
+                            
+                            <a href="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-3.webp" data-pswp-width="700" data-pswp-height="350"></a>
+                            
+                        </div>
+                        <p class="mini-gallery-hint"><i class="fa fa-search-plus"></i> Click image to open zoom lightbox view</p>
                     </div>
                     
                 </div>
@@ -868,6 +892,52 @@
       });
     </script>
 
+    
+    <script>
+    // ===== Mini Image Gallery Logic =====
+    (function() {
+        var images = [
+            
+            { src: '../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-0.jpg', w: 2048, h: 2048, alt: 'Water-Fillable Traffic Barrier' },
+            
+            { src: '../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-1.png', w: 800, h: 800, alt: 'Water-Fillable Traffic Barrier' },
+            
+            { src: '../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-2.png', w: 800, h: 800, alt: 'Water-Fillable Traffic Barrier' },
+            
+            { src: '../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-3.webp', w: 700, h: 350, alt: 'Water-Fillable Traffic Barrier' }
+            
+        ];
+        var mainImg = document.getElementById('gallery-main-img');
+        var mainLink = document.getElementById('gallery-main-link');
+        var thumbContainer = document.getElementById('gallery-thumbs');
+        var prevBtn = document.getElementById('gallery-prev');
+        var nextBtn = document.getElementById('gallery-next');
+        if (!mainImg) return;
+        var thumbs = thumbContainer ? thumbContainer.querySelectorAll('.mini-gallery-thumb') : [];
+        var current = 0;
+        function goTo(idx) {
+            current = idx;
+            mainImg.style.opacity = '0';
+            setTimeout(function() {
+                mainImg.src = images[idx].src;
+                mainImg.alt = images[idx].alt;
+                if (mainLink) {
+                    mainLink.href = images[idx].src;
+                    mainLink.setAttribute('data-pswp-width', images[idx].w);
+                    mainLink.setAttribute('data-pswp-height', images[idx].h);
+                }
+                mainImg.style.opacity = '1';
+            }, 150);
+            thumbs.forEach(function(t, i) { t.classList.toggle('active', i === idx); });
+            if (prevBtn) prevBtn.disabled = (idx === 0);
+            if (nextBtn) nextBtn.disabled = (idx === images.length - 1);
+        }
+        thumbs.forEach(function(t, i) { t.addEventListener('click', function() { goTo(i); }); });
+        if (prevBtn) prevBtn.addEventListener('click', function() { if (current > 0) goTo(current - 1); });
+        if (nextBtn) nextBtn.addEventListener('click', function() { if (current < images.length - 1) goTo(current + 1); });
+        goTo(0);
+    })();
+    </script>
     
 
 </body>
