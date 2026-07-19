@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour Test V4</title>
+
+  <link rel="stylesheet" href="./album/album_libs/photoswipe.css">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue';
+      margin: 0;
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #1a1a1a 0%, #0d0d0d 100%);
+    }
+
+    .gallery-container {
+      width: 60vw;
+      height: 85vh;
+      margin: auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Changed from space-between to center since title is removed */
+      background: transparent;
+    }
+
+    @media screen and (max-width: 768px) and (orientation: portrait) {
+      .gallery-container {
+        width: 95vw;
+        height: auto;
+        margin: 20px auto;
+      }
+    }
+
+    /* Main area container so arrows can sit outside the anchor */
+    .main-slot {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      margin-bottom: 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 15px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .main-image-link {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: zoom-in;
+      line-height: 0;
+      touch-action: pan-y; /* allow vertical scroll, capture horizontal for swipe */
+      user-select: none;
+    }
+
+    @media screen and (max-width: 768px) and (orientation: portrait) {
+      .main-slot {
+        height: auto;
+      }
+      .main-image-link {
+        height: 0;
+        padding-bottom: 65%;
+      }
+    }
+
+    .main-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform .4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      user-select: none;
+      -webkit-user-drag: none; /* FIX: Added for better desktop swipe */
+      z-index: 1;
+    }
+
+    .thumbnail-strip {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 15px 0;
+      cursor: grab;
+      user-select: none;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      background-color: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      position: relative;
+    }
+    .thumbnail-strip::-webkit-scrollbar { display: none; }
+
+    .gallery-item {
+      display: inline-block;
+      margin: 0 8px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .3s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 112px;
+      height: 75px;
+      line-height: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.6);
+    }
+    .gallery-item.active {
+      transform: translateY(-2px) scale(1.05);
+      border: 2px solid #0099cc;
+      box-shadow: 0 0 12px rgba(0,153,204,0.9), 0 0 20px rgba(0,153,204,0.5);
+    }
+
+    /* Mobile: scale thumbs to ~70% */
+    @media screen and (max-width: 768px) {
+      .gallery-item {
+        width: calc(112px * 0.7);
+        height: calc(75px * 0.7);
+        margin: 0 6px;
+      }
+      .thumbnail-strip { padding: 10px 0; }
+    }
+
+    /* Navigation arrows */
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.25);
+      color: #fff;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      opacity: 0.75;
+      transition: opacity .2s ease;
+    }
+    .nav-arrow:hover { opacity: 0.95; }
+
+    /* Arrows over main image (outside the anchor) */
+    .nav-arrow.main.prev { left: 8px; }
+    .nav-arrow.main.next { right: 8px; }
+
+    /* Thumb strip wrapper to hold arrows */
+    .thumb-wrap { position: relative; }
+    .nav-arrow.strip.prev { left: 6px; }
+    .nav-arrow.strip.next { right: 6px; }
+    .thumb-wrap .nav-arrow.strip { top: 50%; transform: translateY(-50%); }
+
+    @media (hover: none) { .nav-arrow { opacity: 0.95; } }
+
+    .instruction-text {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8rem;
+      color: #ccc;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background-color: rgba(40,40,40,0.8);
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(5px);
+    }
+
+    .pswp { z-index: 10000; }
+  </style>
+</head>
+<body>
+  <div class="gallery-container">
+    <div class="main-slot">
+      <a href="#" class="main-image-link" id="mainImageLink">
+        <img src="" alt="Current Photo" class="main-image" id="mainImage" draggable="false">
+      </a>
+      <button type="button" class="nav-arrow main prev" aria-label="Previous image">‹</button>
+      <button type="button" class="nav-arrow main next" aria-label="Next image">›</button>
+    </div>
+
+    <div class="thumb-wrap">
+      <button type="button" class="nav-arrow strip prev" aria-label="Previous image">‹</button>
+      <div class="thumbnail-strip" id="thumbnailStrip">
+        
+                <a href="album/images/IMG_20190131_121752.jpg" class="gallery-item"
+                     data-main-src="album/images/IMG_20190131_121752.jpg"
+                     data-pswp-width="3456"
+                     data-pswp-height="4608"
+                     data-index="0">
+                     <img src="album/images/thumb/IMG_20190131_121752.jpg" alt="Thumbnail of IMG_20190131_121752.jpg">
+                </a>
+                <a href="album/images/IMG_20190131_121727.jpg" class="gallery-item"
+                     data-main-src="album/images/IMG_20190131_121727.jpg"
+                     data-pswp-width="3456"
+                     data-pswp-height="4608"
+                     data-index="1">
+                     <img src="album/images/thumb/IMG_20190131_121727.jpg" alt="Thumbnail of IMG_20190131_121727.jpg">
+                </a>
+                <a href="album/images/2231226444.jpg" class="gallery-item"
+                     data-main-src="album/images/2231226444.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="900"
+                     data-index="2">
+                     <img src="album/images/thumb/2231226444.jpg" alt="Thumbnail of 2231226444.jpg">
+                </a>
+                <a href="album/images/2231226443.jpg" class="gallery-item"
+                     data-main-src="album/images/2231226443.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="900"
+                     data-index="3">
+                     <img src="album/images/thumb/2231226443.jpg" alt="Thumbnail of 2231226443.jpg">
+                </a>
+                <a href="album/images/2196842048.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842048.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="4">
+                     <img src="album/images/thumb/2196842048.jpg" alt="Thumbnail of 2196842048.jpg">
+                </a>
+                <a href="album/images/2196842068.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842068.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="5">
+                     <img src="album/images/thumb/2196842068.jpg" alt="Thumbnail of 2196842068.jpg">
+                </a>
+                <a href="album/images/2196842074.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842074.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="6">
+                     <img src="album/images/thumb/2196842074.jpg" alt="Thumbnail of 2196842074.jpg">
+                </a>
+                <a href="album/images/2196842117.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842117.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="898"
+                     data-index="7">
+                     <img src="album/images/thumb/2196842117.jpg" alt="Thumbnail of 2196842117.jpg">
+                </a>
+                <a href="album/images/2196842116.jpg" class="gallery-item"
+                     data-main-src="album/images/2196842116.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="899"
+                     data-index="8">
+                     <img src="album/images/thumb/2196842116.jpg" alt="Thumbnail of 2196842116.jpg">
+                </a>
+                <a href="album/images/2134712264.jpg" class="gallery-item"
+                     data-main-src="album/images/2134712264.jpg"
+                     data-pswp-width="1024"
+                     data-pswp-height="682"
+                     data-index="9">
+                     <img src="album/images/thumb/2134712264.jpg" alt="Thumbnail of 2134712264.jpg">
+                </a>
+                <a href="album/images/2134712259.jpg" class="gallery-item"
+                     data-main-src="album/images/2134712259.jpg"
+                     data-pswp-width="1024"
+                     data-pswp-height="682"
+                     data-index="10">
+                     <img src="album/images/thumb/2134712259.jpg" alt="Thumbnail of 2134712259.jpg">
+                </a>
+                <a href="album/images/2134712282.jpg" class="gallery-item"
+                     data-main-src="album/images/2134712282.jpg"
+                     data-pswp-width="1024"
+                     data-pswp-height="682"
+                     data-index="11">
+                     <img src="album/images/thumb/2134712282.jpg" alt="Thumbnail of 2134712282.jpg">
+                </a>
+                <a href="album/images/2251117315.jpg" class="gallery-item"
+                     data-main-src="album/images/2251117315.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="12">
+                     <img src="album/images/thumb/2251117315.jpg" alt="Thumbnail of 2251117315.jpg">
+                </a>
+                <a href="album/images/2251117289.jpg" class="gallery-item"
+                     data-main-src="album/images/2251117289.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="13">
+                     <img src="album/images/thumb/2251117289.jpg" alt="Thumbnail of 2251117289.jpg">
+                </a>
+                <a href="album/images/2251117349.jpg" class="gallery-item"
+                     data-main-src="album/images/2251117349.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="14">
+                     <img src="album/images/thumb/2251117349.jpg" alt="Thumbnail of 2251117349.jpg">
+                </a>
+                <a href="album/images/2251117263.jpg" class="gallery-item"
+                     data-main-src="album/images/2251117263.jpg"
+                     data-pswp-width="1600"
+                     data-pswp-height="1066"
+                     data-index="15">
+                     <img src="album/images/thumb/2251117263.jpg" alt="Thumbnail of 2251117263.jpg">
+                </a>
+      </div>
+      <button type="button" class="nav-arrow strip next" aria-label="Next image">›</button>
+    </div>
+  </div>
+
+
+  <script type="module">
+    import PhotoSwipeLightbox from './album/album_libs/photoswipe-lightbox.esm.js';
+
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#thumbnailStrip',
+      children: '.gallery-item',
+      pswpModule: () => import('./album/album_libs/photoswipe.esm.js'),
+    });
+
+    const mainImage = document.getElementById('mainImage');
+    const mainImageLink = document.getElementById('mainImageLink');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const thumbnailStrip = document.getElementById('thumbnailStrip');
+
+    // Drag scrolling for strip (mouse)
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let isClick = true;
+
+    thumbnailStrip.addEventListener('mousedown', (e) => {
+      isDown = true;
+      e.preventDefault();
+      startX = e.pageX;
+      scrollLeft = thumbnailStrip.scrollLeft;
+      isClick = true;
+    });
+    document.addEventListener('mouseup', () => { isDown = false; });
+    document.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const walk = (e.pageX - startX) * 2;
+      if (Math.abs(walk) > 10) isClick = false;
+      thumbnailStrip.scrollLeft = scrollLeft - walk;
+    });
+
+    function updateMainImage(item) {
+      const mainSrc = item.dataset.mainSrc;
+      const pswpWidth = item.dataset.pswpWidth;
+      const pswpHeight = item.dataset.pswpHeight;
+
+      mainImage.src = mainSrc;
+      mainImageLink.href = mainSrc;
+
+      mainImageLink.dataset.pswpWidth = pswpWidth;
+      mainImageLink.dataset.pswpHeight = pswpHeight;
+      mainImageLink.dataset.mainSrc = mainSrc;
+      mainImageLink.dataset.index = item.dataset.index;
+
+      galleryItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    }
+
+    galleryItems.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (isClick) {
+          updateMainImage(item);
+        } else {
+          isClick = true;
+        }
+      });
+    });
+
+    function getActiveIndex() {
+      const activeItem = document.querySelector('.gallery-item.active');
+      return activeItem ? parseInt(activeItem.dataset.index) : 0;
+    }
+    function goTo(delta) {
+      const total = galleryItems.length;
+      if (!total) return;
+      const nextIndex = (getActiveIndex() + delta + total) % total;
+      const nextItem = galleryItems[nextIndex];
+      if (nextItem) {
+        updateMainImage(nextItem);
+        nextItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+
+    // Main arrows: change image (do NOT open lightbox)
+    document.querySelector('.nav-arrow.main.prev')?.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation(); goTo(-1);
+    });
+    document.querySelector('.nav-arrow.main.next')?.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation(); goTo(1);
+    });
+
+    // Strip arrows: change image (as requested), not just scroll
+    document.querySelector('.nav-arrow.strip.prev')?.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation(); goTo(-1);
+    });
+    document.querySelector('.nav-arrow.strip.next')?.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation(); goTo(1);
+    });
+    
+    // ------------------------------------------------------------------
+    // FIX: Updated Swipe/drag logic for reliable desktop mouse swiping
+    // ------------------------------------------------------------------
+    let swipeActive = false;
+    let swipeStartX = 0;
+    let blockLightboxClick = false;
+    const swipeThreshold = 40; // Pixels required to register a swipe
+
+    function handlePointerDown(e) {
+      // Only respond to left mouse button (0) or touch
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      
+      swipeActive = true;
+      swipeStartX = e.clientX;
+      blockLightboxClick = false;
+      
+      try { e.target.setPointerCapture(e.pointerId); } catch {}
+      
+      // Crucial: Prevent default actions immediately on mousedown/pointerdown
+      if (e.pointerType === 'mouse' || e.pointerType === 'pen') e.preventDefault();
+    }
+
+    function handlePointerMove(e) {
+      if (!swipeActive) return;
+      
+      const dx = e.clientX - swipeStartX;
+      
+      if (Math.abs(dx) > 5) { // Minimum movement to be considered a drag
+        blockLightboxClick = true;
+        // Crucial: Prevent default browser dragging/selection during movement
+        e.preventDefault(); 
+      }
+    }
+
+    function handlePointerUp(e) {
+      if (!swipeActive) return;
+      swipeActive = false;
+
+      const dx = e.clientX - swipeStartX;
+      
+      if (Math.abs(dx) > swipeThreshold) {
+        goTo(dx < 0 ? 1 : -1); // dx < 0 means swiped left (next image)
+      }
+      
+      try { e.target.releasePointerCapture(e.pointerId); } catch {}
+    }
+
+    // Attach listeners to the link element
+    mainImageLink.addEventListener('pointerdown', handlePointerDown);
+    mainImageLink.addEventListener('pointermove', handlePointerMove);
+    mainImageLink.addEventListener('pointerup', handlePointerUp);
+    mainImageLink.addEventListener('pointercancel', () => { swipeActive = false; });
+    // Use pointerleave as a fallback to trigger pointerUp if the user drags out and releases
+    mainImageLink.addEventListener('pointerleave', (e) => { 
+        if(swipeActive) handlePointerUp(e);
+    });
+    // ------------------------------------------------------------------
+
+    // Open Lightbox when main image is clicked, unless it was a swipe
+    mainImageLink.addEventListener('click', (e) => {
+      if (blockLightboxClick) { e.preventDefault(); blockLightboxClick = false; return; }
+      e.preventDefault();
+      const activeItem = document.querySelector('.gallery-item.active');
+      let startIndex = 0;
+      if (activeItem) startIndex = parseInt(activeItem.dataset.index);
+      lightbox.loadAndOpen(startIndex);
+    });
+
+    // Keyboard navigation (kept outside lightbox open state for dual control)
+    document.addEventListener('keydown', (e) => {
+      // Prevents key scrolling the page when in the main viewer
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); }
+      
+      // If lightbox is not open, use keys to navigate main image viewer
+      if (!lightbox.pswp) {
+        if (e.key === 'ArrowLeft') { goTo(-1); }
+        if (e.key === 'ArrowRight') { goTo(1); }
+      }
+    });
+
+    // Init
+    lightbox.init();
+    if (galleryItems.length > 0) updateMainImage(galleryItems[0]);
+    
+    // ------------------------------------------------------------------
+    // NEW: Synchronization - Lightbox Swipes/Clicks Update Main Image (Feature 1)
+    // ------------------------------------------------------------------
+    lightbox.on('change', () => {
+      // 'pswp' is the PhotoSwipe core instance, which exists once the lightbox is open
+      const pswp = lightbox.pswp;
+      if (pswp) {
+        // The index in PhotoSwipe matches the data-index we set on the thumbnails
+        const newIndex = pswp.currIndex;
+        // Find the corresponding thumbnail item using the index
+        const nextItem = galleryItems[newIndex];
+        
+        if (nextItem) {
+          // updateMainImage handles updating the main viewer, active thumbnail,
+          // and the metadata for the main-image-link element.
+          updateMainImage(nextItem);
+          
+          // Ensure the thumbnail strip scrolls to show the current image
+          nextItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+    });
+    // ------------------------------------------------------------------
+
+  </script>
+</body>
+</html>
