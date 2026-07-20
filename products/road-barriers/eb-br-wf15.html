@@ -215,7 +215,7 @@
                             </div>
                             
                             
-                            <a href="#" class="open-inquiry-btn primary-btn normal-btn" data-product="Water-Fillable Traffic Barrier (EB-BR-WF15)" style="border: none; border-radius: 4px; background: #50ab3c; color: #ffffff; padding: 12px 28px; font-size: 13px; font-weight: 600; display: inline-block; cursor: pointer; text-decoration:none;">Inquire Now</a>
+                            <a href="javascript:void(0)" class="open-inquiry-btn primary-btn normal-btn" data-product="Water-Fillable Traffic Barrier (EB-BR-WF15)" data-product-category="Road Barriers & Attenuators" data-product-img="../../img/products/road-barriers/eb-br-wf15/eb-br-wf15-0.jpg" data-product-title="Water-Fillable Traffic Barrier" data-product-model="EB-BR-WF15" data-product-unit="Pcs" style="border: none; border-radius: 4px; background: #50ab3c; color: #ffffff; padding: 12px 28px; font-size: 13px; font-weight: 600; display: inline-block; cursor: pointer; text-decoration:none;">Inquire Now</a>
                         </div>
                     </div>
                 </div>
@@ -760,6 +760,79 @@
     <!-- Footer Section End -->
 
     
+
+    <!-- Dedicated Product Inquiry Modal -->
+    <div id="productInquiryModal" class="product-inquiry-modal">
+        <div class="product-inquiry-backdrop" id="productInquiryBackdrop"></div>
+        <div class="product-inquiry-dialog">
+            <button type="button" class="product-inquiry-close" id="closeProductInquiryModal" aria-label="Close">&times;</button>
+            
+            <div class="product-inquiry-header">
+                <h3 class="product-inquiry-title">Product Inquiry</h3>
+            </div>
+
+            <!-- Top Product Preview Header Card -->
+            <div id="productModalPreviewCard" class="product-modal-preview">
+                <div class="product-modal-preview-imgwrap">
+                    <img id="productModalImg" src="" alt="Product Thumbnail">
+                </div>
+                <div class="product-modal-preview-info">
+                    <h4 id="productModalTitle"></h4>
+                    <div class="product-modal-preview-badges">
+                        <span id="productModalModel" class="badge-model"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-inquiry-body">
+                <form id="productInquiryForm" action="https://formsubmit.co/ajax/temp2temp2222@gmail.com" method="POST">
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input type="hidden" name="_subject" id="prodModalHiddenSubject" value="Product Inquiry" /> 
+                    <input type="hidden" name="Product Category" id="prodModalHiddenCategory" value="" />
+                    <input type="hidden" name="Inquired Product" id="prodModalHiddenName" value="" /> 
+                    <input type="hidden" name="Quantity / Requirement" id="prodModalHiddenQtyFormatted" value="" />
+                    <input type="hidden" name="Page URL" id="prodModalHiddenUrl" value="" /> 
+                    
+                    <div class="modal-form-row">
+                        <div class="modal-form-group">
+                            <label>Your Name <span class="req">*</span></label>
+                            <input type="text" name="Name" id="prodModalName" placeholder="Full Name" required />
+                        </div>
+                        <div class="modal-form-group">
+                            <label>Phone Number <span class="req">*</span></label>
+                            <input type="tel" name="Phone Number" id="prodModalPhone" placeholder="Mobile / Phone Number" required />
+                        </div>
+                    </div>
+                    
+                    <div class="modal-form-row">
+                        <div class="modal-form-group flex-2">
+                            <label>Email Address <span class="req">*</span></label>
+                            <input type="email" name="Email" id="prodModalEmail" placeholder="name@example.com" required />
+                        </div>
+                        <div class="modal-form-group flex-1">
+                            <label>Quantity <span class="req">*</span></label>
+                            <input type="text" id="prodModalQtyInput" placeholder="e.g. 50pcs" required />
+                        </div>
+                    </div>
+
+                    <div class="modal-form-group">
+                        <label>Message</label>
+                        <textarea id="prodModalMessage" name="Message" rows="5" placeholder="Message"></textarea>
+                    </div>
+
+                    <button type="submit" id="prodModalSubmitBtn" class="product-modal-submit-btn">
+                        <span>Send Product Inquiry</span>
+                    </button>
+                </form>
+
+                <div id="productModalOverlay" class="product-modal-overlay">
+                    <div class="product-modal-spinner"></div>
+                    <p id="productModalOverlayMsg" class="product-modal-overlay-msg"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dedicated Product Inquiry Modal End -->
 
     <!-- Js Plugins -->
     <script src="../../js/jquery-3.3.1.min.js"></script>

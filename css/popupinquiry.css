@@ -240,11 +240,292 @@ body {
     }
 }
 
-/* When the form is active/open */
+/* Body lock when modal is open */
+body.modal-open {
+    overflow: hidden !important;
+}
+
+/* When the form is active/open on index.html */
 .inquiry-container.active .inquiry-form-content {
     opacity: 1;
     visibility: visible;
     transform: translateY(0); /* Slides up to its final position */
+}
+
+/* --- Dedicated Product Inquiry Modal Styling --- */
+.product-inquiry-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    overscroll-behavior: contain;
+    touch-action: none;
+}
+
+.product-inquiry-modal.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.product-inquiry-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.product-inquiry-dialog {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    width: 100%;
+    max-width: 460px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    padding: 24px;
+    transform: scale(0.92);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+}
+
+.product-inquiry-modal.active .product-inquiry-dialog {
+    transform: scale(1);
+}
+
+.product-inquiry-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    color: #444;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, color 0.2s ease;
+    z-index: 10;
+}
+
+.product-inquiry-close:hover {
+    background: #e0e0e0;
+    color: #111;
+}
+
+.product-inquiry-header {
+    margin-bottom: 16px;
+}
+.product-inquiry-sub {
+    color: #50ab3c;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 2px;
+}
+.product-inquiry-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0;
+}
+
+/* Product Preview Header inside Modal */
+.product-modal-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 18px;
+}
+.product-modal-preview-imgwrap {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+.product-modal-preview-imgwrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.product-modal-preview-info {
+    flex-grow: 1;
+    min-width: 0;
+}
+.product-modal-preview-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.product-modal-preview-badges {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.badge-model {
+    background: #50ab3c;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+.badge-unit {
+    background: #e2e8f0;
+    color: #4a5568;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+}
+
+/* Modal Form Controls */
+.modal-form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.modal-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+    flex: 1;
+}
+.modal-form-group.flex-2 { flex: 2; }
+.modal-form-group.flex-1 { flex: 1; }
+
+.modal-form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 4px;
+}
+.modal-form-group label .req { color: #e53e3e; }
+.modal-form-group label .opt { color: #718096; font-weight: 400; font-size: 11px; }
+
+.modal-form-group input,
+.modal-form-group textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #1a202c;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.modal-form-group textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.modal-form-group input:focus,
+.modal-form-group textarea:focus {
+    border-color: #50ab3c;
+    box-shadow: 0 0 0 3px rgba(80, 171, 60, 0.15);
+}
+
+.product-modal-submit-btn {
+    width: 100%;
+    background: #50ab3c;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+    margin-top: 6px;
+}
+.product-modal-submit-btn:hover {
+    background: #3d8c2e;
+}
+
+/* Submission Blur & Spinner Overlay inside Product Modal */
+.product-inquiry-body {
+    position: relative;
+}
+.product-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.product-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.product-modal-spinner {
+    width: 38px;
+    height: 38px;
+    border: 4px solid #e2e8f0;
+    border-top: 4px solid #50ab3c;
+    border-radius: 50%;
+    animation: prodSpin 0.8s linear infinite;
+    margin-bottom: 12px;
+}
+@keyframes prodSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.product-modal-overlay-msg {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a202c;
+    text-align: center;
+    padding: 0 15px;
+    margin: 0;
 }
 
 /* Styles for the close button inside the form */
@@ -324,13 +605,13 @@ body {
     margin-bottom: 15px; /* Spacing below the row */
 }
 
-.inquiry-form-content .form-row input[type="text"] {
+.inquiry-form-content .form-row input {
     width: calc(50% - 7.5px);
     margin-bottom: 0; /* Remove individual bottom margin */
     box-sizing: border-box; /* Crucial: includes padding and border in the element's total width */
     padding: 10px; /* Add padding to inputs */
     border: 1px solid #ddd; /* Add border to inputs */
-    border-radius: 20px; /* Apply 20px border-radius as per the image */
+    border-radius: 20px; /* Apply 20px border-radius as per original image */
     font-size: 0.9em;
 }
 
@@ -438,11 +719,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 20px 25px;
+    box-sizing: border-box;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -475,9 +758,12 @@ body {
 
 /* Message style */
 .overlay-message {
-    color: #333;
-    font-size: 1.1em;
+    color: #111;
+    font-size: 0.95em;
+    font-weight: 600;
+    line-height: 1.5;
     text-align: center;
+    padding: 0 10px;
     margin: 0;
     display: none; /* Hidden by default */
 }

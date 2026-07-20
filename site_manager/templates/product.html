@@ -127,7 +127,7 @@
                             </div>
                             {% endfor %}
                             
-                            <a href="#" class="open-inquiry-btn primary-btn normal-btn" data-product="{{ product.title }} ({{ product.model }})" style="border: none; border-radius: 4px; background: #50ab3c; color: #ffffff; padding: 12px 28px; font-size: 13px; font-weight: 600; display: inline-block; cursor: pointer; text-decoration:none;">Inquire Now</a>
+                            <a href="javascript:void(0)" class="open-inquiry-btn primary-btn normal-btn" data-product="{{ product.title }} ({{ product.model }})" data-product-category="{{ category.title if category else product.category }}" data-product-img="{{ root_path }}{{ product.images[0].src if (product.images and product.images|length > 0) else 'img/categories/road-barriers.jpg' }}" data-product-title="{{ product.title }}" data-product-model="{{ product.model }}" data-product-unit="{{ product.unit | default('Pcs') }}" style="border: none; border-radius: 4px; background: #50ab3c; color: #ffffff; padding: 12px 28px; font-size: 13px; font-weight: 600; display: inline-block; cursor: pointer; text-decoration:none;">Inquire Now</a>
                         </div>
                     </div>
                 </div>

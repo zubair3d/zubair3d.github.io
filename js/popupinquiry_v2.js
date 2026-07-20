@@ -36,30 +36,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to add the 'collapsed' class and start shaking (if applicable)
     function collapseButtonAndStartShaking() {
-        // Only collapse if the form is NOT open, the container is NOT permanently hidden,
-        // AND it's a mobile screen size.
+        if (!toggleButton || !inquiryContainer) return;
         if (window.innerWidth <= DESKTOP_BREAKPOINT && !inquiryContainer.classList.contains('active') && !inquiryContainer.classList.contains('hidden')) {
-            toggleButton.classList.add('collapsed'); // Use 'collapsed' class
-            startShaking(); // Shaking can still apply to the collapsed button
+            toggleButton.classList.add('collapsed');
+            startShaking();
         }
     }
 
     // Function to remove the 'collapsed' class and stop shaking
     function expandButtonAndStopShaking() {
-        toggleButton.classList.remove('collapsed'); // Remove 'collapsed' class
+        if (toggleButton) toggleButton.classList.remove('collapsed');
         stopShaking();
     }
 
     // Function to start the shaking animation
     function startShaking() {
-        stopShaking(); // Clear any existing shake interval first
+        stopShaking();
+        if (!toggleButton || !inquiryContainer) return;
         shakeInterval = setInterval(() => {
-            // Shake if the button is not active (form not open)
-            // This applies to both collapsed (mobile) and wide (desktop/mobile uncollapsed) states.
             if (!inquiryContainer.classList.contains('active')) {
                 toggleButton.classList.add('shake-animation');
                 setTimeout(() => {
-                    toggleButton.classList.remove('shake-animation');
+                    if (toggleButton) toggleButton.classList.remove('shake-animation');
                 }, SHAKE_DURATION);
             }
         }, SHAKE_INTERVAL_DELAY);
@@ -68,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to stop the shaking animation
     function stopShaking() {
         clearInterval(shakeInterval);
-        toggleButton.classList.remove('shake-animation'); // Ensure animation class is removed
+        if (toggleButton) toggleButton.classList.remove('shake-animation');
     }
 
     // Function to reset the collapse timer (will cause it to collapse after delay if not interacted with)
@@ -84,14 +82,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleInquiryForm() {
         inquiryContainer.classList.toggle('active');
         if (inquiryContainer.classList.contains('active')) {
-            // If form is open, stop shaking and ensure button is expanded
-            expandButtonAndStopShaking(); // Ensure expanded when form is open
-            clearTimeout(collapseTimer); // Do not collapse while form is open
+            // If opening via floating button and no product preview was set, hide product card preview
+            const cardEl = document.getElementById('inquiryProductCard');
+            const prodNameField = document.getElementById('inquiryProductName');
+            if (prodNameField && prodNameField.value === "General Inquiry" && cardEl) {
+                cardEl.style.display = 'none';
+            }
+            expandButtonAndStopShaking();
+            clearTimeout(collapseTimer);
         } else {
-            // If form is closed, reset collapse timer (will collapse after delay)
             resetCollapseTimer();
-            // Start shaking immediately when the form closes, regardless of desktop/mobile,
-            // as per new requirement for desktop shake.
             startShaking();
         }
     }
@@ -134,90 +134,125 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Desktop Hover Effects (integrated with auto-collapse logic)
-    // Check for window width to apply hover effects only on desktop-like screens
-    if (window.innerWidth > DESKTOP_BREAKPOINT) { // Use the same breakpoint
-        toggleButton.addEventListener('mouseenter', function() {
-            clearTimeout(collapseTimer); // Stop pending collapse
-            expandButtonAndStopShaking(); // Ensure expanded and shaking stops
+    // Desktop Hover Effects & Touch listeners (only when toggleButton is present)
+    if (toggleButton) {
+        if (window.innerWidth > DESKTOP_BREAKPOINT) {
+            toggleButton.addEventListener('mouseenter', function() {
+                clearTimeout(collapseTimer);
+                expandButtonAndStopShaking();
+            });
+
+            toggleButton.addEventListener('mouseleave', function() {
+                if (!inquiryContainer.classList.contains('active')) {
+                    startShaking();
+                }
+            });
+        }
+
+        toggleButton.addEventListener('touchstart', function(event) {
+            if (window.innerWidth <= DESKTOP_BREAKPOINT && !inquiryContainer.classList.contains('active')) {
+                touchHoldTimeout = setTimeout(() => {
+                    isHolding = true;
+                    toggleButton.classList.add('expanded-mobile');
+                    expandButtonAndStopShaking();
+                    clearTimeout(collapseTimer);
+                }, TOUCH_HOLD_DELAY);
+            }
+        }, { passive: true });
+
+        toggleButton.addEventListener('touchend', function(event) {
+            clearTimeout(touchHoldTimeout);
+            touchHoldTimeout = null;
+
+            if (isHolding) {
+                if (window.innerWidth <= DESKTOP_BREAKPOINT && !inquiryContainer.classList.contains('active')) {
+                    toggleButton.classList.remove('expanded-mobile');
+                    resetCollapseTimer();
+                    startShaking();
+                }
+                isHolding = false;
+                event.preventDefault();
+            }
         });
 
-        toggleButton.addEventListener('mouseleave', function() {
-            // On desktop, the button should remain expanded.
-            // If form is closed, re-start shaking when mouse leaves.
-            if (!inquiryContainer.classList.contains('active')) {
-                startShaking(); // Start shaking again
+        toggleButton.addEventListener('touchcancel', function(event) {
+            clearTimeout(touchHoldTimeout);
+            touchHoldTimeout = null;
+            if (isHolding) {
+                if (window.innerWidth <= DESKTOP_BREAKPOINT && !inquiryContainer.classList.contains('active')) {
+                    toggleButton.classList.remove('expanded-mobile');
+                    resetCollapseTimer();
+                    startShaking();
+                }
+                isHolding = false;
             }
         });
     }
 
-
-    // Mobile Touch Hold to Expand
-    toggleButton.addEventListener('touchstart', function(event) {
-        // Only start hold if on mobile and not already active (form not open)
-        if (window.innerWidth <= DESKTOP_BREAKPOINT && !inquiryContainer.classList.contains('active')) {
-            touchHoldTimeout = setTimeout(() => {
-                isHolding = true; // Mark as holding
-                toggleButton.classList.add('expanded-mobile'); // Add class to expand visually
-                expandButtonAndStopShaking(); // Stop shaking and ensure it's fully expanded
-                clearTimeout(collapseTimer); // Prevent auto-collapse while expanded by hold
-            }, TOUCH_HOLD_DELAY);
-        }
-    }, { passive: true }); // Use passive listener for better scroll performance
-
-    toggleButton.addEventListener('touchend', function(event) {
-        clearTimeout(touchHoldTimeout); // Clear any pending hold timeout
-        touchHoldTimeout = null; // Reset the timeout variable
-
-        if (isHolding) {
-            // If a hold was detected, collapse back after touch ends, unless form is now opened
-            // And only if on mobile.
-            if (window.innerWidth <= DESKTOP_BREAKPOINT && !inquiryContainer.classList.contains('active')) {
-                toggleButton.classList.remove('expanded-mobile'); // Remove visual expansion
-                resetCollapseTimer(); // Restart auto-collapse
-                startShaking(); // Re-start shaking for mobile uncollapsed state
+    // Modal-only backdrop click to close
+    if (inquiryContainer) {
+        inquiryContainer.addEventListener('click', function(event) {
+            if (inquiryContainer.classList.contains('modal-only-mode') && event.target === inquiryContainer) {
+                inquiryContainer.classList.remove('active');
             }
-            isHolding = false; // Reset hold flag
-            // Prevent subsequent click event from firing immediately if a hold just ended
-            // This is crucial to prevent the form from opening right after expanding from a hold.
-            event.preventDefault();
+        });
+    }
+
+    // Helper: Customer Code generator for unique email subjects
+    function getCustomerCode(name, phone) {
+        const initials = (name || "").replace(/[^a-zA-Z]/g, "").substring(0, 2).toUpperCase() || "IN";
+        const phoneDigits = (phone || "").replace(/\D/g, "");
+        const last4 = phoneDigits.length >= 4 ? phoneDigits.slice(-4) : (phoneDigits || "0000");
+        return `${initials}-${last4}`;
+    }
+
+    // Helper: Default message generator
+    function getFormattedDefaultMessage(productName, quantity, unit) {
+        let qtyStr = "";
+        if (quantity && quantity.trim()) {
+            qtyStr = `\nEstimated Quantity / Requirement: ${quantity.trim()} ${unit || 'Pcs'}`;
         }
-    });
-
-    toggleButton.addEventListener('touchcancel', function(event) {
-        clearTimeout(touchHoldTimeout);
-        touchHoldTimeout = null;
-        if (isHolding) {
-            if (window.innerWidth <= DESKTOP_BREAKPOINT && !inquiryContainer.classList.contains('active')) {
-                toggleButton.classList.remove('expanded-mobile');
-                resetCollapseTimer();
-                startShaking(); // Re-start shaking for mobile uncollapsed state
-            }
-            isHolding = false;
-            event.preventDefault();
+        if (productName && productName !== "General Inquiry") {
+            return `Hello EcoLuxe Bharat,\n\nI would like to request pricing, technical specifications, and delivery timelines for the following product model:\n\nProduct: ${productName}${qtyStr}\n\nPlease share the official catalog and quotation.`;
         }
-    });
+        return `Hello EcoLuxe Bharat,\n\nI am interested in your road safety products and would like to request information regarding product specifications, pricing, and availability.\n\nPlease get in touch with me.`;
+    }
 
-
-    // Event listener for form submission (MODIFIED for AJAX with error handling)
+    // Event listener for form submission (MODIFIED for AJAX with error handling & auto-close)
     if (inquiryForm) {
         inquiryForm.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
             const form = event.target;
 
-            // Set the dynamic subject before creating FormData
-            const userName = inquiryNameInput.value.trim();
-            let currentSubject = inquiryDynamicSubjectField.value || "Road Safety Product Inquiry";
-            if (currentSubject === "Website Inquiry" || currentSubject === "Road Safety Product Inquiry") {
-                currentSubject = "Road Safety Product Inquiry";
+            const userName = inquiryNameInput ? inquiryNameInput.value.trim() : "";
+            const productName = document.getElementById('inquiryProductName') ? document.getElementById('inquiryProductName').value : "General Inquiry";
+            const productUnit = document.getElementById('inquiryProductUnitVal') ? document.getElementById('inquiryProductUnitVal').value : "Pcs";
+            const quantityVal = document.getElementById('inquiryQuantity') ? document.getElementById('inquiryQuantity').value.trim() : "";
+            const messageField = document.getElementById('inquiryMessage');
+
+            // 1. If message textarea is empty or whitespace, populate generic dynamic inquiry message
+            if (messageField && !messageField.value.trim()) {
+                messageField.value = getFormattedDefaultMessage(productName, quantityVal, productUnit);
             }
-            inquiryDynamicSubjectField.value = userName ? `${userName} - ${currentSubject}` : currentSubject;
+
+            // 2. Set clear dynamic subject line with customer code for index.html popup form
+            if (inquiryDynamicSubjectField) {
+                const leadName = userName || "New Lead";
+                const userPhone = form.querySelector('input[name="Phone Number"]') ? form.querySelector('input[name="Phone Number"]').value.trim() : "";
+                const code = getCustomerCode(userName, userPhone);
+                inquiryDynamicSubjectField.value = `${leadName} - General Inquiry - ${code}`;
+            }
+
+            // Set current Page URL
+            const pageUrlField = document.getElementById('inquiryPageUrl');
+            if (pageUrlField) {
+                pageUrlField.value = window.location.href;
+            }
 
             const formData = new FormData(form);
 
             // Show overlay with spinner and "Sending message..."
-            // Ensure elements exist before trying to manipulate them
             if (inquiryOverlay && inquirySpinner && overlayMessage && formBlurArea) {
                 inquiryOverlay.classList.add('visible');
                 inquirySpinner.style.display = 'block';
@@ -226,12 +261,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 formBlurArea.classList.add('blurred'); // Blur the form content
             }
             
-            const MIN_SENDING_MESSAGE_DISPLAY_DURATION = 3000; // 3 seconds for "Sending message..."
-            const MIN_SUCCESS_ERROR_MESSAGE_DISPLAY_DURATION = 3000; // 3 seconds for success/error message
+            const MIN_SENDING_MESSAGE_DISPLAY_DURATION = 3000; // 3.0s minimum for sending message
+            const MIN_SUCCESS_ERROR_MESSAGE_DISPLAY_DURATION = 3000; // 3.0s minimum for success message before auto-closing
 
             const startTime = Date.now();
 
-            fetch("https://formsubmit.co/ajax/c1d7227628041c568dbd62caac8ef5e7", { // Use the provided email and ?_ajax=true for AJAX mode
+            fetch("https://formsubmit.co/ajax/temp2temp2222@gmail.com", {
                 method: "POST",
                 body: formData
             })
@@ -240,23 +275,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 const actualSendingDuration = fetchEndTime - startTime;
                 const remainingSendingDelay = Math.max(0, MIN_SENDING_MESSAGE_DISPLAY_DURATION - actualSendingDuration);
 
-                // This promise ensures the "Sending message..." is shown for at least 3 seconds
                 return new Promise(resolve => setTimeout(() => resolve(response), remainingSendingDelay));
             })
             .then(response => {
-                // This block executes AFTER the "Sending message..." has been displayed for its minimum duration
                 if (response.ok) {
                     if (overlayMessage) overlayMessage.textContent = "✅ Message sent successfully! Our Team will contact you shortly!";
                     if (inquirySpinner) inquirySpinner.style.display = 'none';
-                    form.reset(); // Clear the form fields
+                    form.reset(); // Clear form fields
 
-                    // Now, show the success message for its minimum duration (3 seconds)
+                    // Auto-close modal after 3.0s
                     setTimeout(() => {
                         if (inquiryOverlay) inquiryOverlay.classList.remove('visible');
-                        if (formBlurArea) formBlurArea.classList.remove('blurred'); // Unblur form
+                        if (formBlurArea) formBlurArea.classList.remove('blurred');
+                        if (inquiryContainer) inquiryContainer.classList.remove('active');
                     }, MIN_SUCCESS_ERROR_MESSAGE_DISPLAY_DURATION);
                 } else {
-                    // Attempt to read error message from response if available, otherwise use generic
                     response.json().then(data => {
                         if (overlayMessage) overlayMessage.textContent = `❌ Failed to send message: ${data.message || 'Unknown error'}`;
                     }).catch(() => {
@@ -264,15 +297,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                     if (inquirySpinner) inquirySpinner.style.display = 'none';
                     
-                    // Show the error message for its minimum duration (3 seconds)
                     setTimeout(() => {
                         if (inquiryOverlay) inquiryOverlay.classList.remove('visible');
-                        if (formBlurArea) formBlurArea.classList.remove('blurred'); // Unblur form
-                    }, MIN_SUCCESS_ERROR_MESSAGE_DISPLAY_DURATION); // Use same duration for error message
+                        if (formBlurArea) formBlurArea.classList.remove('blurred');
+                    }, MIN_SUCCESS_ERROR_MESSAGE_DISPLAY_DURATION);
                 }
             })
             .catch(error => {
-                // This catch block handles network errors or issues with the fetch itself
                 const fetchEndTime = Date.now();
                 const actualSendingDuration = fetchEndTime - startTime;
                 const remainingSendingDelay = Math.max(0, MIN_SENDING_MESSAGE_DISPLAY_DURATION - actualSendingDuration);
@@ -281,12 +312,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (overlayMessage) overlayMessage.textContent = "❌ Network error. Please try again.";
                     if (inquirySpinner) inquirySpinner.style.display = 'none';
                     
-                    // Show the network error message for its minimum duration (3 seconds)
                     setTimeout(() => {
                         if (inquiryOverlay) inquiryOverlay.classList.remove('visible');
-                        if (formBlurArea) formBlurArea.classList.remove('blurred'); // Unblur form
+                        if (formBlurArea) formBlurArea.classList.remove('blurred');
                     }, MIN_SUCCESS_ERROR_MESSAGE_DISPLAY_DURATION);
-                }, remainingSendingDelay); // Ensure sending message was shown for min duration
+                }, remainingSendingDelay);
             });
         });
     }
@@ -342,50 +372,289 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Add click listener for product model buttons to automatically trigger popup and populate inquiry
-    document.addEventListener('click', function(event) {
-        const btn = event.target.closest('.open-inquiry-btn');
-        if (btn) {
-            event.preventDefault();
-            const productName = btn.getAttribute('data-product') || "Road Safety Product";
-            
-            // Set message textarea template
-            const messageField = document.getElementById('inquiryMessage');
-            if (messageField) {
-                messageField.value = `Hello EcoLuxe Bharat,\n\nI would like to request pricing, technical specifications, and delivery timelines for the following product model:\n\nProduct: ${productName}\n\nPlease share the catalog and quote.`;
+    // --- Dedicated Product Inquiry Modal Logic ---
+    const productModal = document.getElementById('productInquiryModal');
+    const closeProductModalBtn = document.getElementById('closeProductInquiryModal');
+    const productBackdrop = document.getElementById('productInquiryBackdrop');
+    const productInquiryForm = document.getElementById('productInquiryForm');
+
+    let currentProductUnit = "Pcs";
+
+    function openProductModal(productName, productImg, productTitle, productModel, productUnit, productCategory) {
+        if (!productModal) return;
+
+        currentProductUnit = productUnit || 'Pcs';
+
+        // 1. Populate Preview Header
+        const imgEl = document.getElementById('productModalImg');
+        const titleEl = document.getElementById('productModalTitle');
+        const modelEl = document.getElementById('productModalModel');
+
+        if (imgEl) imgEl.src = productImg || "";
+        if (titleEl) titleEl.textContent = productTitle || productName;
+        if (modelEl) modelEl.textContent = productModel ? `Model: ${productModel}` : "";
+
+        // 2. Set hidden metadata
+        const nameHidden = document.getElementById('prodModalHiddenName');
+        if (nameHidden) nameHidden.value = productName;
+
+        const categoryHidden = document.getElementById('prodModalHiddenCategory');
+        if (categoryHidden) categoryHidden.value = productCategory || "Road Safety";
+
+        const urlHidden = document.getElementById('prodModalHiddenUrl');
+        if (urlHidden) urlHidden.value = window.location.href;
+
+        const subjectHidden = document.getElementById('prodModalHiddenSubject');
+        if (subjectHidden) subjectHidden.value = `Inquiry: ${productName}`;
+
+        // 3. Update quantity input placeholder
+        const qtyInput = document.getElementById('prodModalQtyInput');
+        if (qtyInput) {
+            qtyInput.placeholder = "e.g. 50pcs";
+            qtyInput.value = "";
+        }
+
+        // 4. Open Modal
+        productModal.classList.add('active');
+    }
+
+    function closeProductModal() {
+        if (!productModal) return;
+        productModal.classList.remove('active');
+
+        // Hide overlay if open
+        const overlay = document.getElementById('productModalOverlay');
+        if (overlay) overlay.classList.remove('active');
+    }
+
+    if (closeProductModalBtn) {
+        closeProductModalBtn.addEventListener('click', closeProductModal);
+    }
+
+    // Prevent background scrolling via wheel and touchmove when product modal is active
+    if (productModal) {
+        productModal.addEventListener('wheel', function(e) {
+            if (!productModal.classList.contains('active')) return;
+            const dialog = e.target.closest('.product-inquiry-dialog');
+            if (dialog) {
+                const scrollTop = dialog.scrollTop;
+                const scrollHeight = dialog.scrollHeight;
+                const height = dialog.clientHeight;
+                const delta = e.deltaY;
+                const up = delta < 0;
+
+                if (up && scrollTop <= 0) {
+                    e.preventDefault();
+                } else if (!up && delta + scrollTop >= scrollHeight - height) {
+                    e.preventDefault();
+                }
+                e.stopPropagation();
+            } else {
+                e.preventDefault();
             }
-            
-            // Set dynamic subject field
-            if (inquiryDynamicSubjectField) {
-                inquiryDynamicSubjectField.value = `Inquiry: ${productName}`;
+        }, { passive: false });
+
+        productModal.addEventListener('touchmove', function(e) {
+            if (!productModal.classList.contains('active')) return;
+            const dialog = e.target.closest('.product-inquiry-dialog');
+            if (!dialog) {
+                e.preventDefault();
             }
-            
-            // Open inquiry popup
-            if (inquiryContainer && !inquiryContainer.classList.contains('active')) {
-                inquiryContainer.classList.add('active');
-                expandButtonAndStopShaking();
-                clearTimeout(collapseTimer);
+        }, { passive: false });
+    }
+
+    // Escape Key Listener for both modals
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            if (productModal && productModal.classList.contains('active')) {
+                closeProductModal();
+            }
+            if (inquiryContainer && inquiryContainer.classList.contains('active')) {
+                toggleInquiryForm();
             }
         }
     });
 
-    // Check if there is an inquiry product in the URL query string
+    // Product Card Click Listener (.open-inquiry-btn)
+    document.addEventListener('click', function(event) {
+        const btn = event.target.closest('.open-inquiry-btn');
+        if (btn) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+
+            const productName = btn.getAttribute('data-product') || "Road Safety Product";
+            const productImg = btn.getAttribute('data-product-img') || "";
+            const productTitle = btn.getAttribute('data-product-title') || productName;
+            const productModel = btn.getAttribute('data-product-model') || "";
+            const productUnit = btn.getAttribute('data-product-unit') || "Pcs";
+            const productCategory = btn.getAttribute('data-product-category') || "Road Safety";
+
+            openProductModal(productName, productImg, productTitle, productModel, productUnit, productCategory);
+        }
+    });
+
+    // Product Modal Form Submission Handler
+    if (productInquiryForm) {
+        productInquiryForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const userName = document.getElementById('prodModalName') ? document.getElementById('prodModalName').value.trim() : "";
+            const userPhone = document.getElementById('prodModalPhone') ? document.getElementById('prodModalPhone').value.trim() : "";
+            const userEmail = document.getElementById('prodModalEmail') ? document.getElementById('prodModalEmail').value.trim() : "";
+            const rawQty = document.getElementById('prodModalQtyInput') ? document.getElementById('prodModalQtyInput').value.trim() : "";
+            const userMsg = document.getElementById('prodModalMessage') ? document.getElementById('prodModalMessage').value.trim() : "";
+
+            const productName = document.getElementById('prodModalHiddenName') ? document.getElementById('prodModalHiddenName').value : "Product Inquiry";
+
+            // Quantity / Requirement
+            let formattedQty = rawQty;
+
+            const qtyFormattedHidden = document.getElementById('prodModalHiddenQtyFormatted');
+            if (qtyFormattedHidden) {
+                qtyFormattedHidden.value = formattedQty;
+            }
+
+            // Format Customer Code (First 2 letters of Name + Last 4 digits of Phone) to prevent Gmail thread grouping
+            let customerCode = "";
+            if (userName) {
+                const initials = userName.replace(/[^a-zA-Z]/g, "").substring(0, 2).toUpperCase() || "IN";
+                const phoneDigits = userPhone.replace(/\D/g, "");
+                const last4 = phoneDigits.length >= 4 ? phoneDigits.slice(-4) : (phoneDigits || "0000");
+                customerCode = ` - ${initials}-${last4}`;
+            }
+
+            const qtySubjectSuffix = formattedQty ? ` [${formattedQty}]` : "";
+            const subjectHidden = document.getElementById('prodModalHiddenSubject');
+            if (subjectHidden) {
+                subjectHidden.value = `Inquiry: ${productName}${qtySubjectSuffix}${customerCode}`;
+            }
+
+            // Default message formatting if message text is blank
+            const messageField = document.getElementById('prodModalMessage');
+            if (messageField && !userMsg) {
+                let qtyLine = formattedQty ? `\nEstimated Quantity / Requirement: ${formattedQty}` : "";
+                messageField.value = `Hello EcoLuxe Bharat,\n\nI would like to request pricing, technical specifications, and delivery timelines for the following product model:\n\nProduct: ${productName}${qtyLine}\n\nPlease share the official catalog and quotation.`;
+            }
+
+            // Set current Page URL
+            const urlHidden = document.getElementById('prodModalHiddenUrl');
+            if (urlHidden) urlHidden.value = window.location.href;
+
+            const formData = new FormData(form);
+
+            // Show submission overlay
+            const overlay = document.getElementById('productModalOverlay');
+            const overlayMsg = document.getElementById('productModalOverlayMsg');
+            if (overlay && overlayMsg) {
+                overlay.classList.add('active');
+                overlayMsg.textContent = "⏳ Sending product inquiry...";
+            }
+
+            const prodModalStartTime = Date.now();
+
+            fetch("https://formsubmit.co/ajax/temp2temp2222@gmail.com", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                const elapsed = Date.now() - prodModalStartTime;
+                const remainingSendingDelay = Math.max(0, 3000 - elapsed);
+                return new Promise(resolve => setTimeout(() => resolve(response), remainingSendingDelay));
+            })
+            .then(response => {
+                if (response.ok) {
+                    if (overlayMsg) overlayMsg.textContent = "✅ Inquiry sent successfully! Our Team will contact you shortly!";
+                    form.reset();
+
+                    setTimeout(() => {
+                        closeProductModal();
+                    }, 3000);
+                } else {
+                    if (overlayMsg) overlayMsg.textContent = "❌ Failed to send message. Please try again.";
+                    setTimeout(() => {
+                        if (overlay) overlay.classList.remove('active');
+                    }, 3000);
+                }
+            })
+            .catch(error => {
+                if (overlayMsg) overlayMsg.textContent = "❌ Network error. Please check your connection.";
+                setTimeout(() => {
+                    if (overlay) overlay.classList.remove('active');
+                }, 3000);
+            });
+        });
+    }
+
+    // Contact Form AJAX Handler (contact.html)
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('contactName') ? document.getElementById('contactName').value.trim() : "";
+            const phoneInput = contactForm.querySelector('input[name="Phone Number"]');
+            const phone = phoneInput ? phoneInput.value.trim() : "";
+            const leadName = name || "New Lead";
+            const code = getCustomerCode(name, phone);
+
+            const subjectHidden = document.getElementById('dynamicSubject');
+            if (subjectHidden) {
+                subjectHidden.value = `${leadName} - Contact Inquiry - ${code}`;
+            }
+
+            const pageUrlHidden = document.getElementById('contactPageUrl');
+            if (pageUrlHidden) pageUrlHidden.value = window.location.href;
+
+            const statusDiv = document.getElementById('form-status');
+            if (statusDiv) {
+                statusDiv.style.color = '#50ab3c';
+                statusDiv.textContent = '⏳ Sending message...';
+            }
+
+            const formData = new FormData(contactForm);
+
+            const contactStartTime = Date.now();
+
+            fetch("https://formsubmit.co/ajax/temp2temp2222@gmail.com", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                const elapsed = Date.now() - contactStartTime;
+                const remainingSendingDelay = Math.max(0, 3000 - elapsed);
+                return new Promise(resolve => setTimeout(() => resolve(response), remainingSendingDelay));
+            })
+            .then(response => {
+                if (response.ok) {
+                    if (statusDiv) {
+                        statusDiv.style.color = '#28a745';
+                        statusDiv.textContent = '✅ Thank you! Your message has been sent successfully. Our team will get back to you shortly.';
+                    }
+                    contactForm.reset();
+                } else {
+                    if (statusDiv) {
+                        statusDiv.style.color = '#dc3545';
+                        statusDiv.textContent = '❌ Failed to send message. Please try again.';
+                    }
+                }
+            })
+            .catch(error => {
+                if (statusDiv) {
+                    statusDiv.style.color = '#dc3545';
+                    statusDiv.textContent = '❌ Network error. Please check your connection and try again.';
+                }
+            });
+        });
+    }
+
+    // Check query string for direct inquiry link
     const urlParams = new URLSearchParams(window.location.search);
     const inquiryProduct = urlParams.get('inquiry') || urlParams.get('product');
     if (inquiryProduct) {
         setTimeout(() => {
-            if (inquiryContainer && !inquiryContainer.classList.contains('active')) {
-                const messageField = document.getElementById('inquiryMessage');
-                if (messageField) {
-                    messageField.value = `Hello EcoLuxe Bharat,\n\nI would like to request pricing, technical specifications, and delivery timelines for the following product model:\n\nProduct: ${inquiryProduct}\n\nPlease share the catalog and quote.`;
-                }
-                if (inquiryDynamicSubjectField) {
-                    inquiryDynamicSubjectField.value = `Inquiry: ${inquiryProduct}`;
-                }
-                inquiryContainer.classList.add('active');
-                expandButtonAndStopShaking();
-                clearTimeout(collapseTimer);
-            }
+            openProductModal(inquiryProduct, "", inquiryProduct, "", "Pcs");
         }, 800);
     }
 });

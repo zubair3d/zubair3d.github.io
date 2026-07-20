@@ -803,6 +803,7 @@ class ProductDialog(QDialog):
             "model": self.model_input.text().strip(),
             "title": self.title_input.text().strip(),
             "category_slug": self.cat_selector.currentData(),
+            "unit": self.product.get("unit", "Pcs"),
             "description": self.desc_input.toPlainText().strip(),
             "specifications": specs,
             "images": self.product_images

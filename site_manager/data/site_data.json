@@ -316,64 +316,6 @@
     ],
     "products": [
         {
-            "category_slug": "road-delineators",
-            "description": "Made of highly flexible PU that instantly springs back to shape after vehicle impacts. Ideal for lane splitting and hazard zoning.",
-            "id": "eb-dl-pu80",
-            "images": [
-                {
-                    "alt": "Flexible PU Delineator Post",
-                    "h": 1024,
-                    "src": "img/products/road-delineators/eb-dl-pu80/eb-dl-pu80-0.png",
-                    "w": 1024
-                }
-            ],
-            "model": "EB-DL-PU80",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "800 mm Height | 80 mm Post Diameter"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "High-elasticity Polyurethane (PU)"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "3 High-visibility retroreflective silver bands"
-                }
-            ],
-            "title": "Flexible PU Delineator Post"
-        },
-        {
-            "category_slug": "road-delineators",
-            "description": "High-density plastic board featuring chevron reflective stripes. Perfect for construction diversions and toll booths.",
-            "id": "eb-dl-pl10",
-            "images": [
-                {
-                    "alt": "Plastic Delineator Board",
-                    "h": 1024,
-                    "src": "img/products/road-delineators/eb-dl-pl10/eb-dl-pl10-0.png",
-                    "w": 1024
-                }
-            ],
-            "model": "EB-DL-PL10",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "1000 mm Height | 150 mm Face Width"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "High-Density Polyethylene (HDPE)"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "Flat hazard warning sign face with Chevron sheeting"
-                }
-            ],
-            "title": "Plastic Delineator Board"
-        },
-        {
             "category_slug": "anti-glare-panels",
             "description": "Anti Glare Board",
             "id": "8589934859-ksjd",
@@ -483,6 +425,64 @@
                 }
             ],
             "title": "Water-Fillable Traffic Barrier"
+        },
+        {
+            "category_slug": "road-delineators",
+            "description": "Made of highly flexible PU that instantly springs back to shape after vehicle impacts. Ideal for lane splitting and hazard zoning.",
+            "id": "eb-dl-pu80",
+            "images": [
+                {
+                    "alt": "Flexible PU Delineator Post",
+                    "h": 1024,
+                    "src": "img/products/road-delineators/eb-dl-pu80/eb-dl-pu80-0.png",
+                    "w": 1024
+                }
+            ],
+            "model": "EB-DL-PU80",
+            "specifications": [
+                {
+                    "label": "Dimensions / Capacity",
+                    "value": "800 mm Height | 80 mm Post Diameter"
+                },
+                {
+                    "label": "Material Build",
+                    "value": "High-elasticity Polyurethane (PU)"
+                },
+                {
+                    "label": "Key Specifications",
+                    "value": "3 High-visibility retroreflective silver bands"
+                }
+            ],
+            "title": "Flexible PU Delineator Post"
+        },
+        {
+            "category_slug": "road-delineators",
+            "description": "High-density plastic board featuring chevron reflective stripes. Perfect for construction diversions and toll booths.",
+            "id": "eb-dl-pl10",
+            "images": [
+                {
+                    "alt": "Plastic Delineator Board",
+                    "h": 1024,
+                    "src": "img/products/road-delineators/eb-dl-pl10/eb-dl-pl10-0.png",
+                    "w": 1024
+                }
+            ],
+            "model": "EB-DL-PL10",
+            "specifications": [
+                {
+                    "label": "Dimensions / Capacity",
+                    "value": "1000 mm Height | 150 mm Face Width"
+                },
+                {
+                    "label": "Material Build",
+                    "value": "High-Density Polyethylene (HDPE)"
+                },
+                {
+                    "label": "Key Specifications",
+                    "value": "Flat hazard warning sign face with Chevron sheeting"
+                }
+            ],
+            "title": "Plastic Delineator Board"
         }
     ],
     "clients": [
