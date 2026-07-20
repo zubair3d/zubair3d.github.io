@@ -68,6 +68,8 @@
   .gallery-thumb-link {
       display: block;
       text-decoration: none;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
   }
   .gallery-thumb-wrap {
       position: relative;
@@ -114,8 +116,54 @@
   }
   .gallery-carousel .owl-dot.active {
       background: #50ab3c !important;
-      width: 20px;
+      width: 24px;
       border-radius: 4px;
+  }
+
+  /* Styling for Category Showcase Mini Thumbnail Strip */
+  .showcase-gallery-thumbs {
+      max-width: 520px;
+      margin: 15px auto 0 auto;
+      padding: 6px 0;
+  }
+  .showcase-gallery-thumbs .owl-stage-outer {
+      padding: 6px 0;
+      margin: -6px 0;
+      overflow: hidden;
+  }
+  .showcase-gallery-thumbs .owl-stage {
+      display: flex;
+      align-items: center;
+  }
+  .showcase-gallery-thumbs .owl-item {
+      display: flex;
+      justify-content: center;
+  }
+  .showcase-thumb-item {
+      width: 65px;
+      height: 65px;
+      border-radius: 6px;
+      border: 2px solid #eeeeee;
+      background: #ffffff;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .showcase-thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+  }
+  .showcase-thumb-item.active, .showcase-gallery-thumbs .center .showcase-thumb-item {
+      border-color: #50ab3c !important;
+      box-shadow: 0 0 0 2px rgba(80, 171, 60, 0.35) !important;
+      transform: scale(1.04);
+  }
+  .showcase-thumb-item:hover:not(.active) {
+      border-color: #50ab3c;
   }
 </style>
 
@@ -174,7 +222,7 @@
 
     
     <!-- Breadcrumb Section Begin -->
-    <div class="breadcrumb-option breadcrumb-option-short spad set-bg" data-setbg="../img/breadcrumb-bg.jpg">
+    <div class="breadcrumb-option spad set-bg" data-setbg="../img/breadcrumb-bg.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -193,17 +241,13 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Model Cards Showcase Begin -->
-    <section class="project-details spad" style="padding-top:50px;padding-bottom:50px;">
-        <div class="container" style="max-width:1260px;">
-            <div class="row justify-content-center">
-                
-                <div class="col-12 text-center py-5">
-                    <p style="color:#666; font-size:16px;">No products found in this category yet. Check back soon!</p>
-                </div>
-                
-            </div>
+    
+    <section class="spad" style="padding-top: 50px; padding-bottom: 50px; background: #ffffff;">
+        <div class="container text-center py-4">
+            <p style="color:#666; font-size:16px; margin:0;">No products found in this category yet. Check back soon!</p>
         </div>
     </section>
+    
     <!-- Model Cards Showcase End -->
 
     <!-- Category Showcase Gallery Begin -->
@@ -221,20 +265,33 @@
             <div class="gallery-carousel owl-carousel pswp-gallery">
                 <!-- 1. Category Showcase Spotlight Gallery -->
                 
-                <div class="item">
-                    <a href="../img/categories/showcase/road-studs/road-studs-showcase-0.jpg" data-pswp-width="1750" data-pswp-height="1750" class="gallery-thumb-link">
+                <div class="item" data-index="0">
+                    <a href="../img/categories/showcase/road-studs/road-studs-showcase-0.jpg" data-pswp-width="1750" data-pswp-height="1750" class="gallery-thumb-link" data-index="0">
                         <div class="gallery-thumb-wrap">
                             <img src="../img/categories/showcase/road-studs/road-studs-showcase-0.jpg" alt="Road Studs & Cat's Eyes" class="gallery-thumb-img">
                         </div>
                     </a>
                 </div>
                 
-                <div class="item">
-                    <a href="../img/categories/showcase/road-studs/road-studs-showcase-1.jpg" data-pswp-width="1500" data-pswp-height="1500" class="gallery-thumb-link">
+                <div class="item" data-index="1">
+                    <a href="../img/categories/showcase/road-studs/road-studs-showcase-1.jpg" data-pswp-width="1500" data-pswp-height="1500" class="gallery-thumb-link" data-index="1">
                         <div class="gallery-thumb-wrap">
                             <img src="../img/categories/showcase/road-studs/road-studs-showcase-1.jpg" alt="Road Studs & Cat's Eyes" class="gallery-thumb-img">
                         </div>
                     </a>
+                </div>
+                
+            </div>
+
+            <!-- Category Showcase Mini Thumbnail Strip -->
+            <div class="showcase-gallery-thumbs owl-carousel" id="showcase-thumbs" style="display:none;">
+                
+                <div class="showcase-thumb-item active" data-index="0">
+                    <img src="../img/categories/showcase/road-studs/road-studs-showcase-0.jpg" alt="Road Studs & Cat's Eyes">
+                </div>
+                
+                <div class="showcase-thumb-item " data-index="1">
+                    <img src="../img/categories/showcase/road-studs/road-studs-showcase-1.jpg" alt="Road Studs & Cat's Eyes">
                 </div>
                 
             </div>
@@ -795,7 +852,7 @@
     import PhotoSwipeLightbox from '../js/photoswipe-lightbox.esm.min.js';
     const lightbox = new PhotoSwipeLightbox({
         gallery: '.pswp-gallery',
-        children: 'a',
+        children: '.owl-item:not(.cloned) a.gallery-thumb-link, .gallery-carousel > .item > a.gallery-thumb-link',
         pswpModule: () => import('../js/photoswipe.esm.min.js')
     });
     
@@ -810,6 +867,7 @@
     });
 
     lightbox.init();
+    window.categoryPswpLightbox = lightbox;
 </script>
 
 <script>
@@ -821,56 +879,254 @@
 
     // Initialize Category Showcase Gallery Carousel
     var $gallery = $(".gallery-carousel");
+    var $thumbContainer = $("#showcase-thumbs");
     var totalGalleryItems = $gallery.find('.item').length;
-    
-    if (totalGalleryItems > 4) {
-      $gallery.owlCarousel({
-        loop: true,
-        margin: 15,
-        nav: false,
-        dots: true,
-        autoplay: true,
-        autoplayTimeout: 4000,
-        autoplayHoverPause: true,
-        responsive: {
-          0: { items: 1 },
-          480: { items: 2 },
-          768: { items: 3 },
-          992: { items: 4 }
+    var owlGallery = null;
+    var owlThumbs = null;
+    var isSyncing = false;
+
+    function syncActiveThumb(event) {
+        if (!event || !event.item || isSyncing) return;
+        var count = event.item.count;
+        var realIndex = event.item.index;
+        if (event.relatedTarget && event.relatedTarget._clones) {
+            realIndex = event.item.index - Math.floor(event.relatedTarget._clones.length / 2);
+            if (realIndex < 0) realIndex = count + realIndex;
+            realIndex = realIndex % count;
         }
-      });
-    } else {
-      $gallery.removeClass('owl-carousel');
-      $gallery.css({
-        'display': 'flex',
-        'flex-wrap': 'wrap',
-        'margin': '0 -8px',
-        'justify-content': 'center'
-      });
-      $gallery.find('.item').css({
-        'display': 'flex',
-        'flex-direction': 'column',
-        'padding': '8px',
-        'box-sizing': 'border-box'
-      });
-      
-      var setGalleryStyles = function() {
-        var width = $(window).width();
-        var cols = 4;
-        if (width < 480) {
-          cols = 1;
-        } else if (width < 768) {
-          cols = 2;
-        } else if (width < 992) {
-          cols = 3;
+        
+        $thumbContainer.find('.showcase-thumb-item').removeClass('active');
+        $thumbContainer.find('.showcase-thumb-item[data-index="' + realIndex + '"]').addClass('active');
+
+        // Rotate thumbnail carousel to target item cleanly
+        if (owlThumbs && $thumbContainer.hasClass('owl-loaded')) {
+            isSyncing = true;
+            $thumbContainer.trigger('to.owl.carousel', [realIndex, 250, true]);
+            setTimeout(function() { isSyncing = false; }, 260);
         }
-        var itemWidth = (100 / cols) + '%';
-        $gallery.find('.item').css('width', itemWidth);
-      };
-      
-      setGalleryStyles();
-      $(window).on('resize', setGalleryStyles);
     }
+
+    function initShowcaseGallery() {
+        var winWidth = $(window).width();
+        var shouldBeCarousel = (totalGalleryItems > 4) || (winWidth < 768 && totalGalleryItems > 1);
+
+        if (shouldBeCarousel) {
+            if (totalGalleryItems > 1) {
+                $thumbContainer.show();
+                
+                // Initialize mini thumbnail owl carousel if not already initialized
+                if (!$thumbContainer.hasClass('owl-loaded')) {
+                    owlThumbs = $thumbContainer.owlCarousel({
+                        loop: true,
+                        center: true,
+                        margin: 8,
+                        nav: false,
+                        dots: false,
+                        autoplay: false,
+                        touchDrag: false,
+                        mouseDrag: false,
+                        pullDrag: false,
+                        responsive: {
+                            0: { items: 3 },
+                            480: { items: 5 },
+                            768: { items: 5 },
+                            992: { items: 7 }
+                        }
+                    });
+                }
+            } else {
+                $thumbContainer.hide();
+            }
+
+            if (!$gallery.hasClass('owl-loaded')) {
+                $gallery.removeAttr('style');
+                $gallery.find('.item').removeAttr('style');
+                if (!$gallery.hasClass('owl-carousel')) {
+                    $gallery.addClass('owl-carousel');
+                }
+
+                owlGallery = $gallery.owlCarousel({
+                    loop: true,
+                    margin: 15,
+                    nav: false,
+                    dots: false,
+                    autoplay: true,
+                    autoplayTimeout: 4000,
+                    autoplayHoverPause: true,
+                    responsive: {
+                        0: { items: 1 },
+                        480: { items: 2 },
+                        768: { items: 3 },
+                        992: { items: 4 }
+                    },
+                    onTranslated: syncActiveThumb,
+                    onInitialized: syncActiveThumb
+                });
+            }
+        } else {
+            if ($gallery.hasClass('owl-loaded')) {
+                $gallery.trigger('destroy.owl.carousel');
+                $gallery.removeClass('owl-carousel owl-loaded');
+            }
+            if ($thumbContainer.hasClass('owl-loaded')) {
+                $thumbContainer.trigger('destroy.owl.carousel');
+                $thumbContainer.removeClass('owl-carousel owl-loaded');
+            }
+            $thumbContainer.hide();
+            
+            if (totalGalleryItems === 1) {
+                $gallery.css({
+                    'display': 'flex',
+                    'justify-content': 'center',
+                    'align-items': 'center',
+                    'width': '100%',
+                    'margin': '0 auto'
+                });
+                $gallery.find('.item').css({
+                    'width': '100%',
+                    'max-width': '285px',
+                    'padding': '8px',
+                    'margin': '0 auto'
+                });
+                $gallery.find('.gallery-thumb-wrap').css({
+                    'height': '280px',
+                    'width': '100%',
+                    'display': 'block'
+                });
+                $gallery.find('.gallery-thumb-img').css({
+                    'width': '100%',
+                    'height': '100%',
+                    'object-fit': 'cover'
+                });
+            } else {
+                $gallery.removeAttr('style');
+                $gallery.find('.item').removeAttr('style');
+                $gallery.find('.gallery-thumb-wrap').removeAttr('style');
+                $gallery.find('.gallery-thumb-img').removeAttr('style');
+                
+                $gallery.css({
+                    'display': 'flex',
+                    'flex-wrap': 'wrap',
+                    'margin': '0 -8px',
+                    'justify-content': 'center'
+                });
+                $gallery.find('.item').css({
+                    'display': 'flex',
+                    'flex-direction': 'column',
+                    'padding': '8px',
+                    'box-sizing': 'border-box'
+                });
+                
+                var cols = Math.min(totalGalleryItems, 4);
+                if (winWidth < 992 && cols > 3) cols = 3;
+                var itemWidth = (100 / cols) + '%';
+                $gallery.find('.item').css('width', itemWidth);
+            }
+        }
+    }
+
+    // Touch tap & click handler: Prevent raw URL navigation & open PhotoSwipe directly on 1st tap/click
+    var touchStartX = 0, touchStartY = 0, touchEndX = 0, touchEndY = 0;
+    
+    $(document).on('touchstart', '.gallery-thumb-link', function(e) {
+        if (e.originalEvent && e.originalEvent.touches.length === 1) {
+            touchStartX = e.originalEvent.touches[0].clientX;
+            touchStartY = e.originalEvent.touches[0].clientY;
+            touchEndX = touchStartX;
+            touchEndY = touchStartY;
+        }
+    });
+
+    $(document).on('touchmove', '.gallery-thumb-link', function(e) {
+        if (e.originalEvent && e.originalEvent.touches.length === 1) {
+            touchEndX = e.originalEvent.touches[0].clientX;
+            touchEndY = e.originalEvent.touches[0].clientY;
+        }
+    });
+
+    $(document).on('click touchend', '.gallery-thumb-link', function(e) {
+        if (e.type === 'touchend') {
+            if (Math.abs(touchEndX - touchStartX) > 10 || Math.abs(touchEndY - touchStartY) > 10) {
+                return; // Dragged, not a tap
+            }
+        }
+        e.preventDefault();
+        e.stopPropagation();
+
+        var idx = $(this).attr('data-index');
+        if (typeof idx === 'undefined' || idx === '') {
+            idx = $(this).closest('.item').attr('data-index');
+        }
+        var targetIndex = parseInt(idx, 10);
+        if (isNaN(targetIndex)) targetIndex = 0;
+
+        if (window.categoryPswpLightbox) {
+            window.categoryPswpLightbox.loadAndOpen(targetIndex);
+        }
+    });
+
+    // Synchronize background carousel and thumbnail strip when PhotoSwipe slide changes or closes
+    function bindPswpSync() {
+        if (!window.categoryPswpLightbox) {
+            setTimeout(bindPswpSync, 100);
+            return;
+        }
+
+        window.categoryPswpLightbox.on('change', function() {
+            if (window.categoryPswpLightbox.pswp) {
+                var pswpIdx = window.categoryPswpLightbox.pswp.currIndex;
+                syncToTargetIndex(pswpIdx);
+            }
+        });
+
+        window.categoryPswpLightbox.on('close', function() {
+            if (window.categoryPswpLightbox.pswp) {
+                var pswpIdx = window.categoryPswpLightbox.pswp.currIndex;
+                syncToTargetIndex(pswpIdx);
+            }
+        });
+    }
+
+    function syncToTargetIndex(targetIdx) {
+        if (typeof targetIdx === 'undefined' || isNaN(targetIdx)) return;
+        isSyncing = true;
+        
+        if ($gallery.hasClass('owl-loaded')) {
+            $gallery.trigger('to.owl.carousel', [targetIdx, 250, true]);
+        }
+        
+        $thumbContainer.find('.showcase-thumb-item').removeClass('active');
+        $thumbContainer.find('.showcase-thumb-item[data-index="' + targetIdx + '"]').addClass('active');
+        if (owlThumbs && $thumbContainer.hasClass('owl-loaded')) {
+            $thumbContainer.trigger('to.owl.carousel', [targetIdx, 250, true]);
+        }
+        
+        setTimeout(function() { isSyncing = false; }, 260);
+    }
+
+    bindPswpSync();
+
+    // Thumbnail click handler to jump main gallery to slide
+    $thumbContainer.on('click', '.showcase-thumb-item', function() {
+        var idx = $(this).data('index');
+        if (typeof idx !== 'undefined') {
+            isSyncing = true;
+            $gallery.trigger('to.owl.carousel', [idx, 300, true]);
+            $thumbContainer.find('.showcase-thumb-item').removeClass('active');
+            $thumbContainer.find('.showcase-thumb-item[data-index="' + idx + '"]').addClass('active');
+            if (owlThumbs && $thumbContainer.hasClass('owl-loaded')) {
+                $thumbContainer.trigger('to.owl.carousel', [idx, 250, true]);
+            }
+            setTimeout(function() { isSyncing = false; }, 310);
+        }
+    });
+
+    initShowcaseGallery();
+    var resizeTimer;
+    $(window).on('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(initShowcaseGallery, 150);
+    });
 
     // Toggle categories list (carousel / grid)
     var $categoriesCarousel = $(".categories-carousel").owlCarousel({
@@ -891,12 +1147,12 @@
     $("#toggle-index-cats-btn").click(function() {
       var $carouselView = $("#categories-carousel-view");
       var $gridView = $("#categories-grid-view");
-      var sectionTop = $(".services").offset().top - 80;
+      var sectionTop = Math.round($(".services").offset().top);
       
       if ($gridView.is(":hidden")) {
         $carouselView.fadeOut(200, function() {
           $gridView.fadeIn(300, function() {
-            $('html, body').animate({ scrollTop: sectionTop }, 400);
+            window.scrollTo({ top: sectionTop, behavior: 'smooth' });
           });
         });
         $(this).text("View Less");
@@ -904,7 +1160,7 @@
         $gridView.fadeOut(200, function() {
           $carouselView.fadeIn(300, function() {
             $categoriesCarousel.trigger('refresh.owl.carousel');
-            $('html, body').animate({ scrollTop: sectionTop }, 400);
+            window.scrollTo({ top: sectionTop, behavior: 'smooth' });
           });
         });
         $(this).text("View More");
