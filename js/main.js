@@ -9,74 +9,14 @@
 
 'use strict';
 
-// Prevent native browser scroll jump on cross-page hash navigation
-if (window.location.hash) {
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0);
-}
-
 (function ($) {
 
     /*------------------
-        Preloader & Hash Navigation Fix
+        Preloader
     --------------------*/
-    function alignHashTarget() {
-        if (!window.location.hash) return;
-        var hash = window.location.hash;
-        var $target = $(hash);
-        if ($target.length) {
-            var targetTop = Math.round($target.offset().top);
-            var currentScroll = Math.round($(window).scrollTop());
-            if (Math.abs(currentScroll - targetTop) > 5) {
-                window.scrollTo(0, targetTop);
-            }
-        }
-    }
-
-    window.alignHashTarget = alignHashTarget;
-
     $(window).on('load', function () {
-        alignHashTarget();
         $(".loader").fadeOut();
-        $("#preloder").delay(150).fadeOut("slow", function () {
-            alignHashTarget();
-            setTimeout(alignHashTarget, 100);
-            setTimeout(alignHashTarget, 300);
-            setTimeout(alignHashTarget, 600);
-        });
-    });
-
-    /*------------------
-        Smooth In-Page Anchor Scroll
-    --------------------*/
-    $(document).on('click', 'a[href*="#"]', function (e) {
-        var href = $(this).attr('href');
-        var hash = this.hash;
-        if (!hash || hash === '#') return;
-        
-        var currentPath = window.location.pathname.replace(/\/$/, '');
-        var targetPath = href.split('#')[0].replace(/\/$/, '');
-        
-        // Normalize paths (handle root /, index.html, etc.)
-        var isSamePage = (targetPath === '' || targetPath === currentPath || 
-            (targetPath.endsWith('index.html') && (currentPath.endsWith('index.html') || currentPath === '' || currentPath.endsWith('/'))));
-
-        if (isSamePage) {
-            var $target = $(hash);
-            if ($target.length) {
-                e.preventDefault();
-                var targetTop = Math.round($target.offset().top);
-                window.scrollTo({
-                    top: targetTop,
-                    behavior: 'smooth'
-                });
-                if (history.pushState) {
-                    history.pushState(null, null, hash);
-                }
-            }
-        }
+        $("#preloder").delay(200).fadeOut("slow");
     });
 
     /*------------------
@@ -94,12 +34,6 @@ if (window.location.hash) {
     });
 
     $(".offcanvas-menu-overlay").on('click', function () {
-        $(".offcanvas-menu-wrapper").removeClass("active");
-        $(".offcanvas-menu-overlay").removeClass("active");
-    });
-
-    // Close mobile offcanvas menu on link click
-    $(document).on('click', '.offcanvas-menu-wrapper a, .slicknav_nav a', function () {
         $(".offcanvas-menu-wrapper").removeClass("active");
         $(".offcanvas-menu-overlay").removeClass("active");
     });

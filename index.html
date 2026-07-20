@@ -845,21 +845,18 @@
           0: { items: 1 },
           576: { items: 2 },
           992: { items: 4 }
-        },
-        onInitialized: function() {
-          if (window.alignHashTarget) window.alignHashTarget();
         }
       });
       
       $("#toggle-index-cats-btn").click(function() {
         var $carouselView = $("#categories-carousel-view");
         var $gridView = $("#categories-grid-view");
-        var sectionTop = Math.round($(".services").offset().top);
+        var sectionTop = $(".services").offset().top - 80;
         
         if ($gridView.is(":hidden")) {
           $carouselView.fadeOut(200, function() {
             $gridView.fadeIn(300, function() {
-              window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+              $('html, body').animate({ scrollTop: sectionTop }, 400);
             });
           });
           $(this).text("View Less");
@@ -867,7 +864,7 @@
           $gridView.fadeOut(200, function() {
             $carouselView.fadeIn(300, function() {
               owl.trigger('refresh.owl.carousel');
-              window.scrollTo({ top: sectionTop, behavior: 'smooth' });
+              $('html, body').animate({ scrollTop: sectionTop }, 400);
             });
           });
           $(this).text("View More");
