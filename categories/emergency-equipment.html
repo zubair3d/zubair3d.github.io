@@ -38,6 +38,9 @@
 
     
 <style>
+  html {
+      overflow-y: scroll;
+  }
   /* Styling for Model Cards Showcase */
   .product-model-card {
     background: #fff;
@@ -248,9 +251,32 @@
 
     <!-- Model Cards Showcase Begin -->
     
-    <section class="spad" style="padding-top: 50px; padding-bottom: 50px; background: #ffffff;">
-        <div class="container text-center py-4">
-            <p style="color:#666; font-size:16px; margin:0;">No products found in this category yet. Check back soon!</p>
+    <section class="project-details spad" style="padding-top:50px;padding-bottom:50px;">
+        <div class="container" style="max-width:1260px;">
+            <div class="row justify-content-center">
+                
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                    <div class="product-model-card">
+                        <div style="overflow:hidden;position:relative;height:300px;background:#f0f0f0;">
+                            <a href="../products/emergency-equipment/eb-ee-sl05.html" style="display:block;height:100%;">
+                                
+                                <img src="../img/products/emergency-equipment/eb-ee-sl05/eb-ee-sl05-0.png" class="zoom-image" alt="Rechargeable Tactical Search Light" style="width:100%;height:100%;object-fit:cover;transition:transform .3s ease;display:block;">
+                                
+                            </a>
+                        </div>
+                        <div style="padding:22px;display:flex;flex-direction:column;flex-grow:1;">
+                            <span class="badge mb-2" style="background:#50ab3c;color:#fff;width:fit-content;padding:5px 10px;font-size:10px;text-transform:uppercase;font-weight:600;border-radius:4px;letter-spacing:.5px;">Model: EB-EE-SL05</span>
+                            <h4 style="font-weight:700;font-size:18px;margin-top:5px;margin-bottom:12px;color:#111;"><a href="../products/emergency-equipment/eb-ee-sl05.html" style="color:inherit;text-decoration:none;">Rechargeable Tactical Search Light</a></h4>
+                            <p style="font-size:13px;color:#666;line-height:1.6;margin-bottom:20px;flex-grow:1;">Long-range rechargeable search light featuring heavy-duty beam focus, dimmer function, and visual warning flash modes.</p>
+                            <div style="display:flex;gap:10px;margin-top:auto;">
+                                <a href="#" class="open-inquiry-btn" data-product="Rechargeable Tactical Search Light (EB-EE-SL05)" style="flex:1;text-align:center;border:none;border-radius:4px;background:#50ab3c;color:#fff;padding:10px 0;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">Inquire Now</a>
+                                <a href="../products/emergency-equipment/eb-ee-sl05.html" style="flex:1;text-align:center;border:none;border-radius:4px;background:#111;color:#fff;padding:10px 0;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap;">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
         </div>
     </section>
     
@@ -535,17 +561,6 @@
         </div>
         
         <div class="item">
-          <a href="../categories/road-barriers.html" class="product-cat-card">
-            <div class="product-cat-imgwrap">
-              <img src="../img/categories/road-barriers.jpg" class="product-cat-img" alt="Road Barriers & Attenuators">
-            </div>
-            <div class="product-cat-body">
-              <h5 class="product-cat-title">Road Barriers & Attenuators</h5>
-            </div>
-          </a>
-        </div>
-        
-        <div class="item">
           <a href="../categories/speed-breakers.html" class="product-cat-card">
             <div class="product-cat-imgwrap">
               <img src="../img/categories/speed-breakers.jpg" class="product-cat-img" alt="Speed Breakers & Rumblers">
@@ -563,6 +578,17 @@
             </div>
             <div class="product-cat-body">
               <h5 class="product-cat-title">Barricades</h5>
+            </div>
+          </a>
+        </div>
+        
+        <div class="item">
+          <a href="../categories/road-barriers.html" class="product-cat-card">
+            <div class="product-cat-imgwrap">
+              <img src="../img/categories/road-barriers.jpg" class="product-cat-img" alt="Road Barriers & Attenuators">
+            </div>
+            <div class="product-cat-body">
+              <h5 class="product-cat-title">Road Barriers & Attenuators</h5>
             </div>
           </a>
         </div>
@@ -718,17 +744,6 @@
         </div>
         
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-          <a href="../categories/road-barriers.html" class="product-cat-card">
-            <div class="product-cat-imgwrap">
-              <img src="../img/categories/road-barriers.jpg" class="product-cat-img" alt="Road Barriers & Attenuators">
-            </div>
-            <div class="product-cat-body">
-              <h5 class="product-cat-title">Road Barriers & Attenuators</h5>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
           <a href="../categories/speed-breakers.html" class="product-cat-card">
             <div class="product-cat-imgwrap">
               <img src="../img/categories/speed-breakers.jpg" class="product-cat-img" alt="Speed Breakers & Rumblers">
@@ -746,6 +761,17 @@
             </div>
             <div class="product-cat-body">
               <h5 class="product-cat-title">Barricades</h5>
+            </div>
+          </a>
+        </div>
+        
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <a href="../categories/road-barriers.html" class="product-cat-card">
+            <div class="product-cat-imgwrap">
+              <img src="../img/categories/road-barriers.jpg" class="product-cat-img" alt="Road Barriers & Attenuators">
+            </div>
+            <div class="product-cat-body">
+              <h5 class="product-cat-title">Road Barriers & Attenuators</h5>
             </div>
           </a>
         </div>
@@ -858,6 +884,31 @@
             itemData.h = imgEl.naturalHeight;
         }
         return itemData;
+    });
+
+    lightbox.on('beforeOpen', () => {
+        window.isPswpOpen = true;
+        // Pause background autoplay immediately; do NOT move carousel so items remain frozen in place
+        if (window.stopCategoryAutoplay) {
+            window.stopCategoryAutoplay();
+        }
+    });
+
+    lightbox.on('change', () => {
+        // Smoothly swipe background carousel & update thumbnail strip when user swipes in PhotoSwipe
+        if (lightbox.pswp && window.syncBackgroundGalleryIndex) {
+            window.syncBackgroundGalleryIndex(lightbox.pswp.currIndex);
+        }
+    });
+
+    lightbox.on('close', () => {
+        window.isPswpOpen = false;
+        // Post-close geometry refresh and resume autoplay
+        setTimeout(() => {
+            if (window.refreshAndResumeCarousel) {
+                window.refreshAndResumeCarousel();
+            }
+        }, 100);
     });
 
     lightbox.init();
@@ -1044,43 +1095,50 @@
         }
     });
 
-    // Synchronize background carousel and thumbnail strip when PhotoSwipe slide changes or closes
-    function bindPswpSync() {
-        if (!window.categoryPswpLightbox) {
-            setTimeout(bindPswpSync, 100);
-            return;
+    // Global Autoplay & Sync Control Helpers called by PhotoSwipe ESM Module
+    window.stopCategoryAutoplay = function() {
+        if ($gallery && $gallery.hasClass('owl-loaded')) {
+            $gallery.trigger('stop.owl.autoplay');
         }
+    };
 
-        window.categoryPswpLightbox.on('change', function() {
-            if (window.categoryPswpLightbox.pswp) {
-                var pswpIdx = window.categoryPswpLightbox.pswp.currIndex;
-                syncToTargetIndex(pswpIdx);
+    window.resumeCategoryAutoplay = function() {
+        if ($gallery && $gallery.hasClass('owl-loaded') && !window.isPswpOpen) {
+            $gallery.trigger('play.owl.autoplay', [4000]);
+        }
+    };
+
+    window.refreshAndResumeCarousel = function() {
+        if ($gallery && $gallery.hasClass('owl-loaded')) {
+            $gallery.trigger('refresh.owl.carousel');
+            if (!window.isPswpOpen) {
+                $gallery.trigger('play.owl.autoplay', [4000]);
             }
-        });
+        }
+    };
 
-        window.categoryPswpLightbox.on('close', function() {
-            if (window.categoryPswpLightbox.pswp) {
-                var pswpIdx = window.categoryPswpLightbox.pswp.currIndex;
-                syncToTargetIndex(pswpIdx);
-            }
-        });
-    }
-
-    function syncToTargetIndex(targetIdx) {
+    window.syncActiveThumbIndex = function(targetIdx) {
         if (typeof targetIdx === 'undefined' || isNaN(targetIdx)) return;
-        isSyncing = true;
-        
-        if ($gallery.hasClass('owl-loaded')) {
-            $gallery.trigger('to.owl.carousel', [targetIdx, 250, true]);
-        }
-        
         $thumbContainer.find('.showcase-thumb-item').removeClass('active');
-        $thumbContainer.find('.showcase-thumb-item[data-index="' + targetIdx + '"]').addClass('active');
-        
-        setTimeout(function() { isSyncing = false; }, 260);
-    }
+        var $activeThumb = $thumbContainer.find('.showcase-thumb-item[data-index="' + targetIdx + '"]');
+        $activeThumb.addClass('active');
 
-    bindPswpSync();
+        if ($activeThumb.length && $thumbContainer[0]) {
+            var container = $thumbContainer[0];
+            var item = $activeThumb[0];
+            var scrollLeft = item.offsetLeft - (container.clientWidth / 2) + (item.clientWidth / 2);
+            container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        }
+    };
+
+    window.syncBackgroundGalleryIndex = function(targetIdx) {
+        if (typeof targetIdx === 'undefined' || isNaN(targetIdx)) return;
+        window.syncActiveThumbIndex(targetIdx);
+
+        if ($gallery && $gallery.hasClass('owl-loaded')) {
+            $gallery.trigger('to.owl.carousel', [targetIdx, 300, true]);
+        }
+    };
 
     // Thumbnail click handler to jump main gallery to slide
     $thumbContainer.on('click', '.showcase-thumb-item', function() {
@@ -1099,6 +1157,7 @@
     initShowcaseGallery();
     var resizeTimer;
     $(window).on('resize', function() {
+        if (window.isPswpOpen) return; // Prevent carousel destroy/re-init while PhotoSwipe is open
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(initShowcaseGallery, 150);
     });

@@ -38,6 +38,9 @@
 
     
 <style>
+  html {
+      overflow-y: scroll;
+  }
   /* Styling for Model Cards Showcase */
   .product-model-card {
     background: #fff;
@@ -711,17 +714,6 @@
         </div>
         
         <div class="item">
-          <a href="../categories/road-barriers.html" class="product-cat-card">
-            <div class="product-cat-imgwrap">
-              <img src="../img/categories/road-barriers.jpg" class="product-cat-img" alt="Road Barriers & Attenuators">
-            </div>
-            <div class="product-cat-body">
-              <h5 class="product-cat-title">Road Barriers & Attenuators</h5>
-            </div>
-          </a>
-        </div>
-        
-        <div class="item">
           <a href="../categories/speed-breakers.html" class="product-cat-card">
             <div class="product-cat-imgwrap">
               <img src="../img/categories/speed-breakers.jpg" class="product-cat-img" alt="Speed Breakers & Rumblers">
@@ -739,6 +731,17 @@
             </div>
             <div class="product-cat-body">
               <h5 class="product-cat-title">Barricades</h5>
+            </div>
+          </a>
+        </div>
+        
+        <div class="item">
+          <a href="../categories/road-barriers.html" class="product-cat-card">
+            <div class="product-cat-imgwrap">
+              <img src="../img/categories/road-barriers.jpg" class="product-cat-img" alt="Road Barriers & Attenuators">
+            </div>
+            <div class="product-cat-body">
+              <h5 class="product-cat-title">Road Barriers & Attenuators</h5>
             </div>
           </a>
         </div>
@@ -894,17 +897,6 @@
         </div>
         
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-          <a href="../categories/road-barriers.html" class="product-cat-card">
-            <div class="product-cat-imgwrap">
-              <img src="../img/categories/road-barriers.jpg" class="product-cat-img" alt="Road Barriers & Attenuators">
-            </div>
-            <div class="product-cat-body">
-              <h5 class="product-cat-title">Road Barriers & Attenuators</h5>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
           <a href="../categories/speed-breakers.html" class="product-cat-card">
             <div class="product-cat-imgwrap">
               <img src="../img/categories/speed-breakers.jpg" class="product-cat-img" alt="Speed Breakers & Rumblers">
@@ -922,6 +914,17 @@
             </div>
             <div class="product-cat-body">
               <h5 class="product-cat-title">Barricades</h5>
+            </div>
+          </a>
+        </div>
+        
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <a href="../categories/road-barriers.html" class="product-cat-card">
+            <div class="product-cat-imgwrap">
+              <img src="../img/categories/road-barriers.jpg" class="product-cat-img" alt="Road Barriers & Attenuators">
+            </div>
+            <div class="product-cat-body">
+              <h5 class="product-cat-title">Road Barriers & Attenuators</h5>
             </div>
           </a>
         </div>
@@ -1034,6 +1037,31 @@
             itemData.h = imgEl.naturalHeight;
         }
         return itemData;
+    });
+
+    lightbox.on('beforeOpen', () => {
+        window.isPswpOpen = true;
+        // Pause background autoplay immediately; do NOT move carousel so items remain frozen in place
+        if (window.stopCategoryAutoplay) {
+            window.stopCategoryAutoplay();
+        }
+    });
+
+    lightbox.on('change', () => {
+        // Smoothly swipe background carousel & update thumbnail strip when user swipes in PhotoSwipe
+        if (lightbox.pswp && window.syncBackgroundGalleryIndex) {
+            window.syncBackgroundGalleryIndex(lightbox.pswp.currIndex);
+        }
+    });
+
+    lightbox.on('close', () => {
+        window.isPswpOpen = false;
+        // Post-close geometry refresh and resume autoplay
+        setTimeout(() => {
+            if (window.refreshAndResumeCarousel) {
+                window.refreshAndResumeCarousel();
+            }
+        }, 100);
     });
 
     lightbox.init();
@@ -1220,43 +1248,50 @@
         }
     });
 
-    // Synchronize background carousel and thumbnail strip when PhotoSwipe slide changes or closes
-    function bindPswpSync() {
-        if (!window.categoryPswpLightbox) {
-            setTimeout(bindPswpSync, 100);
-            return;
+    // Global Autoplay & Sync Control Helpers called by PhotoSwipe ESM Module
+    window.stopCategoryAutoplay = function() {
+        if ($gallery && $gallery.hasClass('owl-loaded')) {
+            $gallery.trigger('stop.owl.autoplay');
         }
+    };
 
-        window.categoryPswpLightbox.on('change', function() {
-            if (window.categoryPswpLightbox.pswp) {
-                var pswpIdx = window.categoryPswpLightbox.pswp.currIndex;
-                syncToTargetIndex(pswpIdx);
+    window.resumeCategoryAutoplay = function() {
+        if ($gallery && $gallery.hasClass('owl-loaded') && !window.isPswpOpen) {
+            $gallery.trigger('play.owl.autoplay', [4000]);
+        }
+    };
+
+    window.refreshAndResumeCarousel = function() {
+        if ($gallery && $gallery.hasClass('owl-loaded')) {
+            $gallery.trigger('refresh.owl.carousel');
+            if (!window.isPswpOpen) {
+                $gallery.trigger('play.owl.autoplay', [4000]);
             }
-        });
+        }
+    };
 
-        window.categoryPswpLightbox.on('close', function() {
-            if (window.categoryPswpLightbox.pswp) {
-                var pswpIdx = window.categoryPswpLightbox.pswp.currIndex;
-                syncToTargetIndex(pswpIdx);
-            }
-        });
-    }
-
-    function syncToTargetIndex(targetIdx) {
+    window.syncActiveThumbIndex = function(targetIdx) {
         if (typeof targetIdx === 'undefined' || isNaN(targetIdx)) return;
-        isSyncing = true;
-        
-        if ($gallery.hasClass('owl-loaded')) {
-            $gallery.trigger('to.owl.carousel', [targetIdx, 250, true]);
-        }
-        
         $thumbContainer.find('.showcase-thumb-item').removeClass('active');
-        $thumbContainer.find('.showcase-thumb-item[data-index="' + targetIdx + '"]').addClass('active');
-        
-        setTimeout(function() { isSyncing = false; }, 260);
-    }
+        var $activeThumb = $thumbContainer.find('.showcase-thumb-item[data-index="' + targetIdx + '"]');
+        $activeThumb.addClass('active');
 
-    bindPswpSync();
+        if ($activeThumb.length && $thumbContainer[0]) {
+            var container = $thumbContainer[0];
+            var item = $activeThumb[0];
+            var scrollLeft = item.offsetLeft - (container.clientWidth / 2) + (item.clientWidth / 2);
+            container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        }
+    };
+
+    window.syncBackgroundGalleryIndex = function(targetIdx) {
+        if (typeof targetIdx === 'undefined' || isNaN(targetIdx)) return;
+        window.syncActiveThumbIndex(targetIdx);
+
+        if ($gallery && $gallery.hasClass('owl-loaded')) {
+            $gallery.trigger('to.owl.carousel', [targetIdx, 300, true]);
+        }
+    };
 
     // Thumbnail click handler to jump main gallery to slide
     $thumbContainer.on('click', '.showcase-thumb-item', function() {
@@ -1275,6 +1310,7 @@
     initShowcaseGallery();
     var resizeTimer;
     $(window).on('resize', function() {
+        if (window.isPswpOpen) return; // Prevent carousel destroy/re-init while PhotoSwipe is open
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(initShowcaseGallery, 150);
     });
