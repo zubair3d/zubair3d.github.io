@@ -124,14 +124,28 @@
   .showcase-gallery-thumbs {
       max-width: 100%;
       margin: 15px auto 0 auto;
-      padding: 6px 0;
+      padding: 6px 4px;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+  }
+  .showcase-gallery-thumbs::-webkit-scrollbar {
+      display: none;
+  }
+  @media (max-width: 767px) {
+      .showcase-gallery-thumbs {
+          justify-content: flex-start;
+          padding-left: 10px;
+          padding-right: 10px;
+      }
   }
   .showcase-thumb-item {
+      flex: 0 0 65px;
       width: 65px;
       height: 65px;
       border-radius: 6px;
@@ -924,48 +938,59 @@
         }
         
         $thumbContainer.find('.showcase-thumb-item').removeClass('active');
-        $thumbContainer.find('.showcase-thumb-item[data-index="' + realIndex + '"]').addClass('active');
+        var $activeThumb = $thumbContainer.find('.showcase-thumb-item[data-index="' + realIndex + '"]');
+        $activeThumb.addClass('active');
+
+        if ($activeThumb.length && $thumbContainer[0]) {
+            var container = $thumbContainer[0];
+            var item = $activeThumb[0];
+            var scrollLeft = item.offsetLeft - (container.clientWidth / 2) + (item.clientWidth / 2);
+            container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+        }
     }
 
     function initShowcaseGallery() {
         var winWidth = $(window).width();
         var shouldBeCarousel = (totalGalleryItems > 4) || (winWidth < 768 && totalGalleryItems > 1);
 
-        if (totalGalleryItems > 1) {
+        if (shouldBeCarousel && totalGalleryItems > 1) {
             $thumbContainer.css('display', 'flex');
         } else {
             $thumbContainer.hide();
         }
 
         if (shouldBeCarousel) {
+            if ($gallery.hasClass('owl-loaded')) {
+                $gallery.trigger('destroy.owl.carousel');
+                $gallery.removeClass('owl-carousel owl-loaded');
+            }
+
             $gallery.removeAttr('style');
             $gallery.find('.item').removeAttr('style');
             $gallery.find('.gallery-thumb-wrap').removeAttr('style');
             $gallery.find('.gallery-thumb-img').removeAttr('style');
 
-            if (!$gallery.hasClass('owl-loaded')) {
-                if (!$gallery.hasClass('owl-carousel')) {
-                    $gallery.addClass('owl-carousel');
-                }
-
-                owlGallery = $gallery.owlCarousel({
-                    loop: true,
-                    margin: 15,
-                    nav: false,
-                    dots: false,
-                    autoplay: true,
-                    autoplayTimeout: 4000,
-                    autoplayHoverPause: true,
-                    responsive: {
-                        0: { items: 1 },
-                        480: { items: 2 },
-                        768: { items: 3 },
-                        992: { items: 4 }
-                    },
-                    onTranslated: syncActiveThumb,
-                    onInitialized: syncActiveThumb
-                });
+            if (!$gallery.hasClass('owl-carousel')) {
+                $gallery.addClass('owl-carousel');
             }
+
+            owlGallery = $gallery.owlCarousel({
+                loop: true,
+                margin: 15,
+                nav: false,
+                dots: false,
+                autoplay: true,
+                autoplayTimeout: 4000,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: { items: 1 },
+                    480: { items: 2 },
+                    768: { items: 3 },
+                    992: { items: 4 }
+                },
+                onTranslated: syncActiveThumb,
+                onInitialized: syncActiveThumb
+            });
         } else {
             if ($gallery.hasClass('owl-loaded')) {
                 $gallery.trigger('destroy.owl.carousel');
