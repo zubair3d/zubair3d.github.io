@@ -1,0 +1,29 @@
+{
+    "category_slug": "safety-tapes",
+    "description": "Non-adhesive tear-resistant warning tape used for fencing off excavations, crime scenes, or active hazard work spaces.",
+    "id": "eb-tp-cau",
+    "images": [
+        {
+            "alt": "Cautionary Barricade Tape",
+            "h": 1024,
+            "src": "img/products/safety-tapes/eb-tp-cau/eb-tp-cau-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-TP-CAU",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "75 mm x 500 m roll size"
+        },
+        {
+            "label": "Material Build",
+            "value": "Non-adhesive Low Density Polyethylene (LDPE)"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "High-contrast stripe (Yellow-Black / Red-White)"
+        }
+    ],
+    "title": "Cautionary Barricade Tape"
+}

@@ -1,0 +1,29 @@
+{
+    "category_slug": "markers-reflectors",
+    "description": "Side-mounted reflector with steel bracket designed to bolt onto standard W-beam metal guard rails.",
+    "id": "eb-mr-grl02",
+    "images": [
+        {
+            "alt": "Guard Rail Reflector",
+            "h": 1024,
+            "src": "img/products/markers-reflectors/eb-mr-grl02/eb-mr-grl02-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-MR-GRL02",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "120 x 80 mm trapezoid plate"
+        },
+        {
+            "label": "Material Build",
+            "value": "Galvanized steel bracket + PMMA reflector plate"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "Retroreflective Yellow / White face"
+        }
+    ],
+    "title": "Guard Rail Reflector"
+}

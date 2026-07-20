@@ -1,0 +1,29 @@
+{
+    "category_slug": "road-studs",
+    "description": "Made of high-impact engineering plastic with excellent compression resistance. Equipped with dual-sided PMMA reflectors for brilliant retroreflectivity.",
+    "id": "eb-rs-abs01",
+    "images": [
+        {
+            "alt": "ABS Plastic Road Stud (Cat's Eye)",
+            "h": 1024,
+            "src": "img/products/road-studs/eb-rs-abs01/eb-rs-abs01-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-RS-ABS01",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "100 x 100 x 20 mm"
+        },
+        {
+            "label": "Material Build",
+            "value": "High-Impact ABS Plastic"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "Double-Sided Acrylic PMMA Reflector (Yellow / White)"
+        }
+    ],
+    "title": "ABS Plastic Road Stud (Cat's Eye)"
+}

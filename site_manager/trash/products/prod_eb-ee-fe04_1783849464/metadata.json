@@ -1,0 +1,29 @@
+{
+    "category_slug": "emergency-equipment",
+    "description": "High-performance ABC dry powder extinguisher. Equipped with pressure gauge and wall mounting bracket.",
+    "id": "eb-ee-fe04",
+    "images": [
+        {
+            "alt": "Dry Powder Fire Extinguisher",
+            "h": 1024,
+            "src": "img/products/emergency-equipment/eb-ee-fe04/eb-ee-fe04-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-EE-FE04",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "4 kg Capacity"
+        },
+        {
+            "label": "Material Build",
+            "value": "Heavy gauge steel canister with pressure gauge"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "IS 15683 certified, suitable for ABC Class fires"
+        }
+    ],
+    "title": "Dry Powder Fire Extinguisher"
+}

@@ -1,0 +1,29 @@
+{
+    "category_slug": "convex-mirrors",
+    "description": "Unbreakable polycarbonate mirror offering a 130-degree wide-angle view. Ideal for blind spots, corners, and driveways.",
+    "id": "eb-cm-pc80",
+    "images": [
+        {
+            "alt": "Polycarbonate Convex Mirror",
+            "h": 1024,
+            "src": "img/products/convex-mirrors/eb-cm-pc80/eb-cm-pc80-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-CM-PC80",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "800 mm Diameter"
+        },
+        {
+            "label": "Material Build",
+            "value": "Unbreakable Polycarbonate lens with ABS back"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "Orange protective hood, wall / post mounting bracket included"
+        }
+    ],
+    "title": "Polycarbonate Convex Mirror"
+}

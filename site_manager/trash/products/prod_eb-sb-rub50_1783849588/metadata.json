@@ -1,0 +1,29 @@
+{
+    "category_slug": "speed-breakers",
+    "description": "Constructed from heavy-duty vulcanized rubber with anti-skid surface patterns. Interlocking design for flexible length customization.",
+    "id": "eb-sb-rub50",
+    "images": [
+        {
+            "alt": "Rubber Speed Breaker",
+            "h": 1024,
+            "src": "img/products/speed-breakers/eb-sb-rub50/eb-sb-rub50-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-SB-RUB50",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "500 x 350 x 50 mm"
+        },
+        {
+            "label": "Material Build",
+            "value": "Recycled vulcanized rubber"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "Reflective yellow arrows on center modules"
+        }
+    ],
+    "title": "Rubber Speed Breaker"
+}

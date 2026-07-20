@@ -1,0 +1,29 @@
+{
+    "category_slug": "convex-mirrors",
+    "description": "Security mirror equipped with caster wheels and light bracket, enabling visual inspection under vehicles.",
+    "id": "eb-cm-uvm02",
+    "images": [
+        {
+            "alt": "Under-Vehicle Inspection Mirror",
+            "h": 1024,
+            "src": "img/products/convex-mirrors/eb-cm-uvm02/eb-cm-uvm02-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-CM-UVM02",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "300 mm Mirror | 1.2m extendable handle"
+        },
+        {
+            "label": "Material Build",
+            "value": "High-clarity acrylic dome with heavy duty aluminum rod"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "Heavy duty caster wheels + LED light attachment bracket"
+        }
+    ],
+    "title": "Under-Vehicle Inspection Mirror"
+}

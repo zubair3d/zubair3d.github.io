@@ -1,0 +1,29 @@
+{
+    "category_slug": "ppe-safety",
+    "description": "Lightweight safety vest with 2-inch wide retroreflective stripes. Essential safety apparel for road builders and security staff.",
+    "id": "eb-pp-vst01",
+    "images": [
+        {
+            "alt": "High-Visibility Safety Vest",
+            "h": 1024,
+            "src": "img/products/ppe-safety/eb-pp-vst01/eb-pp-vst01-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-PP-VST01",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "Free size (Standard fitting)"
+        },
+        {
+            "label": "Material Build",
+            "value": "Polyester mesh fabric with Class 2 reflective strips"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "Lime Green / Neon Orange colors available"
+        }
+    ],
+    "title": "High-Visibility Safety Vest"
+}

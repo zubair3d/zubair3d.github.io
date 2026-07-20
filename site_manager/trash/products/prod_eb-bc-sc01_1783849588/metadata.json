@@ -1,0 +1,29 @@
+{
+    "category_slug": "barricades-fences",
+    "description": "Collapsible expansion scissor gate designed for quick containment of hazard sites or restriction of pedestrian paths.",
+    "id": "eb-bc-sc01",
+    "images": [
+        {
+            "alt": "Metal Scissor Barricade",
+            "h": 1024,
+            "src": "img/products/barricades-fences/eb-bc-sc01/eb-bc-sc01-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-BC-SC01",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "2000 mm Extended Length | 950 mm Height"
+        },
+        {
+            "label": "Material Build",
+            "value": "Steel & Aluminum frame"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "Yellow/Black powder coating with locking wheels"
+        }
+    ],
+    "title": "Metal Scissor Barricade"
+}

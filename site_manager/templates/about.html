@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}EcoLuxe Bharat | About Us{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumb Section Begin -->
+    <div class="breadcrumb-option breadcrumb-option-short spad set-bg" data-setbg="img/breadcrumb-bg.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>About Us</h2>
+                        <div class="breadcrumb__links">
+                            <a href="./">Home</a>
+                            <span>About Us</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section End -->
+
+<!-- About Page Section Begin -->
+<section class="about-page spad">
+    <div class="container">
+        <div class="row">
+            <!-- Left Column: About Intro -->
+            <div class="col-lg-4 col-md-4">
+                <div class="about__text about__page__text">
+                    <div class="section-title">
+                        <span>Who We Are</span>
+                        <h2>About Us</h2>
+                    </div>
+                    <div class="about__para__text">
+                        <p>
+                            EcoLuxe Bharat is a premier manufacturer and supplier of high-quality, sustainable road safety products and traffic control systems. We specialize in enhancing highway and urban roadway safety across India.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Extended Info, Mission & Vision -->
+            <div class="col-lg-8 col-md-8">
+                <div class="about__page__services">
+                    <div class="about__page__services__text">
+                        <p>
+                            We offer comprehensive roadway safety solutions, blending durable solar technology, high-visibility reflective materials, and modular rubber structures. From municipal roadways to industrial parking complexes, our products are engineered for maximum durability, visual guidance, and traffic calming, supporting a safer and more sustainable infrastructure.
+                        </p>
+                    </div>
+
+                    <div class="row">
+                        <!-- Mission -->
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="services__item">
+                                <img src="img/services/services-5.png" alt="Our Mission icon">
+                                <h4>Our Mission</h4>
+                                <p>
+                                    To manufacture and install high-visibility, durable, and eco-friendly road safety products that protect human lives and streamline traffic flow across India's growing transit networks.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Vision -->
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="services__item">
+                                <img src="img/services/services-6.png" alt="Our Vision icon">
+                                <h4>Our Vision</h4>
+                                <p>
+                                    To be India's most trusted partner in smart highway engineering, transforming roads into safe, solar-powered, and visually guided pathways with zero accidental hazards.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Page Section End -->
+
+<!-- Call To Action Section Begin -->
+<section class="callto spad set-bg" data-setbg="img/call-bg.jpg">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-10 text-center">
+                <div class="callto__text">
+                    <span>Why choose us?</span>
+                    <h2>Our ability to bring outstanding results to our customers.</h2>
+                    <a href="contact.html" class="primary-btn">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Call To Action Section End -->
+
+<!-- Team Section Begin -->
+<section class="team spad">
+</section>
+<!-- Team Section End -->
+{% endblock %}
+
+{% block custom_scripts %}
+<script>
+  $(function() {
+    $('.set-bg').each(function () {
+      var bg = $(this).data('setbg');
+      if (bg) $(this).css('background-image', 'url(' + bg + ')');
+    });
+  });
+</script>
+{% endblock %}

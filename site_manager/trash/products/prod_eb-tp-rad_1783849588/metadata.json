@@ -1,0 +1,29 @@
+{
+    "category_slug": "safety-tapes",
+    "description": "High-intensity microprismatic tape for highlighting heavy vehicle tailgates or safety gates. Strong self-adhesive back.",
+    "id": "eb-tp-rad",
+    "images": [
+        {
+            "alt": "Retroreflective Radium Tape",
+            "h": 1024,
+            "src": "img/products/safety-tapes/eb-tp-rad/eb-tp-rad-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-TP-RAD",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "50 mm x 45 m roll size"
+        },
+        {
+            "label": "Material Build",
+            "value": "Prismatic Acrylic sheeting with adhesive"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "Class C Prismatic (Yellow / Red / White)"
+        }
+    ],
+    "title": "Retroreflective Radium Tape"
+}

@@ -1,0 +1,29 @@
+{
+    "category_slug": "barricades-fences",
+    "description": "Sturdy steel support frame holding warning displays or custom company logos. Ideal for police barricading and public events.",
+    "id": "eb-bc-ad30",
+    "images": [
+        {
+            "alt": "Advertisement Barricade Board",
+            "h": 1024,
+            "src": "img/products/barricades-fences/eb-bc-ad30/eb-bc-ad30-0.png",
+            "w": 1024
+        }
+    ],
+    "model": "EB-BC-AD30",
+    "specifications": [
+        {
+            "label": "Dimensions / Capacity",
+            "value": "1200 x 900 mm board size"
+        },
+        {
+            "label": "Material Build",
+            "value": "Heavy-duty steel frame with galvanized sheet face"
+        },
+        {
+            "label": "Key Specifications",
+            "value": "Double-sided board face with retroreflective stripes"
+        }
+    ],
+    "title": "Advertisement Barricade Board"
+}

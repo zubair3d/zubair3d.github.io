@@ -1,0 +1,586 @@
+{
+    "categories": [
+        {
+            "slug": "ppe-safety",
+            "title": "Personal Protective Equipment",
+            "description": "High-visibility reflective jackets, safety helmets, protective gloves, masks, safety boots, and fall-arrest harnesses.",
+            "image": "img/categories/ppe-safety.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/ppe-safety/ppe-safety-showcase-0.jpg",
+                    "w": 1500,
+                    "h": 1500
+                }
+            ]
+        },
+        {
+            "slug": "emergency-equipment",
+            "title": "Emergency & Rescue Equipment",
+            "description": "Dry powder and CO2 fire extinguishers, warning sirens, emergency lights, and rechargeable tactical search lights.",
+            "image": "img/categories/emergency-equipment.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/emergency-equipment/emergency-equipment-showcase-0.jpg",
+                    "w": 1500,
+                    "h": 1500
+                }
+            ]
+        },
+        {
+            "slug": "convex-mirrors",
+            "title": "Convex Mirrors & Security",
+            "description": "Polycarbonate convex safety mirrors for blind turns, and trolley under-vehicle inspection search mirrors.",
+            "image": "img/categories/convex-mirrors.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/convex-mirrors/convex-mirrors-showcase-0.jpg",
+                    "w": 1500,
+                    "h": 1500
+                }
+            ]
+        },
+        {
+            "title": "Anti-Glare Panels",
+            "slug": "anti-glare-panels",
+            "description": "High-performance anti-glare panels designed to reduce headlight glare and improve driver visibility on roads and highways.",
+            "image": "img/categories/anti-glare-panels.jpg",
+            "showcase_images": [
+                {
+                    "h": 2048,
+                    "src": "img/categories/showcase/anti-glare-panels/anti-glare-panels-showcase-0.jpg",
+                    "w": 2048
+                }
+            ]
+        },
+        {
+            "slug": "safety-tapes",
+            "title": "Safety Tapes & Accessories",
+            "description": "High-intensity retroreflective tapes, retroreflective stickers, radium tapes, caution tapes, etc.",
+            "image": "img/categories/safety-tapes.jpg",
+            "showcase_images": [
+                {
+                    "h": 1862,
+                    "src": "img/categories/showcase/safety-tapes/safety-tapes-showcase-0.jpg",
+                    "w": 1862
+                }
+            ]
+        },
+        {
+            "slug": "road-signages",
+            "title": "Road Signages & Boards",
+            "description": "High-intensity reflective signage sheets, mandatory boards, cautionary sign posts, and anti-glare highway median boards.",
+            "image": "img/categories/road-signages.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/road-signages/road-signages-showcase-0.jpg",
+                    "w": 1800,
+                    "h": 1800
+                }
+            ]
+        },
+        {
+            "description": "High-visibility PVC, PU, and rubber safety cones with retroreflective sleeves for construction zoning and lane merging.",
+            "image": "img/categories/traffic-cones.jpg",
+            "slug": "traffic-cones",
+            "title": "Traffic Cones",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/traffic-cones/traffic-cones-showcase-0.jpg",
+                    "w": 2048,
+                    "h": 2048
+                }
+            ]
+        },
+        {
+            "slug": "road-delineators",
+            "title": "Delineators & Spring Posts",
+            "description": "Highly flexible PU spring posts, MS hazard delineators, and plastic post markers to absorb vehicle impact and guide drivers.",
+            "image": "img/categories/road-delineators.jpg",
+            "showcase_images": [
+                {
+                    "h": 2200,
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-0.jpg",
+                    "w": 2200
+                },
+                {
+                    "h": 2200,
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-1.jpg",
+                    "w": 2200
+                },
+                {
+                    "h": 2048,
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-2.jpg",
+                    "w": 2048
+                },
+                {
+                    "h": 651,
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-3.jpg",
+                    "w": 307
+                },
+                {
+                    "h": 1000,
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-4.webp",
+                    "w": 750
+                },
+                {
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-5.png",
+                    "w": 2048,
+                    "h": 2048
+                },
+                {
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-6.png",
+                    "w": 1536,
+                    "h": 2728
+                },
+                {
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-7.png",
+                    "w": 2048,
+                    "h": 2048
+                },
+                {
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-8.jpg",
+                    "w": 2200,
+                    "h": 2200
+                },
+                {
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-9.png",
+                    "w": 2048,
+                    "h": 2048
+                },
+                {
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-10.png",
+                    "w": 2048,
+                    "h": 2048
+                },
+                {
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-11.png",
+                    "w": 2048,
+                    "h": 2048
+                }
+            ]
+        },
+        {
+            "title": "Guard-Rail Reflectors",
+            "slug": "guard-rail-reflector",
+            "description": "Long-lasting guard rail reflectors with superior retroreflective performance for improved visibility on roads and highways.",
+            "image": "img/categories/guard-rail-reflector.jpg",
+            "showcase_images": [
+                {
+                    "h": 1697,
+                    "src": "img/categories/showcase/guard-rail-reflector/guard-rail-reflector-showcase-0.jpg",
+                    "w": 1692
+                },
+                {
+                    "h": 2048,
+                    "src": "img/categories/showcase/guard-rail-reflector/guard-rail-reflector-showcase-1.jpg",
+                    "w": 2048
+                },
+                {
+                    "h": 2048,
+                    "src": "img/categories/showcase/guard-rail-reflector/guard-rail-reflector-showcase-2.jpg",
+                    "w": 2048
+                },
+                {
+                    "src": "img/categories/showcase/guard-rail-reflector/guard-rail-reflector-showcase-3.jpg",
+                    "w": 750,
+                    "h": 750
+                },
+                {
+                    "src": "img/categories/showcase/guard-rail-reflector/guard-rail-reflector-showcase-4.jpg",
+                    "w": 800,
+                    "h": 800
+                },
+                {
+                    "src": "img/categories/showcase/guard-rail-reflector/guard-rail-reflector-showcase-5.jpg",
+                    "w": 750,
+                    "h": 750
+                },
+                {
+                    "src": "img/categories/showcase/guard-rail-reflector/guard-rail-reflector-showcase-6.jpg",
+                    "w": 800,
+                    "h": 800
+                }
+            ]
+        },
+        {
+            "description": "High-strength ABS, aluminum, and solar-powered road studs engineered to provide brilliant lane markers and warning indicators.",
+            "image": "img/categories/road-studs.jpg",
+            "slug": "road-studs",
+            "title": "Road Studs & Cat's Eyes",
+            "showcase_images": [
+                {
+                    "h": 1750,
+                    "src": "img/categories/showcase/road-studs/road-studs-showcase-0.jpg",
+                    "w": 1750
+                },
+                {
+                    "h": 1500,
+                    "src": "img/categories/showcase/road-studs/road-studs-showcase-1.jpg",
+                    "w": 1500
+                },
+                {
+                    "h": 1000,
+                    "src": "img/categories/showcase/road-studs/road-studs-showcase-2.jpg",
+                    "w": 1000
+                },
+                {
+                    "h": 800,
+                    "src": "img/categories/showcase/road-studs/road-studs-showcase-3.jpg",
+                    "w": 800
+                },
+                {
+                    "h": 600,
+                    "src": "img/categories/showcase/road-studs/road-studs-showcase-4.webp",
+                    "w": 600
+                }
+            ]
+        },
+        {
+            "title": "Solar Blinkers",
+            "slug": "solar-blinkers",
+            "description": "Solar-powered LED blinkers designed to enhance visibility and provide effective warning signals in traffic and construction zones.",
+            "image": "img/categories/solar-blinkers.jpg",
+            "showcase_images": [
+                {
+                    "h": 1685,
+                    "src": "img/categories/showcase/solar-blinkers/solar-blinkers-showcase-0.jpg",
+                    "w": 1684
+                }
+            ]
+        },
+        {
+            "slug": "markers-reflectors",
+            "title": "Median & Guard Rail Markers",
+            "description": "Trapezoidal median markers, guard rail metal brackets with reflective inserts, and high-impact plastic reflectors.",
+            "image": "img/categories/markers-reflectors.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/markers-reflectors/markers-reflectors-showcase-0.jpg",
+                    "w": 2048,
+                    "h": 2050
+                }
+            ]
+        },
+        {
+            "slug": "barricades-fences",
+            "title": "Barricades & Fences",
+            "description": "Expandable scissor barriers, display advertising barricade boards, and security steel fences for crowd control.",
+            "image": "img/categories/barricades-fences.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/barricades-fences/barricades-fences-showcase-0.jpg",
+                    "w": 2148,
+                    "h": 2148
+                }
+            ]
+        },
+        {
+            "description": "Vulcanized rubber speed bumps, heavy-duty plastic speed ramps, and rumbler strips designed for optimal speed reduction.",
+            "image": "img/categories/speed-breakers.jpg",
+            "slug": "speed-breakers",
+            "title": "Speed Breakers & Rumblers",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/speed-breakers/speed-breakers-showcase-0.jpg",
+                    "w": 2048,
+                    "h": 2048
+                }
+            ]
+        },
+        {
+            "title": "Barricades",
+            "slug": "barricades",
+            "description": "",
+            "image": "img/categories/barricades.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/barricades/barricades-showcase-0.jpg",
+                    "w": 2048,
+                    "h": 2048
+                }
+            ]
+        },
+        {
+            "description": "Water-fillable plastic barricades, sand barrels, and impact attenuators designed to absorb collision kinetic energy.",
+            "image": "img/categories/road-barriers.jpg",
+            "showcase_images": [
+                {
+                    "h": 2048,
+                    "src": "img/categories/showcase/road-barriers/road-barriers-showcase-0.jpg",
+                    "w": 2048
+                }
+            ],
+            "slug": "road-barriers",
+            "title": "Road Barriers & Attenuators"
+        }
+    ],
+    "products": [
+        {
+            "category_slug": "road-delineators",
+            "description": "Made of highly flexible PU that instantly springs back to shape after vehicle impacts. Ideal for lane splitting and hazard zoning.",
+            "id": "eb-dl-pu80",
+            "images": [
+                {
+                    "alt": "Flexible PU Delineator Post",
+                    "h": 1024,
+                    "src": "img/products/road-delineators/eb-dl-pu80/eb-dl-pu80-0.png",
+                    "w": 1024
+                }
+            ],
+            "model": "EB-DL-PU80",
+            "specifications": [
+                {
+                    "label": "Dimensions / Capacity",
+                    "value": "800 mm Height | 80 mm Post Diameter"
+                },
+                {
+                    "label": "Material Build",
+                    "value": "High-elasticity Polyurethane (PU)"
+                },
+                {
+                    "label": "Key Specifications",
+                    "value": "3 High-visibility retroreflective silver bands"
+                }
+            ],
+            "title": "Flexible PU Delineator Post"
+        },
+        {
+            "category_slug": "road-delineators",
+            "description": "High-density plastic board featuring chevron reflective stripes. Perfect for construction diversions and toll booths.",
+            "id": "eb-dl-pl10",
+            "images": [
+                {
+                    "alt": "Plastic Delineator Board",
+                    "h": 1024,
+                    "src": "img/products/road-delineators/eb-dl-pl10/eb-dl-pl10-0.png",
+                    "w": 1024
+                }
+            ],
+            "model": "EB-DL-PL10",
+            "specifications": [
+                {
+                    "label": "Dimensions / Capacity",
+                    "value": "1000 mm Height | 150 mm Face Width"
+                },
+                {
+                    "label": "Material Build",
+                    "value": "High-Density Polyethylene (HDPE)"
+                },
+                {
+                    "label": "Key Specifications",
+                    "value": "Flat hazard warning sign face with Chevron sheeting"
+                }
+            ],
+            "title": "Plastic Delineator Board"
+        },
+        {
+            "category_slug": "anti-glare-panels",
+            "description": "Anti Glare Board",
+            "id": "8589934859-ksjd",
+            "images": [
+                {
+                    "alt": "Anti Glare Board",
+                    "h": 2048,
+                    "src": "img/products/anti-glare-panels/8589934859-ksjd/8589934859-ksjd-0.png",
+                    "w": 2048
+                }
+            ],
+            "model": "8589934859-ksjd",
+            "specifications": [
+                {
+                    "label": "asdasd",
+                    "value": "asdasdas"
+                },
+                {
+                    "label": "dasdasdasd",
+                    "value": "dfsgcdfg"
+                },
+                {
+                    "label": "asczxvdvs",
+                    "value": "dfg sdg sdg dfg dfg df"
+                }
+            ],
+            "title": "Anti Glare Board"
+        },
+        {
+            "category_slug": "emergency-equipment",
+            "description": "Long-range rechargeable search light featuring heavy-duty beam focus, dimmer function, and visual warning flash modes.",
+            "id": "eb-ee-sl05",
+            "images": [
+                {
+                    "src": "img/products/emergency-equipment/eb-ee-sl05/eb-ee-sl05-0.png",
+                    "w": 1024,
+                    "h": 1024,
+                    "alt": "Rechargeable Tactical Search Light"
+                },
+                {
+                    "src": "img/products/emergency-equipment/eb-ee-sl05/eb-ee-sl05-1.jpg",
+                    "w": 1500,
+                    "h": 1500,
+                    "alt": "Rechargeable Tactical Search Light"
+                }
+            ],
+            "model": "EB-EE-SL05",
+            "specifications": [
+                {
+                    "label": "Dimensions / Capacity",
+                    "value": "50 Watts LED | 5000 mAh Li-ion battery"
+                },
+                {
+                    "label": "Material Build",
+                    "value": "Shockproof ABS plastic body + shoulder strap"
+                },
+                {
+                    "label": "Key Specifications",
+                    "value": "1000m range, 3 modes (Strong / Dim / Flashing beacon)"
+                }
+            ],
+            "title": "Rechargeable Tactical Search Light"
+        },
+        {
+            "category_slug": "road-barriers",
+            "description": "Durable water or sand fillable barrier designed to absorb impact energy. Includes interlocking lugs to form straight or curved paths.",
+            "id": "eb-br-wf15",
+            "images": [
+                {
+                    "alt": "Water-Fillable Traffic Barrier",
+                    "h": 2048,
+                    "src": "img/products/road-barriers/eb-br-wf15/eb-br-wf15-0.jpg",
+                    "w": 2048
+                },
+                {
+                    "alt": "Water-Fillable Traffic Barrier",
+                    "h": 800,
+                    "src": "img/products/road-barriers/eb-br-wf15/eb-br-wf15-1.png",
+                    "w": 800
+                },
+                {
+                    "alt": "Water-Fillable Traffic Barrier",
+                    "h": 800,
+                    "src": "img/products/road-barriers/eb-br-wf15/eb-br-wf15-2.png",
+                    "w": 800
+                },
+                {
+                    "alt": "Water-Fillable Traffic Barrier",
+                    "h": 350,
+                    "src": "img/products/road-barriers/eb-br-wf15/eb-br-wf15-3.webp",
+                    "w": 700
+                }
+            ],
+            "model": "EB-BR-WF15",
+            "specifications": [
+                {
+                    "label": "Dimensions / Capacity",
+                    "value": "1500 x 450 x 800 mm"
+                },
+                {
+                    "label": "Material Build",
+                    "value": "UV-Stabilized High-Density Polyethylene (HDPE)"
+                },
+                {
+                    "label": "Key Specifications",
+                    "value": "Interlocking joint tabs, drain plug at bottom"
+                }
+            ],
+            "title": "Water-Fillable Traffic Barrier"
+        }
+    ],
+    "clients": [
+        {
+            "id": "client_1783846307_ASC.png",
+            "name": "Asc",
+            "logo": "img/logo/ASC.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 0.9
+        },
+        {
+            "id": "client_1783846307_NAHI.png",
+            "name": "Nahi",
+            "logo": "img/logo/NAHI.png",
+            "link": "https://nhai.gov.in/",
+            "link_enabled": true,
+            "scale": 1.5
+        },
+        {
+            "id": "client_1783846307_KCPL.png",
+            "name": "Kcpl",
+            "logo": "img/logo/KCPL.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 2.3
+        },
+        {
+            "id": "client_1783846307_DD.png",
+            "name": "Dd",
+            "logo": "img/logo/DD.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 1.3
+        },
+        {
+            "id": "client_1783846307_NKC.png",
+            "name": "Nkc",
+            "logo": "img/logo/NKC.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 1.3
+        },
+        {
+            "id": "client_1783846307_Emperium.png",
+            "name": "Emperium",
+            "logo": "img/logo/Emperium.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 2.1
+        },
+        {
+            "id": "client_1783846307_Inventis.png",
+            "name": "Inventis",
+            "logo": "img/logo/Inventis.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 1.2
+        },
+        {
+            "id": "client_1783846307_logo copy_1.png",
+            "name": "Logo Copy 1",
+            "logo": "img/logo/logo copy_1.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 1.1
+        },
+        {
+            "id": "client_1783846307_METAGUISE.png",
+            "name": "Metaguise",
+            "logo": "img/logo/METAGUISE.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 1.2
+        },
+        {
+            "id": "client_1783846307_DeFloorplanners.png",
+            "name": "Defloorplanners",
+            "logo": "img/logo/DeFloorplanners.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 0.5
+        },
+        {
+            "id": "client_1783846307_Space Design Studio.png",
+            "name": "Space Design Studio",
+            "logo": "img/logo/Space Design Studio.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 1.8
+        },
+        {
+            "id": "client_1783846307_Ngatahi.png",
+            "name": "Ngatahi",
+            "logo": "img/logo/Ngatahi.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 0.9
+        }
+    ]
+}
