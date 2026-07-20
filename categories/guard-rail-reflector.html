@@ -1034,6 +1034,11 @@
             }
             $thumbContainer.hide();
             
+            $gallery.removeAttr('style');
+            $gallery.find('.item').removeAttr('style');
+            $gallery.find('.gallery-thumb-wrap').removeAttr('style');
+            $gallery.find('.gallery-thumb-img').removeAttr('style');
+            
             if (totalGalleryItems === 1) {
                 $gallery.css({
                     'display': 'flex',
@@ -1042,14 +1047,17 @@
                     'width': '100%',
                     'margin': '0 auto'
                 });
+                var cardMaxWidth = (winWidth < 768) ? '300px' : '290px';
+                var cardHeight = (winWidth < 768) ? '260px' : '280px';
+
                 $gallery.find('.item').css({
                     'width': '100%',
-                    'max-width': '285px',
+                    'max-width': cardMaxWidth,
                     'padding': '8px',
                     'margin': '0 auto'
                 });
                 $gallery.find('.gallery-thumb-wrap').css({
-                    'height': '280px',
+                    'height': cardHeight,
                     'width': '100%',
                     'display': 'block'
                 });
@@ -1059,11 +1067,6 @@
                     'object-fit': 'cover'
                 });
             } else {
-                $gallery.removeAttr('style');
-                $gallery.find('.item').removeAttr('style');
-                $gallery.find('.gallery-thumb-wrap').removeAttr('style');
-                $gallery.find('.gallery-thumb-img').removeAttr('style');
-                
                 $gallery.css({
                     'display': 'flex',
                     'flex-wrap': 'wrap',
@@ -1077,8 +1080,9 @@
                     'box-sizing': 'border-box'
                 });
                 
-                var cols = Math.min(totalGalleryItems, 4);
-                if (winWidth < 992 && cols > 3) cols = 3;
+                var cols = 4;
+                if (winWidth < 992) cols = 3;
+                if (winWidth < 768) cols = 2;
                 var itemWidth = (100 / cols) + '%';
                 $gallery.find('.item').css('width', itemWidth);
             }
