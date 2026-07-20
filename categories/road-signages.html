@@ -122,22 +122,14 @@
 
   /* Styling for Category Showcase Mini Thumbnail Strip */
   .showcase-gallery-thumbs {
-      max-width: 520px;
+      max-width: 100%;
       margin: 15px auto 0 auto;
       padding: 6px 0;
-  }
-  .showcase-gallery-thumbs .owl-stage-outer {
-      padding: 6px 0;
-      margin: -6px 0;
-      overflow: hidden;
-  }
-  .showcase-gallery-thumbs .owl-stage {
-      display: flex;
-      align-items: center;
-  }
-  .showcase-gallery-thumbs .owl-item {
       display: flex;
       justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
   }
   .showcase-thumb-item {
       width: 65px;
@@ -157,7 +149,7 @@
       display: block;
       pointer-events: none;
   }
-  .showcase-thumb-item.active, .showcase-gallery-thumbs .center .showcase-thumb-item {
+  .showcase-thumb-item.active {
       border-color: #50ab3c !important;
       box-shadow: 0 0 0 2px rgba(80, 171, 60, 0.35) !important;
       transform: scale(1.04);
@@ -276,7 +268,7 @@
             </div>
 
             <!-- Category Showcase Mini Thumbnail Strip -->
-            <div class="showcase-gallery-thumbs owl-carousel" id="showcase-thumbs" style="display:none;">
+            <div class="showcase-gallery-thumbs" id="showcase-thumbs" style="display:none;">
                 
                 <div class="showcase-thumb-item active" data-index="0">
                     <img src="../img/categories/showcase/road-signages/road-signages-showcase-0.jpg" alt="Road Signages & Boards">
@@ -885,50 +877,25 @@
         
         $thumbContainer.find('.showcase-thumb-item').removeClass('active');
         $thumbContainer.find('.showcase-thumb-item[data-index="' + realIndex + '"]').addClass('active');
-
-        // Rotate thumbnail carousel to target item cleanly
-        if (owlThumbs && $thumbContainer.hasClass('owl-loaded')) {
-            isSyncing = true;
-            $thumbContainer.trigger('to.owl.carousel', [realIndex, 250, true]);
-            setTimeout(function() { isSyncing = false; }, 260);
-        }
     }
 
     function initShowcaseGallery() {
         var winWidth = $(window).width();
         var shouldBeCarousel = (totalGalleryItems > 4) || (winWidth < 768 && totalGalleryItems > 1);
 
+        if (totalGalleryItems > 1) {
+            $thumbContainer.css('display', 'flex');
+        } else {
+            $thumbContainer.hide();
+        }
+
         if (shouldBeCarousel) {
-            if (totalGalleryItems > 1) {
-                $thumbContainer.show();
-                
-                // Initialize mini thumbnail owl carousel if not already initialized
-                if (!$thumbContainer.hasClass('owl-loaded')) {
-                    owlThumbs = $thumbContainer.owlCarousel({
-                        loop: true,
-                        center: true,
-                        margin: 8,
-                        nav: false,
-                        dots: false,
-                        autoplay: false,
-                        touchDrag: false,
-                        mouseDrag: false,
-                        pullDrag: false,
-                        responsive: {
-                            0: { items: 3 },
-                            480: { items: 5 },
-                            768: { items: 5 },
-                            992: { items: 7 }
-                        }
-                    });
-                }
-            } else {
-                $thumbContainer.hide();
-            }
+            $gallery.removeAttr('style');
+            $gallery.find('.item').removeAttr('style');
+            $gallery.find('.gallery-thumb-wrap').removeAttr('style');
+            $gallery.find('.gallery-thumb-img').removeAttr('style');
 
             if (!$gallery.hasClass('owl-loaded')) {
-                $gallery.removeAttr('style');
-                $gallery.find('.item').removeAttr('style');
                 if (!$gallery.hasClass('owl-carousel')) {
                     $gallery.addClass('owl-carousel');
                 }
@@ -956,11 +923,6 @@
                 $gallery.trigger('destroy.owl.carousel');
                 $gallery.removeClass('owl-carousel owl-loaded');
             }
-            if ($thumbContainer.hasClass('owl-loaded')) {
-                $thumbContainer.trigger('destroy.owl.carousel');
-                $thumbContainer.removeClass('owl-carousel owl-loaded');
-            }
-            $thumbContainer.hide();
             
             $gallery.removeAttr('style');
             $gallery.find('.item').removeAttr('style');
@@ -1089,9 +1051,6 @@
         
         $thumbContainer.find('.showcase-thumb-item').removeClass('active');
         $thumbContainer.find('.showcase-thumb-item[data-index="' + targetIdx + '"]').addClass('active');
-        if (owlThumbs && $thumbContainer.hasClass('owl-loaded')) {
-            $thumbContainer.trigger('to.owl.carousel', [targetIdx, 250, true]);
-        }
         
         setTimeout(function() { isSyncing = false; }, 260);
     }
@@ -1103,12 +1062,11 @@
         var idx = $(this).data('index');
         if (typeof idx !== 'undefined') {
             isSyncing = true;
-            $gallery.trigger('to.owl.carousel', [idx, 300, true]);
+            if ($gallery.hasClass('owl-loaded')) {
+                $gallery.trigger('to.owl.carousel', [idx, 300, true]);
+            }
             $thumbContainer.find('.showcase-thumb-item').removeClass('active');
             $thumbContainer.find('.showcase-thumb-item[data-index="' + idx + '"]').addClass('active');
-            if (owlThumbs && $thumbContainer.hasClass('owl-loaded')) {
-                $thumbContainer.trigger('to.owl.carousel', [idx, 250, true]);
-            }
             setTimeout(function() { isSyncing = false; }, 310);
         }
     });
