@@ -304,24 +304,29 @@ if (window.location.hash) {
         if (document.activeElement && typeof document.activeElement.blur === 'function') {
             document.activeElement.blur();
         }
-        $('.product-cat-card').blur();
+        $('.product-cat-card, .rel-card, .rel-card-btn').blur();
     });
 
     /*---------------------------------
-        Category Carousel 1-Tap Mobile Navigation Guard
+        Category & Related Carousel 1-Tap Mobile Navigation Guard
     ----------------------------------*/
     (function () {
         var startX = 0, startY = 0;
+        var cardSelector = '.categories-carousel .product-cat-card, ' +
+                           '.related-products-carousel .rel-card-btn, ' +
+                           '.related-products-carousel .rel-card-img, ' +
+                           '.related-products-carousel h5 a';
         
-        $(document).on('touchstart', '.categories-carousel .product-cat-card', function (e) {
+        $(document).on('touchstart', cardSelector, function (e) {
             if (e.originalEvent && e.originalEvent.touches && e.originalEvent.touches[0]) {
                 startX = e.originalEvent.touches[0].clientX;
                 startY = e.originalEvent.touches[0].clientY;
             }
         });
 
-        $(document).on('touchend', '.categories-carousel .product-cat-card', function (e) {
-            var href = $(this).attr('href');
+        $(document).on('touchend', cardSelector, function (e) {
+            var $target = $(this);
+            var href = $target.attr('href') || $target.find('a').attr('href');
             if (!href || href === '#' || href.indexOf('javascript:') === 0) return;
 
             var endX = startX, endY = startY;
