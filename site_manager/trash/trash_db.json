@@ -372,5 +372,39 @@
             }
         ],
         "parent_trash_id": null
+    },
+    {
+        "trash_id": "prod_cone-3_1784654736",
+        "type": "product",
+        "id": "cone-3",
+        "name": "Cone 3",
+        "deleted_date": "2026-07-21 22:55:36",
+        "metadata_path": "trash\\products\\prod_cone-3_1784654736\\metadata.json",
+        "original_images": [
+            {
+                "alt": "Cone 3",
+                "h": 554,
+                "src": "img/products/traffic-cones/cone-3/cone-3-0.jpg",
+                "w": 554
+            }
+        ],
+        "parent_trash_id": null
+    },
+    {
+        "trash_id": "prod_cone-4_1784654736",
+        "type": "product",
+        "id": "cone-4",
+        "name": "Cone 4",
+        "deleted_date": "2026-07-21 22:55:36",
+        "metadata_path": "trash\\products\\prod_cone-4_1784654736\\metadata.json",
+        "original_images": [
+            {
+                "alt": "Cone 4",
+                "h": 447,
+                "src": "img/products/traffic-cones/cone-4/cone-4-0.jpg",
+                "w": 447
+            }
+        ],
+        "parent_trash_id": null
     }
 ]
