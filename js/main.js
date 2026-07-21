@@ -297,19 +297,50 @@ if (window.location.hash) {
 
     $(window).on("resize", hideClippedLogos);
 
-    /*------------------
-        Counter
-    --------------------*/
-    $('.count').each(function () {
-        $(this).prop('Counter', 0).animate({
-            Counter: $(this).text()
-        }, {
-            duration: 4000,
-            easing: 'swing',
-            step: function (now) {
-                $(this).text(Math.ceil(now));
+    /*---------------------------------
+        Clear Stale Focus on Back Navigation (BFCache)
+    ----------------------------------*/
+    $(window).on('pageshow', function (event) {
+        if (document.activeElement && typeof document.activeElement.blur === 'function') {
+            document.activeElement.blur();
+        }
+        $('.product-cat-card').blur();
+    });
+
+    /*---------------------------------
+        Category Carousel 1-Tap Mobile Navigation Guard
+    ----------------------------------*/
+    (function () {
+        var startX = 0, startY = 0;
+        
+        $(document).on('touchstart', '.categories-carousel .product-cat-card', function (e) {
+            if (e.originalEvent && e.originalEvent.touches && e.originalEvent.touches[0]) {
+                startX = e.originalEvent.touches[0].clientX;
+                startY = e.originalEvent.touches[0].clientY;
             }
         });
-    });
+
+        $(document).on('touchend', '.categories-carousel .product-cat-card', function (e) {
+            var href = $(this).attr('href');
+            if (!href || href === '#' || href.indexOf('javascript:') === 0) return;
+
+            var endX = startX, endY = startY;
+            if (e.originalEvent && e.originalEvent.changedTouches && e.originalEvent.changedTouches[0]) {
+                endX = e.originalEvent.changedTouches[0].clientX;
+                endY = e.originalEvent.changedTouches[0].clientY;
+            }
+
+            var deltaX = Math.abs(endX - startX);
+            var deltaY = Math.abs(endY - startY);
+
+            // If displacement is less than 10px, treat as a clean tap (not a swipe drag)
+            if (deltaX < 10 && deltaY < 10) {
+                if (document.activeElement && typeof document.activeElement.blur === 'function') {
+                    document.activeElement.blur();
+                }
+                window.location.href = href;
+            }
+        });
+    })();
 
 })(jQuery);
