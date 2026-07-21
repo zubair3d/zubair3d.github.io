@@ -304,7 +304,7 @@ if (window.location.hash) {
         if (document.activeElement && typeof document.activeElement.blur === 'function') {
             document.activeElement.blur();
         }
-        $('.product-cat-card, .rel-card, .rel-card-btn').blur();
+        $('.product-cat-card, .rel-card, .rel-card *, .rel-card-btn, .rel-card-img').blur();
     });
 
     /*---------------------------------
@@ -312,10 +312,7 @@ if (window.location.hash) {
     ----------------------------------*/
     (function () {
         var startX = 0, startY = 0;
-        var cardSelector = '.categories-carousel .product-cat-card, ' +
-                           '.related-products-carousel .rel-card-btn, ' +
-                           '.related-products-carousel .rel-card-img, ' +
-                           '.related-products-carousel h5 a';
+        var cardSelector = '.categories-carousel .product-cat-card, .related-products-carousel .rel-card';
         
         $(document).on('touchstart', cardSelector, function (e) {
             if (e.originalEvent && e.originalEvent.touches && e.originalEvent.touches[0]) {
@@ -325,8 +322,12 @@ if (window.location.hash) {
         });
 
         $(document).on('touchend', cardSelector, function (e) {
-            var $target = $(this);
-            var href = $target.attr('href') || $target.find('a').attr('href');
+            var $card = $(this);
+            var $link = $(e.target).closest('a');
+            if (!$link.length) {
+                $link = $card.is('a') ? $card : $card.find('a').first();
+            }
+            var href = $link.attr('href');
             if (!href || href === '#' || href.indexOf('javascript:') === 0) return;
 
             var endX = startX, endY = startY;
