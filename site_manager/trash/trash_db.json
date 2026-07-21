@@ -34,40 +34,6 @@
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-pp-glv03_1783849588",
-        "type": "product",
-        "id": "eb-pp-glv03",
-        "name": "Protective Safety Gloves",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-pp-glv03_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Protective Safety Gloves",
-                "h": 1024,
-                "src": "img/products/ppe-safety/eb-pp-glv03/eb-pp-glv03-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-pp-hlm02_1783849588",
-        "type": "product",
-        "id": "eb-pp-hlm02",
-        "name": "Industrial Safety Helmet",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-pp-hlm02_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Industrial Safety Helmet",
-                "h": 1024,
-                "src": "img/products/ppe-safety/eb-pp-hlm02/eb-pp-hlm02-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
         "trash_id": "prod_eb-pp-vst01_1783849588",
         "type": "product",
         "id": "eb-pp-vst01",
@@ -79,87 +45,6 @@
                 "alt": "High-Visibility Safety Vest",
                 "h": 1024,
                 "src": "img/products/ppe-safety/eb-pp-vst01/eb-pp-vst01-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-tc-rub80_1783849588",
-        "type": "product",
-        "id": "eb-tc-rub80",
-        "name": "Rubber Safety Cone",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-tc-rub80_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Rubber Safety Cone",
-                "h": 1024,
-                "src": "img/products/traffic-cones/eb-tc-rub80/eb-tc-rub80-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-tc-flx75_1783849588",
-        "type": "product",
-        "id": "eb-tc-flx75",
-        "name": "Flexible PU Cone",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-tc-flx75_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Flexible PU Cone - View 1",
-                "h": 1024,
-                "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-0.png",
-                "w": 1024
-            },
-            {
-                "alt": "Flexible PU Cone",
-                "h": 1264,
-                "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-1.png",
-                "w": 871
-            },
-            {
-                "alt": "Flexible PU Cone",
-                "h": 1200,
-                "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-2.jpg",
-                "w": 686
-            },
-            {
-                "alt": "Flexible PU Cone",
-                "h": 1104,
-                "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-3.jpg",
-                "w": 736
-            },
-            {
-                "alt": "Flexible PU Cone",
-                "h": 920,
-                "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-4.jpg",
-                "w": 736
-            },
-            {
-                "alt": "Flexible PU Cone",
-                "h": 981,
-                "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-5.jpg",
-                "w": 736
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-tc-pvc75_1783849588",
-        "type": "product",
-        "id": "eb-tc-pvc75",
-        "name": "PVC Safety Cone",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-tc-pvc75_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "PVC Safety Cone",
-                "h": 1024,
-                "src": "img/products/traffic-cones/eb-tc-pvc75/eb-tc-pvc75-0.png",
                 "w": 1024
             }
         ],

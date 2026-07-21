@@ -98,19 +98,32 @@
         flex-grow: 1;
       }
       .product-cat-link {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: #50ab3c;
+        color: #ffffff;
+        padding: 10px 16px;
+        border-radius: 4px;
         font-size: 13px;
         font-weight: 600;
-        color: #50ab3c;
         text-decoration: none;
-        transition: color 0.3s;
-        display: inline-flex;
-        align-items: center;
         margin-top: auto;
-        align-self: center;
+        transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
       }
-      .product-cat-link:hover {
-        color: #3d8c2e;
-        text-decoration: underline;
+      @media (hover: hover) {
+        .product-cat-link:hover {
+          background: #3d8c2e;
+          color: #ffffff;
+          transform: scale(1.02);
+          box-shadow: 0 4px 12px rgba(80, 171, 60, 0.25);
+          text-decoration: none;
+        }
+      }
+      .product-cat-link:active {
+        transform: scale(0.98);
       }
     </style>
 
