@@ -694,6 +694,35 @@
                 }
             ],
             "title": "MS Steel Delineator Post"
+        },
+        {
+            "id": "stud-3m",
+            "model": "Stud-3M",
+            "title": "Stud 3M",
+            "category_slug": "road-studs",
+            "description": "Stud-3M",
+            "specifications": [
+                {
+                    "label": "asdasd",
+                    "value": "asda"
+                },
+                {
+                    "label": "asdasd",
+                    "value": "sdasd"
+                },
+                {
+                    "label": "asdasd",
+                    "value": "asdasd"
+                }
+            ],
+            "images": [
+                {
+                    "alt": "Stud 3M",
+                    "h": 1000,
+                    "src": "img/products/road-studs/stud-3m/stud-3m-0.webp",
+                    "w": 1000
+                }
+            ]
         }
     ],
     "clients": [
