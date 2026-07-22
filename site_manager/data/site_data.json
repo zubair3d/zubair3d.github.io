@@ -99,83 +99,13 @@
             "showcase_images": [
                 {
                     "h": 2048,
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-0.png",
-                    "w": 2048
-                },
-                {
-                    "h": 2048,
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-1.jpg",
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-0.jpg",
                     "w": 2048
                 },
                 {
                     "h": 1000,
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-2.webp",
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-1.webp",
                     "w": 750
-                },
-                {
-                    "h": 755,
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-3.webp",
-                    "w": 915
-                },
-                {
-                    "h": 800,
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-4.jpg",
-                    "w": 800
-                },
-                {
-                    "h": 985,
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-5.webp",
-                    "w": 1000
-                },
-                {
-                    "h": 500,
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-6.webp",
-                    "w": 500
-                },
-                {
-                    "h": 2048,
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-7.png",
-                    "w": 2048
-                },
-                {
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-8.png",
-                    "w": 2048,
-                    "h": 2048
-                },
-                {
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-9.jpg",
-                    "w": 554,
-                    "h": 554
-                },
-                {
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-10.png",
-                    "w": 1536,
-                    "h": 2728
-                },
-                {
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-11.jpg",
-                    "w": 800,
-                    "h": 800
-                },
-                {
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-12.png",
-                    "w": 2048,
-                    "h": 2048
-                },
-                {
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-13.jpg",
-                    "w": 800,
-                    "h": 800
-                },
-                {
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-14.jpg",
-                    "w": 2000,
-                    "h": 2000
-                },
-                {
-                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-15.png",
-                    "w": 2048,
-                    "h": 2048
                 }
             ]
         },
