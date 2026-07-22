@@ -355,56 +355,5 @@
             }
         ],
         "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-dl-ms75_1784471230",
-        "type": "product",
-        "id": "eb-dl-ms75",
-        "name": "MS Steel Delineator Post",
-        "deleted_date": "2026-07-19 19:57:10",
-        "metadata_path": "trash\\products\\prod_eb-dl-ms75_1784471230\\metadata.json",
-        "original_images": [
-            {
-                "alt": "MS Steel Delineator Post",
-                "h": 1024,
-                "src": "img/products/road-delineators/eb-dl-ms75/eb-dl-ms75-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_cone-3_1784654736",
-        "type": "product",
-        "id": "cone-3",
-        "name": "Cone 3",
-        "deleted_date": "2026-07-21 22:55:36",
-        "metadata_path": "trash\\products\\prod_cone-3_1784654736\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Cone 3",
-                "h": 554,
-                "src": "img/products/traffic-cones/cone-3/cone-3-0.jpg",
-                "w": 554
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_cone-4_1784654736",
-        "type": "product",
-        "id": "cone-4",
-        "name": "Cone 4",
-        "deleted_date": "2026-07-21 22:55:36",
-        "metadata_path": "trash\\products\\prod_cone-4_1784654736\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Cone 4",
-                "h": 447,
-                "src": "img/products/traffic-cones/cone-4/cone-4-0.jpg",
-                "w": 447
-            }
-        ],
-        "parent_trash_id": null
     }
 ]

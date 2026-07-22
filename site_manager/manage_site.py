@@ -6,6 +6,7 @@ import re
 import subprocess
 import webbrowser
 import time
+import uuid
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
 
@@ -57,6 +58,123 @@ def save_config(root_path):
         print(f"Failed to save config: {e}")
 
 load_config()
+
+def stage_and_reindex_images(image_list, target_dir_rel, prefix, workspace_dir, trash_dir, log_func=print):
+    """
+    Two-Pass Atomic Staging Algorithm for showcase/gallery images.
+    - image_list: list of dicts containing 'src', 'w', 'h' (and optional 'alt').
+    - target_dir_rel: relative target folder e.g. "img/categories/showcase/road-delineators"
+    - prefix: e.g. "road-delineators-showcase" or "eb-tc-flx75"
+    - workspace_dir: root website directory
+    - trash_dir: site_manager/trash directory
+    """
+    target_dir_abs = os.path.join(workspace_dir, target_dir_rel)
+
+    if not image_list:
+        # Move any remaining files in target folder to trash if empty
+        if os.path.exists(target_dir_abs):
+            for filename in os.listdir(target_dir_abs):
+                file_abs = os.path.join(target_dir_abs, filename)
+                if os.path.isfile(file_abs):
+                    trash_img_dir = os.path.join(trash_dir, "images")
+                    os.makedirs(trash_img_dir, exist_ok=True)
+                    dest_abs = os.path.join(trash_img_dir, filename)
+                    if os.path.exists(dest_abs):
+                        name_part, ext_part = os.path.splitext(filename)
+                        dest_abs = os.path.join(trash_img_dir, f"{name_part}_{int(time.time())}{ext_part}")
+                    try:
+                        shutil.move(file_abs, dest_abs)
+                        log_func(f"Moved removed asset {filename} to trash/images/")
+                    except Exception as e:
+                        log_func(f"Error trashing asset {filename}: {e}")
+        return []
+
+    os.makedirs(target_dir_abs, exist_ok=True)
+
+    session_id = uuid.uuid4().hex[:8]
+    staged_items = []
+    staged_tmp_basenames = []
+    
+    # PASS 1: Atomic Staging to unique temporary files
+    for idx, img_info in enumerate(image_list):
+        src_raw = img_info["src"]
+        ext = os.path.splitext(src_raw)[1] or ".jpg"
+        tmp_filename = f"_tmp_stage_{session_id}_{idx}{ext}"
+        tmp_rel = f"{target_dir_rel}/{tmp_filename}"
+        tmp_abs = os.path.join(workspace_dir, tmp_rel)
+
+        # Check if src_raw is inside workspace or external
+        src_abs = src_raw if os.path.isabs(src_raw) else os.path.join(workspace_dir, src_raw)
+
+        try:
+            if os.path.exists(src_abs):
+                # If src_abs is already in target_dir_abs, rename/move to tmp_abs
+                if os.path.dirname(os.path.abspath(src_abs)) == os.path.abspath(target_dir_abs):
+                    shutil.move(src_abs, tmp_abs)
+                else:
+                    shutil.copy2(src_abs, tmp_abs)
+            else:
+                # If file doesn't exist, log warning
+                log_func(f"Warning: Image source path {src_raw} not found")
+                continue
+
+            item_copy = dict(img_info)
+            item_copy["_tmp_abs"] = tmp_abs
+            item_copy["_ext"] = ext
+            staged_items.append(item_copy)
+            staged_tmp_basenames.append(tmp_filename)
+        except Exception as e:
+            log_func(f"Error staging image {src_raw}: {e}")
+
+    # PASS 2: Orphan Cleanup (Move ALL non-staged files to trash BEFORE sequential renaming!)
+    if os.path.exists(target_dir_abs):
+        for filename in os.listdir(target_dir_abs):
+            if filename in staged_tmp_basenames:
+                continue
+
+            if filename.startswith("_tmp_stage_"):
+                # Clean leftover tmp file from old session
+                try:
+                    os.remove(os.path.join(target_dir_abs, filename))
+                except Exception:
+                    pass
+                continue
+
+            file_abs = os.path.join(target_dir_abs, filename)
+            if os.path.isfile(file_abs):
+                trash_img_dir = os.path.join(trash_dir, "images")
+                os.makedirs(trash_img_dir, exist_ok=True)
+                dest_abs = os.path.join(trash_img_dir, filename)
+                if os.path.exists(dest_abs):
+                    name_part, ext_part = os.path.splitext(filename)
+                    dest_abs = os.path.join(trash_img_dir, f"{name_part}_{int(time.time())}{ext_part}")
+                try:
+                    shutil.move(file_abs, dest_abs)
+                    log_func(f"Moved orphan image {filename} to trash/images/")
+                except Exception as e:
+                    log_func(f"Error trashing orphan image {filename}: {e}")
+
+    # PASS 3: Final Sequential Renaming
+    final_list = []
+
+    for idx, staged_item in enumerate(staged_items):
+        ext = staged_item["_ext"]
+        final_filename = f"{prefix}-{idx}{ext}"
+        final_rel = f"{target_dir_rel}/{final_filename}"
+        final_abs = os.path.join(workspace_dir, final_rel)
+
+        tmp_abs = staged_item.pop("_tmp_abs")
+        staged_item.pop("_ext")
+
+        try:
+            if os.path.exists(tmp_abs):
+                shutil.move(tmp_abs, final_abs)
+            staged_item["src"] = final_rel
+            final_list.append(staged_item)
+        except Exception as e:
+            log_func(f"Error finalizing image {final_filename}: {e}")
+
+    return final_list
 
 # Premium Dark Stylesheet
 STYLESHEET = """
@@ -373,6 +491,7 @@ class CategoryDialog(QDialog):
         showcase_layout = QHBoxLayout(showcase_group)
         
         self.showcase_list = QListWidget()
+        self.showcase_list.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.showcase_list.setIconSize(QSize(60, 60))
         self.refresh_showcase_list()
         
@@ -524,10 +643,14 @@ class CategoryDialog(QDialog):
             self.refresh_showcase_list()
 
     def remove_showcase(self):
-        row = self.showcase_list.currentRow()
-        if row >= 0:
-            del self.showcase_images[row]
-            self.refresh_showcase_list()
+        selected_indexes = self.showcase_list.selectedIndexes()
+        if not selected_indexes:
+            return
+        selected_rows = sorted(list(set(idx.row() for idx in selected_indexes)), reverse=True)
+        for row in selected_rows:
+            if 0 <= row < len(self.showcase_images):
+                del self.showcase_images[row]
+        self.refresh_showcase_list()
 
     def move_showcase_up(self):
         row = self.showcase_list.currentRow()
@@ -632,6 +755,7 @@ class ProductDialog(QDialog):
         img_layout = QHBoxLayout(img_group)
         
         self.img_list = QListWidget()
+        self.img_list.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.img_list.setIconSize(QSize(50, 50))
         self.refresh_image_list()
         
@@ -739,10 +863,14 @@ class ProductDialog(QDialog):
         self.refresh_image_list()
 
     def remove_product_image(self):
-        row = self.img_list.currentRow()
-        if row >= 0:
-            del self.product_images[row]
-            self.refresh_image_list()
+        selected_indexes = self.img_list.selectedIndexes()
+        if not selected_indexes:
+            return
+        selected_rows = sorted(list(set(idx.row() for idx in selected_indexes)), reverse=True)
+        for row in selected_rows:
+            if 0 <= row < len(self.product_images):
+                del self.product_images[row]
+        self.refresh_image_list()
 
     def move_image_up(self):
         row = self.img_list.currentRow()
@@ -1415,28 +1543,18 @@ class MainWindow(QMainWindow):
                 except Exception as e:
                     self.log(f"Error copying category image: {e}")
                     
-            # Copy showcase images
-            final_showcase = []
-            for idx, img_info in enumerate(data.get("showcase_images", [])):
-                src_path = img_info["src"]
-                if src_path.startswith("img/"):
-                    final_showcase.append(img_info)
-                else:
-                    ext = os.path.splitext(src_path)[1] or ".png"
-                    new_rel = f"img/categories/showcase/{data['slug']}/{data['slug']}-showcase-{idx}{ext}"
-                    new_abs = os.path.join(WORKSPACE_DIR, new_rel)
-                    try:
-                        os.makedirs(os.path.dirname(new_abs), exist_ok=True)
-                        shutil.copy2(src_path, new_abs)
-                        final_showcase.append({
-                            "src": new_rel,
-                            "w": img_info["w"],
-                            "h": img_info["h"]
-                        })
-                    except Exception as e:
-                        self.log(f"Error copying category showcase image: {e}")
-            data["showcase_images"] = final_showcase
-                    
+            # Stage & reindex showcase images
+            sc_dir_rel = f"img/categories/showcase/{data['slug']}"
+            prefix = f"{data['slug']}-showcase"
+            data["showcase_images"] = stage_and_reindex_images(
+                data.get("showcase_images", []),
+                sc_dir_rel,
+                prefix,
+                WORKSPACE_DIR,
+                TRASH_DIR,
+                log_func=self.log
+            )
+
             self.categories.append(data)
             self.save_database()
             self.refresh_catalog_tree()
@@ -1469,11 +1587,12 @@ class MainWindow(QMainWindow):
         if dialog.exec() == QDialog.Accepted:
             data = dialog.get_data()
             
-            # Copy image if selected and changed
+            # Check if main category image changed and clean up old main image if different extension
+            old_main_img_rel = cat.get("image", "")
             if data["image"] and not data["image"].startswith("img/categories/"):
                 old_img = data["image"]
                 ext = os.path.splitext(old_img)[1] or ".png"
-                new_img_rel = f"img/categories/{data['slug']}{ext}"
+                new_img_rel = f"img/categories/{slug}{ext}"
                 new_img_abs = os.path.join(WORKSPACE_DIR, new_img_rel)
                 
                 try:
@@ -1481,27 +1600,30 @@ class MainWindow(QMainWindow):
                     data["image"] = new_img_rel
                 except Exception as e:
                     self.log(f"Error copying category image: {e}")
-            
-            # Copy showcase images
-            final_showcase = []
-            for idx, img_info in enumerate(data.get("showcase_images", [])):
-                src_path = img_info["src"]
-                if src_path.startswith("img/"):
-                    final_showcase.append(img_info)
-                else:
-                    ext = os.path.splitext(src_path)[1] or ".png"
-                    new_rel = f"img/categories/showcase/{cat['slug']}/{cat['slug']}-showcase-{idx}{ext}"
-                    new_abs = os.path.join(WORKSPACE_DIR, new_rel)
+
+            if old_main_img_rel and data["image"] != old_main_img_rel:
+                old_main_abs = os.path.join(WORKSPACE_DIR, old_main_img_rel)
+                if os.path.exists(old_main_abs) and os.path.abspath(old_main_abs) != os.path.abspath(os.path.join(WORKSPACE_DIR, data["image"])):
+                    trash_img_dir = os.path.join(TRASH_DIR, "images")
+                    os.makedirs(trash_img_dir, exist_ok=True)
+                    dest_abs = os.path.join(trash_img_dir, os.path.basename(old_main_img_rel))
                     try:
-                        os.makedirs(os.path.dirname(new_abs), exist_ok=True)
-                        shutil.copy2(src_path, new_abs)
-                        final_showcase.append({
-                            "src": new_rel,
-                            "w": img_info["w"],
-                            "h": img_info["h"]
-                        })
+                        shutil.move(old_main_abs, dest_abs)
+                        self.log(f"Moved replaced main category image {old_main_img_rel} to trash/images/")
                     except Exception as e:
-                        self.log(f"Error copying category showcase image: {e}")
+                        self.log(f"Error trashing main category image: {e}")
+            
+            # Stage & reindex showcase images
+            sc_dir_rel = f"img/categories/showcase/{slug}"
+            prefix = f"{slug}-showcase"
+            final_showcase = stage_and_reindex_images(
+                data.get("showcase_images", []),
+                sc_dir_rel,
+                prefix,
+                WORKSPACE_DIR,
+                TRASH_DIR,
+                log_func=self.log
+            )
             
             # Update values
             actual_cat = next((c for c in self.categories if c["slug"] == slug), None)
@@ -1510,6 +1632,25 @@ class MainWindow(QMainWindow):
                 actual_cat["description"] = data["description"]
                 actual_cat["image"] = data["image"]
                 actual_cat["showcase_images"] = final_showcase
+
+            # Clean up orphan images in category showcase directory
+            sc_dir_abs = os.path.join(WORKSPACE_DIR, "img", "categories", "showcase", slug)
+            if os.path.exists(sc_dir_abs):
+                final_basenames = [os.path.basename(img["src"]) for img in final_showcase]
+                for filename in os.listdir(sc_dir_abs):
+                    file_abs = os.path.join(sc_dir_abs, filename)
+                    if os.path.isfile(file_abs) and filename not in final_basenames:
+                        trash_img_dir = os.path.join(TRASH_DIR, "images")
+                        os.makedirs(trash_img_dir, exist_ok=True)
+                        dest_abs = os.path.join(trash_img_dir, filename)
+                        if os.path.exists(dest_abs):
+                            name_part, ext_part = os.path.splitext(filename)
+                            dest_abs = os.path.join(trash_img_dir, f"{name_part}_{int(time.time())}{ext_part}")
+                        try:
+                            shutil.move(file_abs, dest_abs)
+                            self.log(f"Moved removed showcase image {filename} to trash/images/")
+                        except Exception as e:
+                            self.log(f"Error trashing removed showcase image {filename}: {e}")
             
             self.save_database()
             self.refresh_catalog_tree()
@@ -1664,49 +1805,17 @@ class MainWindow(QMainWindow):
                 QMessageBox.warning(self, "Validation Error", "Product ID, Model, and Title cannot be empty.")
                 return
                 
-            # Copy product images to structured dir
-            structured_images = []
+            # Stage & reindex product images
             cat_slug = data.get("category_slug", "uncategorized")
-            for idx, img_info in enumerate(data["images"]):
-                src_path = img_info["src"]
-                if src_path.startswith(f"img/products/{cat_slug}/{data['id']}/"):
-                    structured_images.append(img_info)
-                else:
-                    ext = os.path.splitext(src_path)[1] or ".png"
-                    new_rel = f"img/products/{cat_slug}/{data['id']}/{data['id']}-{idx}{ext}"
-                    new_abs = os.path.join(WORKSPACE_DIR, new_rel)
-                    try:
-                        os.makedirs(os.path.dirname(new_abs), exist_ok=True)
-                        shutil.copy2(src_path, new_abs)
-                        structured_images.append({
-                            "src": new_rel,
-                            "w": img_info["w"],
-                            "h": img_info["h"],
-                            "alt": img_info["alt"]
-                        })
-                    except Exception as e:
-                        self.log(f"Error copying product image {src_path}: {e}")
-            
-            data["images"] = structured_images
-            
-            # Clean up orphan images in the product directory
-            prod_img_dir = os.path.join(WORKSPACE_DIR, "img", "products", cat_slug, data["id"])
-            if os.path.exists(prod_img_dir):
-                structured_basenames = [os.path.basename(img["src"]) for img in structured_images]
-                for filename in os.listdir(prod_img_dir):
-                    file_abs = os.path.join(prod_img_dir, filename)
-                    if os.path.isfile(file_abs) and filename not in structured_basenames:
-                        trash_img_dir = os.path.join(TRASH_DIR, "images")
-                        os.makedirs(trash_img_dir, exist_ok=True)
-                        dest_abs = os.path.join(trash_img_dir, filename)
-                        if os.path.exists(dest_abs):
-                            name_part, ext_part = os.path.splitext(filename)
-                            dest_abs = os.path.join(trash_img_dir, f"{name_part}_{int(time.time())}{ext_part}")
-                        try:
-                            shutil.move(file_abs, dest_abs)
-                            self.log(f"Moved removed image {filename} to trash/images/")
-                        except Exception as e:
-                            self.log(f"Error trashing removed image {filename}: {e}")
+            prod_dir_rel = f"img/products/{cat_slug}/{data['id']}"
+            data["images"] = stage_and_reindex_images(
+                data["images"],
+                prod_dir_rel,
+                data['id'],
+                WORKSPACE_DIR,
+                TRASH_DIR,
+                log_func=self.log
+            )
                             
             self.products.append(data)
             self.save_database()
@@ -1733,46 +1842,10 @@ class MainWindow(QMainWindow):
         dialog = ProductDialog(self, product=prod, categories=self.categories)
         if dialog.exec() == QDialog.Accepted:
             data = dialog.get_data()
-            
-            # Copy product images to structured dir
-            structured_images = []
             cat_slug = data.get("category_slug", "uncategorized")
-            for idx, img_info in enumerate(data["images"]):
-                src_path = img_info["src"]
-                ext = os.path.splitext(src_path)[1] or ".png"
-                new_rel = f"img/products/{cat_slug}/{prod_id}/{prod_id}-{idx}{ext}"
-                new_abs = os.path.join(WORKSPACE_DIR, new_rel)
-                
-                if src_path.startswith("img/products/"):
-                    src_abs = os.path.join(WORKSPACE_DIR, src_path)
-                    if src_abs != new_abs:
-                        try:
-                            os.makedirs(os.path.dirname(new_abs), exist_ok=True)
-                            if os.path.exists(src_abs):
-                                shutil.move(src_abs, new_abs)
-                        except Exception as e:
-                            self.log(f"Error reindexing image {src_path}: {e}")
-                    structured_images.append({
-                        "src": new_rel,
-                        "w": img_info["w"],
-                        "h": img_info["h"],
-                        "alt": img_info["alt"]
-                    })
-                else:
-                    try:
-                        os.makedirs(os.path.dirname(new_abs), exist_ok=True)
-                        shutil.copy2(src_path, new_abs)
-                        structured_images.append({
-                            "src": new_rel,
-                            "w": img_info["w"],
-                            "h": img_info["h"],
-                            "alt": img_info["alt"]
-                        })
-                    except Exception as e:
-                        self.log(f"Error copying product image {src_path}: {e}")
+            old_cat_slug = prod.get("category_slug", "")
             
             # Clean up old category HTML and image folder if migrated
-            old_cat_slug = prod.get("category_slug", "")
             if old_cat_slug and old_cat_slug != cat_slug:
                 # Remove old compiled product HTML
                 old_html_rel = f"products/{old_cat_slug}/{prod_id}.html"
@@ -1783,15 +1856,33 @@ class MainWindow(QMainWindow):
                     except Exception:
                         pass
                 
-                # Remove old image folder if empty
+                # Move old image folder contents to new category folder if existing
                 old_img_dir = os.path.join(WORKSPACE_DIR, "img", "products", old_cat_slug, prod_id)
-                if os.path.exists(old_img_dir) and not os.listdir(old_img_dir):
+                new_img_dir = os.path.join(WORKSPACE_DIR, "img", "products", cat_slug, prod_id)
+                if os.path.exists(old_img_dir):
+                    os.makedirs(new_img_dir, exist_ok=True)
+                    for fn in os.listdir(old_img_dir):
+                        try:
+                            shutil.move(os.path.join(old_img_dir, fn), os.path.join(new_img_dir, fn))
+                        except Exception:
+                            pass
                     try:
                         os.rmdir(old_img_dir)
                     except Exception:
                         pass
 
-             # Update product
+            # Stage & reindex product images
+            prod_dir_rel = f"img/products/{cat_slug}/{prod_id}"
+            structured_images = stage_and_reindex_images(
+                data["images"],
+                prod_dir_rel,
+                prod_id,
+                WORKSPACE_DIR,
+                TRASH_DIR,
+                log_func=self.log
+            )
+
+            # Update product
             actual_prod = next((p for p in self.products if p["id"] == prod_id), None)
             if actual_prod:
                 actual_prod["model"] = data["model"]
@@ -1800,25 +1891,6 @@ class MainWindow(QMainWindow):
                 actual_prod["description"] = data["description"]
                 actual_prod["specifications"] = data["specifications"]
                 actual_prod["images"] = structured_images
-                
-            # Clean up orphan images in the product directory
-            prod_img_dir = os.path.join(WORKSPACE_DIR, "img", "products", cat_slug, prod_id)
-            if os.path.exists(prod_img_dir):
-                structured_basenames = [os.path.basename(img["src"]) for img in structured_images]
-                for filename in os.listdir(prod_img_dir):
-                    file_abs = os.path.join(prod_img_dir, filename)
-                    if os.path.isfile(file_abs) and filename not in structured_basenames:
-                        trash_img_dir = os.path.join(TRASH_DIR, "images")
-                        os.makedirs(trash_img_dir, exist_ok=True)
-                        dest_abs = os.path.join(trash_img_dir, filename)
-                        if os.path.exists(dest_abs):
-                            name_part, ext_part = os.path.splitext(filename)
-                            dest_abs = os.path.join(trash_img_dir, f"{name_part}_{int(time.time())}{ext_part}")
-                        try:
-                            shutil.move(file_abs, dest_abs)
-                            self.log(f"Moved removed image {filename} to trash/images/")
-                        except Exception as e:
-                            self.log(f"Error trashing removed image {filename}: {e}")
             
             self.save_database()
             self.refresh_catalog_tree()
@@ -1926,6 +1998,8 @@ class MainWindow(QMainWindow):
         self.trash_tree.setColumnWidth(1, 200)
         self.trash_tree.header().setSectionResizeMode(2, QHeaderView.Stretch)
         self.trash_tree.setSelectionBehavior(QTreeWidget.SelectRows)
+        self.trash_tree.setSelectionMode(QTreeWidget.ExtendedSelection)
+        self.trash_tree.itemSelectionChanged.connect(self.on_trash_selection_changed)
         
         btn_layout = QVBoxLayout()
         self.btn_restore = QPushButton("Restore Selected")
@@ -2010,7 +2084,21 @@ class MainWindow(QMainWindow):
             for p_rec in individual_prods:
                 p_item = QTreeWidgetItem(virtual_item)
                 p_item.setText(0, p_rec.get("name", ""))
-                p_item.setText(1, "Product")
+                
+                cat_slug = p_rec.get("category_slug", "")
+                if not cat_slug:
+                    meta_rel = p_rec.get("metadata_path", "")
+                    if meta_rel:
+                        meta_abs = os.path.join(SCRIPT_DIR, meta_rel)
+                        if os.path.exists(meta_abs):
+                            try:
+                                with open(meta_abs, "r", encoding="utf-8") as f:
+                                    meta_data = json.load(f)
+                                    cat_slug = meta_data.get("category_slug", "")
+                            except Exception:
+                                pass
+                cat_str = f"Product (Category: {cat_slug})" if cat_slug else "Product"
+                p_item.setText(1, cat_str)
                 p_item.setText(2, p_rec.get("deleted_date", ""))
                 p_item.setData(0, Qt.UserRole, p_rec)
                 p_item.setForeground(0, QColor("#e0e0e0"))
@@ -2019,33 +2107,39 @@ class MainWindow(QMainWindow):
                 
             virtual_item.setExpanded(True)
 
-    def restore_trash_item(self):
-        selected = self.trash_tree.selectedItems()
-        if not selected:
-            QMessageBox.information(self, "No Selection", "Please select a trashed item to restore.")
-            return
+    def on_trash_selection_changed(self):
+        selected_items = self.trash_tree.selectedItems()
+        records = []
+        for item in selected_items:
+            rec = item.data(0, Qt.UserRole)
+            if rec and rec not in records:
+                records.append(rec)
+        has_sel = len(records) > 0
+        self.btn_restore.setEnabled(has_sel)
+        self.btn_delete_perm.setEnabled(has_sel)
+
+    def restore_single_trash_record(self, record):
+        if not record or record not in self.trash_items:
+            return False
             
-        item = selected[0]
-        record = item.data(0, Qt.UserRole)
-        if not record:
-            return
-            
-        item_id = record["id"]
-        item_type = record["type"]
-            
-        metadata_abs = os.path.join(SCRIPT_DIR, record["metadata_path"])
+        item_type = record.get("type")
+        metadata_abs = os.path.join(SCRIPT_DIR, record.get("metadata_path", ""))
         if not os.path.exists(metadata_abs):
-            QMessageBox.warning(self, "Missing Files", "The metadata file for this trashed item is missing from disk.")
-            return
-            
-        with open(metadata_abs, "r", encoding="utf-8") as f:
-            metadata = json.load(f)
-            
+            self.log(f"Error: Missing metadata file for trashed item {record.get('name')}")
+            return False
+
+        try:
+            with open(metadata_abs, "r", encoding="utf-8") as f:
+                metadata = json.load(f)
+        except Exception as e:
+            self.log(f"Error reading metadata for {record.get('name')}: {e}")
+            return False
+
         if item_type == "product":
             cat_slug = metadata.get("category_slug", "")
             if not any(c["slug"] == cat_slug for c in self.categories):
-                QMessageBox.warning(self, "Restore Blocked", f"The category '{cat_slug}' for this product no longer exists. Please restore the category first.")
-                return
+                self.log(f"Restore skipped for product '{metadata.get('title')}': category '{cat_slug}' does not exist.")
+                return False
                 
             trash_images_dir = os.path.join(os.path.dirname(metadata_abs), "images")
             for img in record.get("original_images", []):
@@ -2053,21 +2147,17 @@ class MainWindow(QMainWindow):
                 filename = os.path.basename(src_path)
                 trash_img_abs = os.path.join(trash_images_dir, filename)
                 dest_img_abs = os.path.join(WORKSPACE_DIR, src_path)
-                
                 if os.path.exists(trash_img_abs):
                     try:
                         os.makedirs(os.path.dirname(dest_img_abs), exist_ok=True)
                         shutil.move(trash_img_abs, dest_img_abs)
                     except Exception as e:
                         self.log(f"Error restoring image {src_path}: {e}")
-                        
+
             if not any(p["id"] == metadata["id"] for p in self.products):
                 self.products.append(metadata)
-            self.save_database()
-            self.refresh_catalog_tree()
-            self.lbl_products_count.setText(f"Total Products: {len(self.products)}")
-            self.log(f"Restored product: {metadata['title']} ({metadata['model']})")
-            
+            self.log(f"Restored product: {metadata['title']} ({metadata.get('model', '')})")
+
         elif item_type == "category":
             trash_folder = os.path.dirname(metadata_abs)
             cat_img_rel = metadata.get("image", "")
@@ -2081,7 +2171,7 @@ class MainWindow(QMainWindow):
                         shutil.move(trash_img_abs, dest_img_abs)
                     except Exception as e:
                         self.log(f"Error restoring category image: {e}")
-                        
+
             trash_sc_dir = os.path.join(trash_folder, "showcase")
             for sc_img in metadata.get("showcase_images", []):
                 src_rel = sc_img["src"]
@@ -2095,128 +2185,142 @@ class MainWindow(QMainWindow):
                             shutil.move(trash_img_abs, dest_img_abs)
                         except Exception as e:
                             self.log(f"Error restoring category showcase image: {e}")
-                            
+
             if not any(c["slug"] == metadata["slug"] for c in self.categories):
                 self.categories.append(metadata)
-            self.save_database()
-            self.refresh_catalog_tree()
-            self.lbl_categories_count.setText(f"Total Categories: {len(self.categories)}")
             self.log(f"Restored category: {metadata['title']} ({metadata['slug']})")
-            
+
+            # Restore associated child products automatically if present
             associated_trashed = [
-                x for x in self.trash_items 
-                if x["type"] == "product" and x.get("parent_trash_id") == record["trash_id"]
+                x for x in list(self.trash_items)
+                if x.get("type") == "product" and x.get("parent_trash_id") == record.get("trash_id")
             ]
-            if associated_trashed:
-                confirm = QMessageBox.question(
-                    self, "Restore Products",
-                    f"Found {len(associated_trashed)} products associated with this category in the Trash. Do you want to restore them as well?",
-                    QMessageBox.Yes | QMessageBox.No
-                )
-                if confirm == QMessageBox.Yes:
-                    for prod_rec in list(associated_trashed):
-                        self.restore_product_by_record(prod_rec)
-                        
+            for prod_rec in associated_trashed:
+                self.restore_single_trash_record(prod_rec)
+
+        trash_dir_abs = os.path.dirname(metadata_abs)
+        if os.path.exists(trash_dir_abs):
+            try:
+                shutil.rmtree(trash_dir_abs)
+            except Exception as e:
+                self.log(f"Error removing trash folder: {e}")
+
+        if record in self.trash_items:
+            self.trash_items.remove(record)
+        return True
+
+    def restore_trash_item(self):
+        selected_items = self.trash_tree.selectedItems()
+        if not selected_items:
+            QMessageBox.information(self, "No Selection", "Please select one or more trashed items to restore.")
+            return
+
+        records = []
+        for item in selected_items:
+            rec = item.data(0, Qt.UserRole)
+            if rec and rec not in records:
+                records.append(rec)
+
+        if not records:
+            return
+
+        num = len(records)
+        msg = f"Are you sure you want to restore the {num} selected item(s)?" if num > 1 else f"Are you sure you want to restore '{records[0]['name']}'?"
+        confirm = QMessageBox.question(self, "Confirm Restore", msg, QMessageBox.Yes | QMessageBox.No)
+        if confirm == QMessageBox.No:
+            return
+
+        # Process categories first so child products can find their parent categories
+        categories_first = sorted(records, key=lambda x: 0 if x.get("type") == "category" else 1)
+        restored_count = 0
+        for rec in categories_first:
+            if rec in self.trash_items:
+                if self.restore_single_trash_record(rec):
+                    restored_count += 1
+
+        self.save_database()
+        self.save_trash_database()
+        self.refresh_catalog_tree()
+        self.refresh_trash_table()
+        self.lbl_categories_count.setText(f"Total Categories: {len(self.categories)}")
+        self.lbl_products_count.setText(f"Total Products: {len(self.products)}")
+        self.log(f"Restored {restored_count} item(s) from Trash Bin.")
+        self.compile_site(show_dialog=False)
+
+    def delete_single_trash_record(self, record):
+        if not record or record not in self.trash_items:
+            return
+            
+        metadata_abs = os.path.join(SCRIPT_DIR, record.get("metadata_path", ""))
         trash_dir_abs = os.path.dirname(metadata_abs)
         if os.path.exists(trash_dir_abs):
             try:
                 shutil.rmtree(trash_dir_abs)
             except Exception as e:
                 self.log(f"Error removing trash directory: {e}")
-                
-        self.trash_items.remove(record)
-        self.save_trash_database()
-        self.refresh_trash_table()
-        self.compile_site(show_dialog=False)
 
-    def restore_product_by_record(self, record):
-        metadata_abs = os.path.join(SCRIPT_DIR, record["metadata_path"])
-        if not os.path.exists(metadata_abs):
-            return
-            
-        with open(metadata_abs, "r", encoding="utf-8") as f:
-            metadata = json.load(f)
-            
-        trash_images_dir = os.path.join(os.path.dirname(metadata_abs), "images")
-        for img in record.get("original_images", []):
-            src_path = img["src"]
-            filename = os.path.basename(src_path)
-            trash_img_abs = os.path.join(trash_images_dir, filename)
-            dest_img_abs = os.path.join(WORKSPACE_DIR, src_path)
-            
-            if os.path.exists(trash_img_abs):
-                try:
-                    os.makedirs(os.path.dirname(dest_img_abs), exist_ok=True)
-                    shutil.move(trash_img_abs, dest_img_abs)
-                except Exception as e:
-                    self.log(f"Error restoring image {src_path}: {e}")
-                    
-        if not any(p["id"] == metadata["id"] for p in self.products):
-            self.products.append(metadata)
-        self.save_database()
-        self.refresh_catalog_tree()
-        self.lbl_products_count.setText(f"Total Products: {len(self.products)}")
-        self.log(f"Restored associated product: {metadata['title']}")
-        
-        trash_dir_abs = os.path.dirname(metadata_abs)
-        if os.path.exists(trash_dir_abs):
-            try:
-                shutil.rmtree(trash_dir_abs)
-            except Exception as e:
-                pass
-                
-        if record in self.trash_items:
-            self.trash_items.remove(record)
-
-    def delete_permanently(self):
-        selected = self.trash_tree.selectedItems()
-        if not selected:
-            QMessageBox.information(self, "No Selection", "Please select a trashed item to delete permanently.")
-            return
-            
-        item = selected[0]
-        record = item.data(0, Qt.UserRole)
-        if not record:
-            return
-            
-        item_id = record["id"]
-        item_type = record["type"]
-        
-        confirm = QMessageBox.question(
-            self, "Confirm Permanent Delete",
-            f"Are you sure you want to permanently delete {item_type} '{record['name']}'? This action CANNOT be undone.",
-            QMessageBox.Yes | QMessageBox.No
-        )
-        if confirm == QMessageBox.No:
-            return
-            
-        metadata_abs = os.path.join(SCRIPT_DIR, record["metadata_path"])
-        trash_dir_abs = os.path.dirname(metadata_abs)
-        if os.path.exists(trash_dir_abs):
-            try:
-                shutil.rmtree(trash_dir_abs)
-                self.log(f"Permanently destroyed trashed assets folder: {trash_dir_abs}")
-            except Exception as e:
-                self.log(f"Error clearing trashed assets: {e}")
-                
-        if item_type == "category":
+        if record.get("type") == "category":
             associated_trashed = [
-                x for x in self.trash_items 
-                if x["type"] == "product" and x.get("parent_trash_id") == record["trash_id"]
+                x for x in list(self.trash_items)
+                if x.get("type") == "product" and x.get("parent_trash_id") == record.get("trash_id")
             ]
-            for prod_rec in list(associated_trashed):
-                p_metadata_abs = os.path.join(SCRIPT_DIR, prod_rec["metadata_path"])
+            for prod_rec in associated_trashed:
+                p_metadata_abs = os.path.join(SCRIPT_DIR, prod_rec.get("metadata_path", ""))
                 p_trash_dir_abs = os.path.dirname(p_metadata_abs)
                 if os.path.exists(p_trash_dir_abs):
                     try:
                         shutil.rmtree(p_trash_dir_abs)
                     except Exception:
                         pass
-                self.trash_items.remove(prod_rec)
-                
-        self.trash_items.remove(record)
+                if prod_rec in self.trash_items:
+                    self.trash_items.remove(prod_rec)
+
+        if record in self.trash_items:
+            self.trash_items.remove(record)
+
+    def delete_permanently(self):
+        selected_items = self.trash_tree.selectedItems()
+        if not selected_items:
+            QMessageBox.information(self, "No Selection", "Please select one or more trashed items to delete permanently.")
+            return
+
+        records = []
+        for item in selected_items:
+            rec = item.data(0, Qt.UserRole)
+            if rec and rec not in records:
+                records.append(rec)
+
+        if not records:
+            return
+
+        num = len(records)
+        name_str = f"'{records[0]['name']}'" if num == 1 else f"{num} selected items"
+        
+        # Stage 1 Confirmation
+        confirm1 = QMessageBox.question(
+            self, "Confirm Permanent Delete (Stage 1)",
+            f"Are you sure you want to permanently delete {name_str}? This action CANNOT be undone.",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        if confirm1 == QMessageBox.No:
+            return
+
+        # Stage 2 Double Confirmation
+        confirm2 = QMessageBox.question(
+            self, "Are you ABSOLUTELY sure? (Stage 2)",
+            f"Double Confirmation: Permanent deletion of {name_str} will DESTROY all associated images and metadata files forever. Proceed?",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        if confirm2 == QMessageBox.No:
+            return
+
+        for rec in list(records):
+            self.delete_single_trash_record(rec)
+
         self.save_trash_database()
         self.refresh_trash_table()
+        self.log(f"Permanently destroyed {num} trashed record(s).")
+        self.compile_site(show_dialog=False)
         self.log(f"Permanently deleted: {record['name']}")
         self.compile_site(show_dialog=False)
 
@@ -2677,11 +2781,11 @@ class MainWindow(QMainWindow):
             dest_file_abs = os.path.join(WORKSPACE_DIR, dest_file_rel)
             
             try:
-                # Move old logo file to site_manager/images/ to avoid leaving it orphaned
+                # Move old logo file to site_manager/trash/images/ to avoid leaving it orphaned
                 old_logo_rel = self.clients[row].get("logo", "")
                 old_logo_abs = os.path.join(WORKSPACE_DIR, old_logo_rel)
                 if old_logo_rel and os.path.exists(old_logo_abs):
-                    dest_dir = os.path.join(SCRIPT_DIR, "images")
+                    dest_dir = os.path.join(TRASH_DIR, "images")
                     os.makedirs(dest_dir, exist_ok=True)
                     dest_path = os.path.join(dest_dir, os.path.basename(old_logo_rel))
                     if os.path.exists(dest_path):
@@ -2692,7 +2796,7 @@ class MainWindow(QMainWindow):
                         dest_path = os.path.join(dest_dir, f"{old_base}_{c}{old_ext}")
                     try:
                         shutil.move(old_logo_abs, dest_path)
-                        self.log(f"Moved replaced logo asset {old_logo_rel} to site_manager/images/")
+                        self.log(f"Moved replaced logo asset {old_logo_rel} to trash/images/")
                     except Exception as e:
                         self.log(f"Error moving replaced logo asset: {e}")
 
@@ -2755,11 +2859,11 @@ class MainWindow(QMainWindow):
             for row in selected_rows:
                 client = self.clients.pop(row)
                 
-                # Move removed logo file to site_manager/images/
+                # Move removed logo file to site_manager/trash/images/
                 logo_rel = client.get("logo", "")
                 logo_abs = os.path.join(WORKSPACE_DIR, logo_rel)
                 if logo_rel and os.path.exists(logo_abs):
-                    dest_dir = os.path.join(SCRIPT_DIR, "images")
+                    dest_dir = os.path.join(TRASH_DIR, "images")
                     os.makedirs(dest_dir, exist_ok=True)
                     dest_path = os.path.join(dest_dir, os.path.basename(logo_rel))
                     if os.path.exists(dest_path):
@@ -2770,7 +2874,7 @@ class MainWindow(QMainWindow):
                         dest_path = os.path.join(dest_dir, f"{base_name}_{counter}{ext}")
                     try:
                         shutil.move(logo_abs, dest_path)
-                        self.log(f"Moved removed logo asset {logo_rel} to site_manager/images/")
+                        self.log(f"Moved removed logo asset {logo_rel} to trash/images/")
                     except Exception as e:
                         self.log(f"Error moving logo asset: {e}")
                         
