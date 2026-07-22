@@ -27,19 +27,6 @@
             "title": "Emergency & Rescue Equipment"
         },
         {
-            "slug": "convex-mirrors",
-            "title": "Convex Mirrors & Security",
-            "description": "Polycarbonate convex safety mirrors for blind turns, and trolley under-vehicle inspection search mirrors.",
-            "image": "img/categories/convex-mirrors.jpg",
-            "showcase_images": [
-                {
-                    "src": "img/categories/showcase/convex-mirrors/convex-mirrors-showcase-0.jpg",
-                    "w": 1500,
-                    "h": 1500
-                }
-            ]
-        },
-        {
             "title": "Anti-Glare Panels",
             "slug": "anti-glare-panels",
             "description": "High-performance anti-glare panels designed to reduce headlight glare and improve driver visibility on roads and highways.",
@@ -53,28 +40,15 @@
             ]
         },
         {
-            "slug": "safety-tapes",
-            "title": "Safety Tapes & Accessories",
-            "description": "High-intensity retroreflective tapes, retroreflective stickers, radium tapes, caution tapes, etc.",
-            "image": "img/categories/safety-tapes.jpg",
-            "showcase_images": [
-                {
-                    "h": 1862,
-                    "src": "img/categories/showcase/safety-tapes/safety-tapes-showcase-0.jpg",
-                    "w": 1862
-                }
-            ]
-        },
-        {
             "slug": "road-signages",
-            "title": "Road Signages & Boards",
+            "title": "Road Signs & Gantry Signboards",
             "description": "High-intensity reflective signage sheets, mandatory boards, cautionary sign posts, and anti-glare highway median boards.",
             "image": "img/categories/road-signages.jpg",
             "showcase_images": [
                 {
+                    "h": 1800,
                     "src": "img/categories/showcase/road-signages/road-signages-showcase-0.jpg",
-                    "w": 1800,
-                    "h": 1800
+                    "w": 1800
                 }
             ]
         },
@@ -106,6 +80,11 @@
                     "h": 1000,
                     "src": "img/categories/showcase/road-delineators/road-delineators-showcase-1.webp",
                     "w": 750
+                },
+                {
+                    "h": 2728,
+                    "src": "img/categories/showcase/road-delineators/road-delineators-showcase-2.png",
+                    "w": 1536
                 }
             ]
         },
@@ -156,7 +135,7 @@
             "description": "High-strength ABS, aluminum, and solar-powered road studs engineered to provide brilliant lane markers and warning indicators.",
             "image": "img/categories/road-studs.jpg",
             "slug": "road-studs",
-            "title": "Road Studs & Cat's Eyes",
+            "title": "Road Studs",
             "showcase_images": [
                 {
                     "h": 1750,
@@ -199,32 +178,6 @@
             ]
         },
         {
-            "slug": "markers-reflectors",
-            "title": "Median & Guard Rail Markers",
-            "description": "Trapezoidal median markers, guard rail metal brackets with reflective inserts, and high-impact plastic reflectors.",
-            "image": "img/categories/markers-reflectors.jpg",
-            "showcase_images": [
-                {
-                    "src": "img/categories/showcase/markers-reflectors/markers-reflectors-showcase-0.jpg",
-                    "w": 2048,
-                    "h": 2050
-                }
-            ]
-        },
-        {
-            "slug": "barricades-fences",
-            "title": "Barricades & Fences",
-            "description": "Expandable scissor barriers, display advertising barricade boards, and security steel fences for crowd control.",
-            "image": "img/categories/barricades-fences.jpg",
-            "showcase_images": [
-                {
-                    "src": "img/categories/showcase/barricades-fences/barricades-fences-showcase-0.jpg",
-                    "w": 2148,
-                    "h": 2148
-                }
-            ]
-        },
-        {
             "description": "Vulcanized rubber speed bumps, heavy-duty plastic speed ramps, and rumbler strips designed for optimal speed reduction.",
             "image": "img/categories/speed-breakers.jpg",
             "slug": "speed-breakers",
@@ -240,13 +193,52 @@
         {
             "title": "Barricades",
             "slug": "barricades",
-            "description": "",
+            "description": "Expandable scissor barriers, display advertising barricade boards, and security steel fences for crowd control.",
             "image": "img/categories/barricades.jpg",
             "showcase_images": [
                 {
                     "src": "img/categories/showcase/barricades/barricades-showcase-0.jpg",
+                    "w": 2148,
+                    "h": 2148
+                }
+            ]
+        },
+        {
+            "title": "Traffic & Safety Mirrors",
+            "slug": "safety-mirrors",
+            "description": "Polycarbonate convex safety mirrors for blind turns, and trolley under-vehicle inspection search mirrors.",
+            "image": "img/categories/safety-mirrors.jpg",
+            "showcase_images": [
+                {
+                    "h": 1500,
+                    "src": "img/categories/showcase/safety-mirrors/safety-mirrors-showcase-0.jpg",
+                    "w": 1500
+                }
+            ]
+        },
+        {
+            "title": "Crash Attenuators",
+            "slug": "crash-attenuators",
+            "description": "Water-fillable plastic barricades, sand barrels, and impact attenuators designed to absorb collision kinetic energy.",
+            "image": "img/categories/crash-attenuators.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/crash-attenuators/crash-attenuators-showcase-0.jpg",
                     "w": 2048,
                     "h": 2048
+                }
+            ]
+        },
+        {
+            "title": "Reflective Sheeting, Tapes & Accessories",
+            "slug": "reflective-accessories",
+            "description": "High-intensity retroreflective tapes, retroreflective stickers, radium tapes, caution tapes, etc.",
+            "image": "img/categories/reflective-accessories.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/reflective-accessories/reflective-accessories-showcase-0.jpg",
+                    "w": 1862,
+                    "h": 1862
                 }
             ]
         },
@@ -261,374 +253,23 @@
                 }
             ],
             "slug": "road-barriers",
-            "title": "Road Barriers & Attenuators"
+            "title": "Road Barriers"
+        },
+        {
+            "title": "Median Markers",
+            "slug": "median-markers",
+            "description": "",
+            "image": "img/categories/median-markers.jpg",
+            "showcase_images": [
+                {
+                    "src": "img/categories/showcase/median-markers/median-markers-showcase-0.jpg",
+                    "w": 2048,
+                    "h": 2050
+                }
+            ]
         }
     ],
     "products": [
-        {
-            "category_slug": "anti-glare-panels",
-            "description": "Anti Glare Board",
-            "id": "8589934859-ksjd",
-            "images": [
-                {
-                    "alt": "Anti Glare Board",
-                    "h": 2048,
-                    "src": "img/products/anti-glare-panels/8589934859-ksjd/8589934859-ksjd-0.png",
-                    "w": 2048
-                }
-            ],
-            "model": "8589934859-ksjd",
-            "specifications": [
-                {
-                    "label": "asdasd",
-                    "value": "asdasdas"
-                },
-                {
-                    "label": "dasdasdasd",
-                    "value": "dfsgcdfg"
-                },
-                {
-                    "label": "asczxvdvs",
-                    "value": "dfg sdg sdg dfg dfg df"
-                }
-            ],
-            "title": "Anti Glare Board"
-        },
-        {
-            "category_slug": "road-delineators",
-            "description": "Made of highly flexible PU that instantly springs back to shape after vehicle impacts. Ideal for lane splitting and hazard zoning.",
-            "id": "eb-dl-pu80",
-            "images": [
-                {
-                    "alt": "Flexible PU Delineator Post",
-                    "h": 1024,
-                    "src": "img/products/road-delineators/eb-dl-pu80/eb-dl-pu80-0.png",
-                    "w": 1024
-                }
-            ],
-            "model": "EB-DL-PU80",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "800 mm Height | 80 mm Post Diameter"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "High-elasticity Polyurethane (PU)"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "3 High-visibility retroreflective silver bands"
-                }
-            ],
-            "title": "Flexible PU Delineator Post"
-        },
-        {
-            "category_slug": "road-delineators",
-            "description": "High-density plastic board featuring chevron reflective stripes. Perfect for construction diversions and toll booths.",
-            "id": "eb-dl-pl10",
-            "images": [
-                {
-                    "alt": "Plastic Delineator Board",
-                    "h": 1024,
-                    "src": "img/products/road-delineators/eb-dl-pl10/eb-dl-pl10-0.png",
-                    "w": 1024
-                }
-            ],
-            "model": "EB-DL-PL10",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "1000 mm Height | 150 mm Face Width"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "High-Density Polyethylene (HDPE)"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "Flat hazard warning sign face with Chevron sheeting"
-                }
-            ],
-            "title": "Plastic Delineator Board"
-        },
-        {
-            "category_slug": "traffic-cones",
-            "description": "Heavyweight rubber body that resists strong winds without tipping. Features high-intensity reflective sleeves for night safety.",
-            "id": "eb-tc-rub80",
-            "images": [
-                {
-                    "alt": "Rubber Safety Cone",
-                    "h": 1024,
-                    "src": "img/products/traffic-cones/eb-tc-rub80/eb-tc-rub80-0.png",
-                    "w": 1024
-                }
-            ],
-            "model": "EB-TC-RUB80",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "800 mm Height | 400 x 400 mm Base"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "Recycled natural rubber"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "Dual reflective sleeves (100 mm + 100 mm)"
-                }
-            ],
-            "title": "Rubber Safety Cone"
-        },
-        {
-            "category_slug": "traffic-cones",
-            "description": "Super flexible PU safety cone that is virtually indestructible. Lightweight and easily stackable for storage.",
-            "id": "eb-tc-flx75",
-            "images": [
-                {
-                    "alt": "Flexible PU Cone - View 1",
-                    "h": 1024,
-                    "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-0.png",
-                    "w": 1024
-                },
-                {
-                    "alt": "Flexible PU Cone",
-                    "h": 1264,
-                    "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-1.png",
-                    "w": 871
-                }
-            ],
-            "model": "EB-TC-FLX75",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "750 mm Height | 380 mm diameter Base"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "Highly elastic Polyurethane (PU)"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "Single reflective safety sleeve"
-                }
-            ],
-            "title": "Flexible PU Cone"
-        },
-        {
-            "category_slug": "traffic-cones",
-            "description": "Constructed of high-performance PVC with a heavy base. Instantly recovers shape after being run over by vehicles.",
-            "id": "eb-tc-pvc75",
-            "images": [
-                {
-                    "alt": "PVC Safety Cone",
-                    "h": 1024,
-                    "src": "img/products/traffic-cones/eb-tc-pvc75/eb-tc-pvc75-0.png",
-                    "w": 1024
-                }
-            ],
-            "model": "EB-TC-PVC75",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "750 mm Height | 380 mm diameter Base"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "High-performance Polyvinyl Chloride (PVC)"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "Dual high-visibility reflective collars"
-                }
-            ],
-            "title": "PVC Safety Cone"
-        },
-        {
-            "category_slug": "emergency-equipment",
-            "description": "Long-range rechargeable search light featuring heavy-duty beam focus, dimmer function, and visual warning flash modes.",
-            "id": "eb-ee-sl05",
-            "images": [
-                {
-                    "src": "img/products/emergency-equipment/eb-ee-sl05/eb-ee-sl05-0.png",
-                    "w": 1024,
-                    "h": 1024,
-                    "alt": "Rechargeable Tactical Search Light"
-                },
-                {
-                    "src": "img/products/emergency-equipment/eb-ee-sl05/eb-ee-sl05-1.jpg",
-                    "w": 1500,
-                    "h": 1500,
-                    "alt": "Rechargeable Tactical Search Light"
-                }
-            ],
-            "model": "EB-EE-SL05",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "50 Watts LED | 5000 mAh Li-ion battery"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "Shockproof ABS plastic body + shoulder strap"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "1000m range, 3 modes (Strong / Dim / Flashing beacon)"
-                }
-            ],
-            "title": "Rechargeable Tactical Search Light"
-        },
-        {
-            "category_slug": "ppe-safety",
-            "description": "Nitrile-palm coated gloves providing excellent puncture resistance and firm grip in oily or wet conditions.",
-            "id": "eb-pp-glv03",
-            "images": [
-                {
-                    "alt": "Protective Safety Gloves",
-                    "h": 1024,
-                    "src": "img/products/ppe-safety/eb-pp-glv03/eb-pp-glv03-0.png",
-                    "w": 1024
-                }
-            ],
-            "model": "EB-PP-GLV03",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "Standard size"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "Polyester knitted gloves with Nitrile coated palm"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "Abrasion and cut-resistant safety grip"
-                }
-            ],
-            "title": "Protective Safety Gloves"
-        },
-        {
-            "category_slug": "ppe-safety",
-            "description": "Heavy-duty hard hat designed to absorb shock from falling objects. Features sweatband and secure adjustable straps.",
-            "id": "eb-pp-hlm02",
-            "images": [
-                {
-                    "alt": "Industrial Safety Helmet",
-                    "h": 1024,
-                    "src": "img/products/ppe-safety/eb-pp-hlm02/eb-pp-hlm02-0.png",
-                    "w": 1024
-                }
-            ],
-            "model": "EB-PP-HLM02",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "Adjustable suspension head band"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "High-impact ABS shell"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "White / Yellow / Blue colors, IS 2925 certified"
-                }
-            ],
-            "title": "Industrial Safety Helmet"
-        },
-        {
-            "category_slug": "traffic-cones",
-            "description": "Cone 3",
-            "id": "cone-3",
-            "images": [
-                {
-                    "alt": "Cone 3",
-                    "h": 554,
-                    "src": "img/products/traffic-cones/cone-3/cone-3-0.jpg",
-                    "w": 554
-                }
-            ],
-            "model": "Cone-3",
-            "specifications": [
-                {
-                    "label": "Cone Size",
-                    "value": "750mm"
-                },
-                {
-                    "label": "fsdfsd",
-                    "value": "sdgsdfg"
-                },
-                {
-                    "label": "gsdfgsdfg",
-                    "value": "dfgdfgsdfg"
-                }
-            ],
-            "title": "Cone 3"
-        },
-        {
-            "category_slug": "traffic-cones",
-            "description": "lskdsjfoi sflhs lfhlskjh fkjsdh fkjsh fdkjshfdkj skjdfh ksjdhf kjshdf kjshd",
-            "id": "cone-4",
-            "images": [
-                {
-                    "alt": "Cone 4",
-                    "h": 447,
-                    "src": "img/products/traffic-cones/cone-4/cone-4-0.jpg",
-                    "w": 447
-                }
-            ],
-            "model": "Cone-4",
-            "specifications": [
-                {
-                    "label": "Cone Size",
-                    "value": "98374mm"
-                },
-                {
-                    "label": "asasfsdfsd",
-                    "value": "fsdfsdf"
-                },
-                {
-                    "label": "sdfsdf",
-                    "value": "fsdfs"
-                },
-                {
-                    "label": "dfsdfsdf",
-                    "value": "sd"
-                }
-            ],
-            "title": "Cone 4"
-        },
-        {
-            "category_slug": "traffic-cones",
-            "description": "Cone 5",
-            "id": "cone-5",
-            "images": [
-                {
-                    "alt": "Cone 5",
-                    "h": 447,
-                    "src": "img/products/traffic-cones/cone-5/cone-5-0.jpg",
-                    "w": 447
-                }
-            ],
-            "model": "Cone-5",
-            "specifications": [
-                {
-                    "label": "asda",
-                    "value": "asdasd"
-                },
-                {
-                    "label": "sda",
-                    "value": "asda"
-                },
-                {
-                    "label": "sdasd",
-                    "value": "sdasd"
-                }
-            ],
-            "title": "Cone 5"
-        },
         {
             "category_slug": "road-barriers",
             "description": "Durable water or sand fillable barrier designed to absorb impact energy. Includes interlocking lugs to form straight or curved paths.",
@@ -675,38 +316,17 @@
                 }
             ],
             "title": "Water-Fillable Traffic Barrier"
-        },
-        {
-            "category_slug": "road-delineators",
-            "description": "Rugged steel construction designed for permanent median positioning. Coated with anti-rust paint and bright reflective strips.",
-            "id": "eb-dl-ms75",
-            "images": [
-                {
-                    "alt": "MS Steel Delineator Post",
-                    "h": 1024,
-                    "src": "img/products/road-delineators/eb-dl-ms75/eb-dl-ms75-0.png",
-                    "w": 1024
-                }
-            ],
-            "model": "EB-DL-MS75",
-            "specifications": [
-                {
-                    "label": "Dimensions / Capacity",
-                    "value": "750 mm Height | 75 mm Post Diameter"
-                },
-                {
-                    "label": "Material Build",
-                    "value": "Mild Steel (MS) with anti-corrosion coating"
-                },
-                {
-                    "label": "Key Specifications",
-                    "value": "Double reflective glass beads bands"
-                }
-            ],
-            "title": "MS Steel Delineator Post"
         }
     ],
     "clients": [
+        {
+            "id": "client_1784728404_ASC.webp",
+            "name": "Asc",
+            "logo": "img/logo/ASC.webp",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 0.9
+        },
         {
             "id": "client_1783846307_NAHI.png",
             "name": "Nahi",
@@ -756,9 +376,9 @@
             "scale": 1.2
         },
         {
-            "id": "client_1783846307_logo copy_1.png",
-            "name": "Logo Copy 1",
-            "logo": "img/logo/logo copy_1.png",
+            "id": "client_1784728640_wave_estate.png",
+            "name": "Wave Estate",
+            "logo": "img/logo/wave_estate.png",
             "link": "#",
             "link_enabled": false,
             "scale": 1.1

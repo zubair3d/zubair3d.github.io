@@ -1,357 +1,233 @@
 [
     {
-        "trash_id": "prod_eb-ee-fe04_1783849464",
+        "trash_id": "prod_eb-pp-glv03_1784735081",
         "type": "product",
-        "id": "eb-ee-fe04",
-        "name": "Dry Powder Fire Extinguisher",
-        "deleted_date": "2026-07-12 15:14:24",
-        "metadata_path": "trash\\products\\prod_eb-ee-fe04_1783849464\\metadata.json",
+        "id": "eb-pp-glv03",
+        "name": "Protective Safety Gloves",
+        "deleted_date": "2026-07-22 21:14:41",
+        "metadata_path": "trash\\products\\prod_eb-pp-glv03_1784735081\\metadata.json",
         "original_images": [
             {
-                "alt": "Dry Powder Fire Extinguisher",
+                "alt": "Protective Safety Gloves",
                 "h": 1024,
-                "src": "img/products/emergency-equipment/eb-ee-fe04/eb-ee-fe04-0.png",
+                "src": "img/products/ppe-safety/eb-pp-glv03/eb-pp-glv03-0.png",
                 "w": 1024
             }
         ],
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-ee-srn_1783849464",
+        "trash_id": "prod_eb-pp-hlm02_1784735081",
         "type": "product",
-        "id": "eb-ee-srn",
-        "name": "Motorized Warning Siren",
-        "deleted_date": "2026-07-12 15:14:24",
-        "metadata_path": "trash\\products\\prod_eb-ee-srn_1783849464\\metadata.json",
+        "id": "eb-pp-hlm02",
+        "name": "Industrial Safety Helmet",
+        "deleted_date": "2026-07-22 21:14:41",
+        "metadata_path": "trash\\products\\prod_eb-pp-hlm02_1784735081\\metadata.json",
         "original_images": [
             {
-                "alt": "Motorized Warning Siren",
+                "alt": "Industrial Safety Helmet",
                 "h": 1024,
-                "src": "img/products/emergency-equipment/eb-ee-srn/eb-ee-srn-0.png",
+                "src": "img/products/ppe-safety/eb-pp-hlm02/eb-pp-hlm02-0.png",
                 "w": 1024
             }
         ],
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-pp-vst01_1783849588",
+        "trash_id": "prod_eb-ee-sl05_1784735090",
         "type": "product",
-        "id": "eb-pp-vst01",
-        "name": "High-Visibility Safety Vest",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-pp-vst01_1783849588\\metadata.json",
+        "id": "eb-ee-sl05",
+        "name": "Rechargeable Tactical Search Light",
+        "deleted_date": "2026-07-22 21:14:50",
+        "metadata_path": "trash\\products\\prod_eb-ee-sl05_1784735090\\metadata.json",
         "original_images": [
             {
-                "alt": "High-Visibility Safety Vest",
+                "alt": "Rechargeable Tactical Search Light",
                 "h": 1024,
-                "src": "img/products/ppe-safety/eb-pp-vst01/eb-pp-vst01-0.png",
+                "src": "img/products/emergency-equipment/eb-ee-sl05/eb-ee-sl05-0.png",
+                "w": 1024
+            },
+            {
+                "alt": "Rechargeable Tactical Search Light",
+                "h": 1500,
+                "src": "img/products/emergency-equipment/eb-ee-sl05/eb-ee-sl05-1.jpg",
+                "w": 1500
+            }
+        ],
+        "parent_trash_id": null
+    },
+    {
+        "trash_id": "prod_8589934859-ksjd_1784735097",
+        "type": "product",
+        "id": "8589934859-ksjd",
+        "name": "Anti Glare Board",
+        "deleted_date": "2026-07-22 21:14:57",
+        "metadata_path": "trash\\products\\prod_8589934859-ksjd_1784735097\\metadata.json",
+        "original_images": [
+            {
+                "alt": "Anti Glare Board",
+                "h": 2048,
+                "src": "img/products/anti-glare-panels/8589934859-ksjd/8589934859-ksjd-0.png",
+                "w": 2048
+            }
+        ],
+        "parent_trash_id": null
+    },
+    {
+        "trash_id": "prod_eb-dl-pu80_1784735134",
+        "type": "product",
+        "id": "eb-dl-pu80",
+        "name": "Flexible PU Delineator Post",
+        "deleted_date": "2026-07-22 21:15:34",
+        "metadata_path": "trash\\products\\prod_eb-dl-pu80_1784735134\\metadata.json",
+        "original_images": [
+            {
+                "alt": "Flexible PU Delineator Post",
+                "h": 1024,
+                "src": "img/products/road-delineators/eb-dl-pu80/eb-dl-pu80-0.png",
                 "w": 1024
             }
         ],
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-cm-pc80_1783849588",
+        "trash_id": "prod_eb-dl-pl10_1784735134",
         "type": "product",
-        "id": "eb-cm-pc80",
-        "name": "Polycarbonate Convex Mirror",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-cm-pc80_1783849588\\metadata.json",
+        "id": "eb-dl-pl10",
+        "name": "Plastic Delineator Board",
+        "deleted_date": "2026-07-22 21:15:34",
+        "metadata_path": "trash\\products\\prod_eb-dl-pl10_1784735134\\metadata.json",
         "original_images": [
             {
-                "alt": "Polycarbonate Convex Mirror",
+                "alt": "Plastic Delineator Board",
                 "h": 1024,
-                "src": "img/products/convex-mirrors/eb-cm-pc80/eb-cm-pc80-0.png",
+                "src": "img/products/road-delineators/eb-dl-pl10/eb-dl-pl10-0.png",
                 "w": 1024
             }
         ],
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-cm-uvm02_1783849588",
+        "trash_id": "prod_eb-dl-ms75_1784735134",
         "type": "product",
-        "id": "eb-cm-uvm02",
-        "name": "Under-Vehicle Inspection Mirror",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-cm-uvm02_1783849588\\metadata.json",
+        "id": "eb-dl-ms75",
+        "name": "MS Steel Delineator Post",
+        "deleted_date": "2026-07-22 21:15:34",
+        "metadata_path": "trash\\products\\prod_eb-dl-ms75_1784735134\\metadata.json",
         "original_images": [
             {
-                "alt": "Under-Vehicle Inspection Mirror",
+                "alt": "MS Steel Delineator Post",
                 "h": 1024,
-                "src": "img/products/convex-mirrors/eb-cm-uvm02/eb-cm-uvm02-0.png",
+                "src": "img/products/road-delineators/eb-dl-ms75/eb-dl-ms75-0.png",
                 "w": 1024
             }
         ],
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-mr-grl02_1783849588",
+        "trash_id": "prod_eb-tc-rub80_1784735152",
         "type": "product",
-        "id": "eb-mr-grl02",
-        "name": "Guard Rail Reflector",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-mr-grl02_1783849588\\metadata.json",
+        "id": "eb-tc-rub80",
+        "name": "Rubber Safety Cone",
+        "deleted_date": "2026-07-22 21:15:52",
+        "metadata_path": "trash\\products\\prod_eb-tc-rub80_1784735152\\metadata.json",
         "original_images": [
             {
-                "alt": "Guard Rail Reflector",
+                "alt": "Rubber Safety Cone",
                 "h": 1024,
-                "src": "img/products/markers-reflectors/eb-mr-grl02/eb-mr-grl02-0.png",
+                "src": "img/products/traffic-cones/eb-tc-rub80/eb-tc-rub80-0.png",
                 "w": 1024
             }
         ],
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-mr-med01_1783849588",
+        "trash_id": "prod_eb-tc-flx75_1784735152",
         "type": "product",
-        "id": "eb-mr-med01",
-        "name": "Median Reflector Marker",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-mr-med01_1783849588\\metadata.json",
+        "id": "eb-tc-flx75",
+        "name": "Flexible PU Cone",
+        "deleted_date": "2026-07-22 21:15:52",
+        "metadata_path": "trash\\products\\prod_eb-tc-flx75_1784735152\\metadata.json",
         "original_images": [
             {
-                "alt": "Median Reflector Marker",
+                "alt": "Flexible PU Cone - View 1",
                 "h": 1024,
-                "src": "img/products/markers-reflectors/eb-mr-med01/eb-mr-med01-0.png",
+                "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-0.png",
+                "w": 1024
+            },
+            {
+                "alt": "Flexible PU Cone",
+                "h": 1264,
+                "src": "img/products/traffic-cones/eb-tc-flx75/eb-tc-flx75-1.png",
+                "w": 871
+            }
+        ],
+        "parent_trash_id": null
+    },
+    {
+        "trash_id": "prod_eb-tc-pvc75_1784735152",
+        "type": "product",
+        "id": "eb-tc-pvc75",
+        "name": "PVC Safety Cone",
+        "deleted_date": "2026-07-22 21:15:52",
+        "metadata_path": "trash\\products\\prod_eb-tc-pvc75_1784735152\\metadata.json",
+        "original_images": [
+            {
+                "alt": "PVC Safety Cone",
+                "h": 1024,
+                "src": "img/products/traffic-cones/eb-tc-pvc75/eb-tc-pvc75-0.png",
                 "w": 1024
             }
         ],
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-sg-agb02_1783849588",
+        "trash_id": "prod_cone-3_1784735152",
         "type": "product",
-        "id": "eb-sg-agb02",
-        "name": "Highway Anti-Glare Board",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-sg-agb02_1783849588\\metadata.json",
+        "id": "cone-3",
+        "name": "Cone 3",
+        "deleted_date": "2026-07-22 21:15:52",
+        "metadata_path": "trash\\products\\prod_cone-3_1784735152\\metadata.json",
         "original_images": [
             {
-                "alt": "Highway Anti-Glare Board",
-                "h": 1024,
-                "src": "img/products/road-signages/eb-sg-agb02/eb-sg-agb02-0.png",
-                "w": 1024
+                "alt": "Cone 3",
+                "h": 554,
+                "src": "img/products/traffic-cones/cone-3/cone-3-0.jpg",
+                "w": 554
             }
         ],
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-sg-ref01_1783849588",
+        "trash_id": "prod_cone-4_1784735152",
         "type": "product",
-        "id": "eb-sg-ref01",
-        "name": "Retroreflective Road Signage",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-sg-ref01_1783849588\\metadata.json",
+        "id": "cone-4",
+        "name": "Cone 4",
+        "deleted_date": "2026-07-22 21:15:52",
+        "metadata_path": "trash\\products\\prod_cone-4_1784735152\\metadata.json",
         "original_images": [
             {
-                "alt": "Retroreflective Road Signage",
-                "h": 1024,
-                "src": "img/products/road-signages/eb-sg-ref01/eb-sg-ref01-0.png",
-                "w": 1024
+                "alt": "Cone 4",
+                "h": 447,
+                "src": "img/products/traffic-cones/cone-4/cone-4-0.jpg",
+                "w": 447
             }
         ],
         "parent_trash_id": null
     },
     {
-        "trash_id": "prod_eb-bc-ad30_1783849588",
+        "trash_id": "prod_cone-5_1784735152",
         "type": "product",
-        "id": "eb-bc-ad30",
-        "name": "Advertisement Barricade Board",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-bc-ad30_1783849588\\metadata.json",
+        "id": "cone-5",
+        "name": "Cone 5",
+        "deleted_date": "2026-07-22 21:15:52",
+        "metadata_path": "trash\\products\\prod_cone-5_1784735152\\metadata.json",
         "original_images": [
             {
-                "alt": "Advertisement Barricade Board",
-                "h": 1024,
-                "src": "img/products/barricades-fences/eb-bc-ad30/eb-bc-ad30-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-bc-sc01_1783849588",
-        "type": "product",
-        "id": "eb-bc-sc01",
-        "name": "Metal Scissor Barricade",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-bc-sc01_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Metal Scissor Barricade",
-                "h": 1024,
-                "src": "img/products/barricades-fences/eb-bc-sc01/eb-bc-sc01-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-br-att01_1783849588",
-        "type": "product",
-        "id": "eb-br-att01",
-        "name": "Impact Attenuator (Sand Barrel)",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-br-att01_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Impact Attenuator (Sand Barrel)",
-                "h": 1024,
-                "src": "img/products/road-barriers/eb-br-att01/eb-br-att01-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-sb-rub50_1783849588",
-        "type": "product",
-        "id": "eb-sb-rub50",
-        "name": "Rubber Speed Breaker",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-sb-rub50_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Rubber Speed Breaker",
-                "h": 1024,
-                "src": "img/products/speed-breakers/eb-sb-rub50/eb-sb-rub50-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-sb-pla75_1783849588",
-        "type": "product",
-        "id": "eb-sb-pla75",
-        "name": "Plastic Speed Breaker",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-sb-pla75_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Plastic Speed Breaker",
-                "h": 1024,
-                "src": "img/products/speed-breakers/eb-sb-pla75/eb-sb-pla75-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-rs-abs01_1783849588",
-        "type": "product",
-        "id": "eb-rs-abs01",
-        "name": "ABS Plastic Road Stud (Cat's Eye)",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-rs-abs01_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "ABS Plastic Road Stud (Cat's Eye)",
-                "h": 1024,
-                "src": "img/products/road-studs/eb-rs-abs01/eb-rs-abs01-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-rs-alu02_1783849588",
-        "type": "product",
-        "id": "eb-rs-alu02",
-        "name": "Aluminum Road Stud",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-rs-alu02_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Aluminum Road Stud",
-                "h": 1024,
-                "src": "img/products/road-studs/eb-rs-alu02/eb-rs-alu02-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-rs-sol03_1783849588",
-        "type": "product",
-        "id": "eb-rs-sol03",
-        "name": "Solar Powered LED Road Stud",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-rs-sol03_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Solar Powered LED Road Stud",
-                "h": 1024,
-                "src": "img/products/road-studs/eb-rs-sol03/eb-rs-sol03-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-tp-cau_1783849588",
-        "type": "product",
-        "id": "eb-tp-cau",
-        "name": "Cautionary Barricade Tape",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-tp-cau_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Cautionary Barricade Tape",
-                "h": 1024,
-                "src": "img/products/safety-tapes/eb-tp-cau/eb-tp-cau-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-tp-con_1783849588",
-        "type": "product",
-        "id": "eb-tp-con",
-        "name": "Vehicle Conspicuity Tape (ECE 104)",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-tp-con_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Vehicle Conspicuity Tape (ECE 104)",
-                "h": 1024,
-                "src": "img/products/safety-tapes/eb-tp-con/eb-tp-con-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-tp-rad_1783849588",
-        "type": "product",
-        "id": "eb-tp-rad",
-        "name": "Retroreflective Radium Tape",
-        "deleted_date": "2026-07-12 15:16:28",
-        "metadata_path": "trash\\products\\prod_eb-tp-rad_1783849588\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Retroreflective Radium Tape",
-                "h": 1024,
-                "src": "img/products/safety-tapes/eb-tp-rad/eb-tp-rad-0.png",
-                "w": 1024
-            }
-        ],
-        "parent_trash_id": null
-    },
-    {
-        "trash_id": "prod_eb-sb-rum15_1783849606",
-        "type": "product",
-        "id": "eb-sb-rum15",
-        "name": "Road Safety Rumbler Strip",
-        "deleted_date": "2026-07-12 15:16:46",
-        "metadata_path": "trash\\products\\prod_eb-sb-rum15_1783849606\\metadata.json",
-        "original_images": [
-            {
-                "alt": "Road Safety Rumbler Strip",
-                "h": 1024,
-                "src": "img/products/speed-breakers/eb-sb-rum15/eb-sb-rum15-0.png",
-                "w": 1024
+                "alt": "Cone 5",
+                "h": 447,
+                "src": "img/products/traffic-cones/cone-5/cone-5-0.jpg",
+                "w": 447
             }
         ],
         "parent_trash_id": null
