@@ -1539,8 +1539,13 @@ ol {
 	margin-top: 20px;
 }
 
+.copyright__text {
+	text-align: center;
+}
+
 .copyright__text p {
 	margin-bottom: 0;
+	text-align: center;
 }
 
 .copyright__text p i {
