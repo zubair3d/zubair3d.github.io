@@ -341,7 +341,7 @@
             "logo": "img/logo/KCPL.png",
             "link": "#",
             "link_enabled": false,
-            "scale": 2.3
+            "scale": 2.0
         },
         {
             "id": "client_1783846307_DD.png",
@@ -357,7 +357,15 @@
             "logo": "img/logo/NKC.png",
             "link": "#",
             "link_enabled": false,
-            "scale": 1.3
+            "scale": 1.1
+        },
+        {
+            "id": "client_1784790397_All-Grace-Developers.png",
+            "name": "All Grace Developers",
+            "logo": "img/logo/All-Grace-Developers.png",
+            "link": "#",
+            "link_enabled": false,
+            "scale": 1.2
         },
         {
             "id": "client_1783846307_Emperium.png",
@@ -373,7 +381,7 @@
             "logo": "img/logo/Inventis.png",
             "link": "#",
             "link_enabled": false,
-            "scale": 1.2
+            "scale": 1.1
         },
         {
             "id": "client_1784728640_wave_estate.png",
